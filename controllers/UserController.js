@@ -57,7 +57,7 @@ const login = async (req, res, next) => {
         
         const isPasswordMatch =  bcrypt.compareSync(password, User.password);
         if(!isPasswordMatch){
-            return badRequest(res, 'Password Does not Match!', [])
+            return badRequest(res, 'Password Does not Match!', [], 403)
         }
         if(!User?.verified) {
             let token = await TokenRepo.findOneByObject({userId : User?._id})
@@ -85,7 +85,7 @@ const login = async (req, res, next) => {
         console.log("[UserController:login] Logged in Successfully")
         const token = jwt.sign({User}, process.env.JWT_SECRET)
 
-        successResponse(res, 'Login Successful.', {userData, token})
+        successResponse(res, 'Login Successful.', {userData, token}, 200)
    }catch(err){
      next(err)
    }
