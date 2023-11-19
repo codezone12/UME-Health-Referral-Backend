@@ -33,7 +33,9 @@ const findOneByObject = async (obj) => {
   };
 
 
-
+const updateUser = async (_id, verified) => {
+  return await UserModel.findOneAndUpdate({_id}, {$set : {verified}}, {new : true})
+}
 
 
 module.exports = {
@@ -42,7 +44,7 @@ module.exports = {
     getAllUsers,
     createUser,
     findOneByObject,
-
+    updateUser
 
 
 }

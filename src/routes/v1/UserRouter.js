@@ -4,6 +4,7 @@ const UserController = require('../../controllers/UserController')
 
 router.post('/', UserController.createNewUser)
 router.post('/login', UserController.login)
+router.post('/otp', UserController.VerifyToken)
 
 
 

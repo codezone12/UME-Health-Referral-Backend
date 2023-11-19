@@ -24,6 +24,10 @@ let User = new Schema({
   active: {
     type: Boolean,
     default: true
+  },
+  verified: {
+    type: Boolean,
+    default: false
   }
 },
 { 
