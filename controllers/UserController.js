@@ -73,7 +73,7 @@ const login = async (req, res, next) => {
                     )
                 await sendMail(User?.email, User?.name ,"Verify Email", token?.token)
             }
-            return successResponse(res, "An Email Sent to your account please verify", [],400)
+            return successResponse(res, "An Email Sent to your account please verify", [],402)
         }
         const userData =  {
             name: User.name,
@@ -86,6 +86,43 @@ const login = async (req, res, next) => {
         const token = jwt.sign({User}, process.env.JWT_SECRET)
 
         successResponse(res, 'Login Successful.', {userData, token}, 200)
+   }catch(err){
+     next(err)
+   }
+}
+const resendOTP = async (req, res, next) => {
+   try{
+        
+        const {email} = req.body
+        let User = await UserRepo.findOneByObject({email})
+        if(!User){
+            return badRequest(res, 'User Not Found', [])
+        }
+        if(!User?.verified) {
+            let token = await TokenRepo.findOneByObject({userId : User?._id})
+            if (!token) {
+             
+                const otp = generateOTP();
+                const token = await TokenRepo.createToken(
+                    {
+                        userId : User?._id,
+                        email : User?.email,
+                        token : otp
+                    }
+                    )
+                await sendMail(User?.email, User?.name ,"Verify Email", token?.token)
+            }
+            return successResponse(res, "An Email Sent to your account please verify", [],400)
+        }
+        const userData =  {
+            name: User.name,
+            email,
+            profileImage: User.profileImage,
+            role: User.role
+        }
+
+
+        successResponse(res, 'OTP Sent Successful.', {userData, token}, 200)
    }catch(err){
      next(err)
    }
@@ -129,6 +166,6 @@ module.exports = {
     createNewUser,
     login,
     VerifyToken,
-
+    resendOTP
 
 }
