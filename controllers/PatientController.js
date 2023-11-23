@@ -53,13 +53,23 @@ const updatePatient = async (req, res, next) => {
   try {
     const { id } = req.params;
     const updatedData = req.body;
-    const updatedPatient = await PatientRepo.updatePatient(id, updatedData);
+
+    // To make the controller flexible, update only the provided fields
+    const allowedFields = ['title', 'firstName', 'lastName', 'dob', 'gender', 'email', 'phoneNumber', 'address', 'postalCode', 'city', 'bodyPart', 'clinicalIndication', 'payment', 'paymentMethod', 'clinicalInfo', 'safety'];
+    const filteredData = {};
+    
+    Object.keys(updatedData).forEach((key) => {
+      if (allowedFields.includes(key)) {
+        filteredData[key] = updatedData[key];
+      }
+    });
+
+    const updatedPatient = await PatientRepo.updatePatient(id, filteredData);
     successResponse(res, 'Patient updated successfully.', updatedPatient, 200);
   } catch (error) {
     next(error);
   }
 };
-
 /**
  * @param {Object} req.params - Patient ID
  * @returns {boolean}
