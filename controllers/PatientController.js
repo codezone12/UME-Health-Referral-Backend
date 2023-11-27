@@ -1,6 +1,12 @@
 const PatientRepo = require('../repo/PatientRepo');
 const { badRequest, successResponse, errorResponse } = require('../config/responceHandler');
+const cloudinary = require('cloudinary').v2;
 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.SECRET_KEY,
+});
 /**
  * @returns {Array}
  */
@@ -20,8 +26,35 @@ const getAllPatients = async (req, res, next) => {
 const createPatient = async (req, res, next) => {
   try {
     const patientData = req.body;
-    const newPatient = await PatientRepo.createPatient(patientData);
-    successResponse(res, 'Patient created successfully.', newPatient, 201);
+
+    if (req.file) {
+      // Upload the PDF file to Cloudinary
+      cloudinary.uploader.upload_stream(
+        { resource_type: 'raw', public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName}${Date.now()}.pdf` },
+        async (error, result) => {
+          if (error) {
+            console.error(error);
+            return next(error);
+          }
+
+          patientData.pdfURL = result.secure_url;
+
+          try {
+            const newPatient = await PatientRepo.createPatient(patientData);
+            successResponse(res, 'Patient created successfully.', newPatient, 201);
+          } catch (dbError) {
+            next(dbError); 
+          }
+        }
+      ).end(req.file.buffer);
+    } else {
+      try {
+        const newPatient = await PatientRepo.createPatient(patientData);
+        successResponse(res, 'Patient created successfully.', newPatient, 201);
+      } catch (dbError) {
+        next(dbError); 
+      }
+    }
   } catch (error) {
     next(error);
   }

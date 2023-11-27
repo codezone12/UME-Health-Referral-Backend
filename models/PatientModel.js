@@ -79,6 +79,10 @@ let Patient = new Schema({
         enum: ['Yes', 'No'],
       }
     },
+    pdfURL: {
+        type: String,
+        default: ''
+    },
     active: {
         type: Boolean,
         default: false,
