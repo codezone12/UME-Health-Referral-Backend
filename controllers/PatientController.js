@@ -144,7 +144,7 @@ const patientUpdateRequest = async (req, res, next) =>{
   try {
     const mailOptions = {
       from: 'sohailshabir282@gmail.com',
-      to: "sohailshabir282@gmail.com",
+      to: "codezone67@gmail.com",
       subject: 'Request for Update',
       html: `
         <p>Dear Admin,</p>
