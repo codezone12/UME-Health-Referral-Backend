@@ -85,7 +85,19 @@ let Patient = new Schema({
     },
     active: {
         type: Boolean,
-        default: false,
+        default: true,
+    },
+    status : {
+        type : Boolean,
+        default: false
+    },
+    approved: {
+        type: Boolean,
+        default : false
+    },
+    updateRequest: {
+        type: Boolean,
+        default : false
     }
 },
 { 

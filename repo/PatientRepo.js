@@ -4,7 +4,7 @@ const PatientModel = require('../models/PatientModel');
  * @returns {Array}
  */
 const getAllPatients = async () => {
-  return await PatientModel.find({});
+  return await PatientModel.find({active:true});
 };
 
 /**
@@ -37,7 +37,7 @@ const updatePatient = async (id, updatedData) => {
  * @returns {boolean}
  */
 const deletePatient = async (id) => {
-  return await PatientModel.findOneAndUpdate({ _id: id, active : false });
+  return await PatientModel.findOneAndUpdate({ _id: id}, {active : false}, {new:true });
 };
 
 module.exports = {

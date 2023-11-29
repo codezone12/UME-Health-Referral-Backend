@@ -1,6 +1,7 @@
 const PatientRepo = require('../repo/PatientRepo');
 const { badRequest, successResponse, errorResponse } = require('../config/responceHandler');
 const cloudinary = require('cloudinary').v2;
+const nodemailer = require('nodemailer')
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -86,23 +87,39 @@ const updatePatient = async (req, res, next) => {
   try {
     const { id } = req.params;
     const updatedData = req.body;
+    console.log('updatedData', updatedData);
+    if (req.file) {
+      cloudinary.uploader.upload_stream(
+        { resource_type: 'raw', public_id: `patient_files/${updatedData?.firstName + " " + updatedData?.lastName}${Date.now()}.pdf` },
+        async (error, result) => {
+          if (error) {
+            console.error(error);
+            return next(error);
+          }
 
-    // To make the controller flexible, update only the provided fields
-    const allowedFields = ['title', 'firstName', 'lastName', 'dob', 'gender', 'email', 'phoneNumber', 'address', 'postalCode', 'city', 'bodyPart', 'clinicalIndication', 'payment', 'paymentMethod', 'clinicalInfo', 'safety'];
-    const filteredData = {};
-    
-    Object.keys(updatedData).forEach((key) => {
-      if (allowedFields.includes(key)) {
-        filteredData[key] = updatedData[key];
+          updatedData.pdfURL = result.secure_url;
+
+          try {
+            const updatedPatient = await PatientRepo.updatePatient(id, updatedData);
+            successResponse(res, 'Patient updated successfully.', updatedPatient, 200);
+          } catch (dbError) {
+            next(dbError); 
+          }
+        }
+      ).end(req.file.buffer);
+    } else {
+      try {
+        const updatedPatient = await PatientRepo.updatePatient(id, updatedData);
+        successResponse(res, 'Patient updated successfully.', updatedPatient, 200);
+      } catch (dbError) {
+        next(dbError); 
       }
-    });
-
-    const updatedPatient = await PatientRepo.updatePatient(id, filteredData);
-    successResponse(res, 'Patient updated successfully.', updatedPatient, 200);
+    }
   } catch (error) {
     next(error);
   }
 };
+
 /**
  * @param {Object} req.params - Patient ID
  * @returns {boolean}
@@ -120,10 +137,47 @@ const deletePatient = async (req, res, next) => {
   }
 };
 
+
+const patientUpdateRequest = async (req, res, next) =>{
+  const {id, patientName} = req.body
+  console.log('patient', patientName);
+  try {
+    const mailOptions = {
+      from: 'sohailshabir282@gmail.com',
+      to: "sohailshabir282@gmail.com",
+      subject: 'Request for Update',
+      html: `
+        <p>Dear Admin,</p>
+        <p>We hope this message finds you well.</p>
+        <p>We would like to request an update regarding referral of patient ${patientName}. Please provide any additional information or updates that may be relevant to your case.</p>
+        <p>Thank you for your cooperation.</p>
+        <p>Best regards,</p>
+        <p>Your Organization</p>
+      `,
+    };
+    const transporter = nodemailer.createTransport({
+      host: process.env.HOST,
+      service: process.env.SERVICE,
+      port: Number(process.env.EMAIL_PORT),
+      secure: Boolean(process.env.SECURE),
+      auth : {
+          user: process.env.USER,
+          pass : process.env.PASSWORD
+      }
+  })
+
+    const info = await transporter.sendMail(mailOptions);
+    const updatedPatient = await PatientRepo.updatePatient(id, {updateRequest : true})
+    return successResponse(res, 'Update Reminder Sent', updatedPatient , 200)
+  }catch(error) {
+    next(error)
+  }
+}
 module.exports = {
   getAllPatients,
   createPatient,
   getPatientById,
   updatePatient,
   deletePatient,
+  patientUpdateRequest
 };
