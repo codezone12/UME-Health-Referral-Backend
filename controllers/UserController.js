@@ -3,9 +3,15 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { badRequest, errorResponse, successResponse } = require('../config/responceHandler')
 const TokenRepo = require('../repo/TokenRepo')
-// const TokenModel = require('../models/TokenModel')
 const sendMail = require('../utils/sendEmail')
 const crypto = require('crypto')
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.SECRET_KEY,
+});
 
 const generateOTP = () => {
     const otp = Math.floor(100000 + Math.random() * 900000);
@@ -79,7 +85,8 @@ const login = async (req, res, next) => {
             name: User.name,
             email,
             profileImage: User.profileImage,
-            role: User.role
+            role: User.role,
+            _id : User?._id
         }
 
         console.log("[UserController:login] Logged in Successfully")
@@ -151,13 +158,62 @@ const VerifyToken = async (req, res, next) => {
 }
 
 
+const updateUserProfile = async (req, res, next) => {
+try {
+    const { id } = req.params; 
+    const { name, email, password, ...additionalFields } = req.body;
+    console.log('req.file', req.file);
+    let imageUrl;
+    if (req.file) {
+        try {
+            const result = await cloudinary.uploader.upload(req.file.buffer.toString('base64'));
+            imageUrl = result.secure_url;
+            console.log('imageURL', imageUrl);
+          } catch (uploadError) {
+            console.error('Error uploading image to Cloudinary:', uploadError);
+            // Handle the error or return an appropriate response
+          }
+    }
 
+    // Update user information
+    const updatedUser = await UserRepo.updateProfile(id, {
+      name,
+      email,
+      password: password ? bcrypt.hashSync(password, bcrypt.genSaltSync(10)) : undefined,
+      image: imageUrl,
+      ...additionalFields,
+    });
 
+    if (!updatedUser) {
+      return errorResponse(res, 'Failed to update user profile', [], 500);
+    }
+
+    successResponse(res, 'Profile updated successfully', updatedUser, 200);
+  } catch (err) {
+    next(err);
+  }
+}
+
+const getUserById = async (req, res, next) => {
+    try {
+      const userId = req.params.id; // Assuming your route has a parameter for the user ID
+      const user = await UserRepo.findOneByObject({_id:userId});
+  
+      if (!user) {
+        return errorResponse(res, 'User not found', [], 404);
+      }
+  
+      return successResponse(res, 'User data retrieved successfully', user, 200);
+    } catch (error) {
+      next(error);
+    }
+  };
 
 module.exports = {
     createNewUser,
     login,
     VerifyToken,
-    resendOTP
-
+    resendOTP,
+    updateUserProfile,
+    getUserById
 }

@@ -61,6 +61,12 @@ let Patient = new Schema({
     paymentMethod: {
         type: String,
     },
+    provider: {
+        type: String,
+    },
+    policyNumber: {
+        type: String,
+    },
     clinicalInfo: {
       type: [String],
       required: true,
@@ -77,6 +83,9 @@ let Patient = new Schema({
       pregnancy: {
         type: String,
         enum: ['Yes', 'No'],
+      },
+      eGFR: {
+        type: String,
       }
     },
     pdfURL: {

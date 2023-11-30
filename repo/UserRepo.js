@@ -37,6 +37,21 @@ const updateUser = async (_id, verified) => {
   return await UserModel.findOneAndUpdate({_id}, {$set : {verified}}, {new : true})
 }
 
+const updateProfile = async (userId, data) => {
+  try {
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      {_id:userId},
+      {
+        data,
+      },
+      { new: true }
+    );
+
+    return updatedUser;
+  } catch (error) {
+    throw error;
+  }
+};
 
 module.exports = {
     UserRoleObject,
@@ -44,7 +59,8 @@ module.exports = {
     getAllUsers,
     createUser,
     findOneByObject,
-    updateUser
+    updateUser,
+    updateProfile
 
 
 }

@@ -7,7 +7,7 @@ let User = new Schema({
   name: {
     type: String,
   },
-  profileImage: {
+  image: {
     type: String,
     default: 'https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg'
   },
@@ -17,6 +17,42 @@ let User = new Schema({
   password: {
     type: String,
   },  
+  practitionerSpecialty : {
+    type: String,
+    default: ""
+  },
+  practitionerGroup : {
+    type: String,
+    default: ""
+  },
+  primaryPracticeName : {
+    type: String,
+    default: ""
+  },
+  registrationNumber : {
+    type: String,
+    default: ""
+  },
+  street : {
+    type: String,
+    default: ""
+  },
+  jobTitle : {
+    type: String,
+    default: ""
+  },
+  postcode : {
+    type: String,
+    default: ""
+  },
+  landline : {
+    type: String,
+    default: ""
+  },
+  townCity : {
+    type: String,
+    default: ""
+  },
   role: {
     type: String,
     default:"User"
