@@ -84,7 +84,7 @@ const login = async (req, res, next) => {
         const userData = {
             name: User.name,
             email,
-            profileImage: User.profileImage,
+            image: User.image,
             role: User.role,
             _id : User?._id
         }

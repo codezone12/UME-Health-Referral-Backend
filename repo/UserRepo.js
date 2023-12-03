@@ -41,9 +41,7 @@ const updateProfile = async (userId, data) => {
   try {
     const updatedUser = await UserModel.findByIdAndUpdate(
       {_id:userId},
-      {
-        data,
-      },
+      { $set: data },
       { new: true }
     );
 

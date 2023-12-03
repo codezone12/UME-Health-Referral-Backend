@@ -23,7 +23,7 @@ let Patient = new Schema({
     gender: {
         type: String,
         required: true,
-        enum: ['Male', 'Female', 'Other'],
+        enum: ['Male', 'Female', 'Prefer Not to Say'],
     },
     email: {
         type: String,
@@ -35,28 +35,26 @@ let Patient = new Schema({
     },
     address: {
         type: String,
-        required: true,
+        default:""
     },
     postalCode: {
         type: String,
-        required: true,
+        default:""
     },
     city: {
         type: String,
-        required: true,
+        default:""
     },
     bodyPart: {
         type: String,
-        required: true,
     },
     clinicalIndication: {
         type: String,
-        required: true,
     },
     payment: {
         type: String,
         required: true,
-        enum: ['Self Provider', 'Third Party'],
+        enum: ['Self Provider', 'Insurance/Embassy'],
     },
     paymentMethod: {
         type: String,
@@ -69,7 +67,6 @@ let Patient = new Schema({
     },
     clinicalInfo: {
       type: [String],
-      required: true,
     },
     safety: { 
       pacemaker: {
@@ -82,7 +79,7 @@ let Patient = new Schema({
       },
       pregnancy: {
         type: String,
-        enum: ['Yes', 'No'],
+        enum: ['Yes', 'No', 'Not applicable', 'Unknown'],
       },
       eGFR: {
         type: String,
