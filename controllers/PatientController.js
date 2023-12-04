@@ -86,21 +86,21 @@ const getPatientById = async (req, res, next) => {
 const updatePatient = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const updatedData = req.body;
-    console.log('updatedData', updatedData);
+    const data = req.body;
+    console.log('data', data,req.body);
     if (req.file) {
       cloudinary.uploader.upload_stream(
-        { resource_type: 'raw', public_id: `patient_files/${updatedData?.firstName + " " + updatedData?.lastName}${Date.now()}.pdf` },
+        { resource_type: 'raw', public_id: `patient_files/${data?.firstName + " " + data?.lastName}${Date.now()}.pdf` },
         async (error, result) => {
           if (error) {
             console.error(error);
             return next(error);
           }
 
-          updatedData.pdfURL = result.secure_url;
+          data.pdfURL = result.secure_url;
 
           try {
-            const updatedPatient = await PatientRepo.updatePatient(id, updatedData);
+            const updatedPatient = await PatientRepo.updatePatient(id, data);
             successResponse(res, 'Patient updated successfully.', updatedPatient, 200);
           } catch (dbError) {
             next(dbError); 
@@ -109,7 +109,7 @@ const updatePatient = async (req, res, next) => {
       ).end(req.file.buffer);
     } else {
       try {
-        const updatedPatient = await PatientRepo.updatePatient(id, updatedData);
+        const updatedPatient = await PatientRepo.updatePatient(id, data);
         successResponse(res, 'Patient updated successfully.', updatedPatient, 200);
       } catch (dbError) {
         next(dbError); 
@@ -173,11 +173,54 @@ const patientUpdateRequest = async (req, res, next) =>{
     next(error)
   }
 }
+
+const patientProfile = async (req, res, next) =>{
+  const {pdfURL, id, name} = req.body
+  try {
+    const mailOptions = {
+      from: 'sohailshabir282@gmail.com',
+      to: "codezone67@gmail.com",
+      subject: 'Request for Update',
+      html: `
+        <p>Dear Admin,</p>
+        <p>We hope this message finds you well.</p>
+        <p>We would like to request an update regarding referral of patient ${name}. Please provide any additional information or updates that may be relevant to your case.</p>
+        <p>PDF is attached <a href=${pdfURL} > Here</a></p>
+        <p>Thank you for your cooperation.</p>
+        <p>Best regards,</p>
+        <p>Your Organization</p>
+      `,
+    };
+    const transporter = nodemailer.createTransport({
+      host: process.env.HOST,
+      service: process.env.SERVICE,
+      port: Number(process.env.EMAIL_PORT),
+      secure: Boolean(process.env.SECURE),
+      auth : {
+          user: process.env.USER,
+          pass : process.env.PASSWORD
+      }
+  })
+
+    const info = await transporter.sendMail(mailOptions);
+    if (info) {
+      const updatePatient = await PatientRepo?.updatePatient(id, {pending:true})
+      return successResponse(res, "Request Update Sent Successfully", info, 200)
+    }else{
+      return errorResponse(res, "Something went wrong please try again ", [])
+    }
+}catch(error) {
+  next(error)
+}
+}
+
+
 module.exports = {
   getAllPatients,
   createPatient,
   getPatientById,
   updatePatient,
   deletePatient,
-  patientUpdateRequest
+  patientUpdateRequest,
+  patientProfile
 };

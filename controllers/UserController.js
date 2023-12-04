@@ -102,6 +102,7 @@ const resendOTP = async (req, res, next) => {
 
         const { email } = req.body
         let User = await UserRepo.findOneByObject({ email })
+        console.log('email', email);
         if (!User) {
             return badRequest(res, 'User Not Found', [])
         }
@@ -120,7 +121,7 @@ const resendOTP = async (req, res, next) => {
                 )
                 await sendMail(User?.email, User?.name, "Verify Email", newtoken?.token)
         
-            successResponse(res, 'OTP Sent Successful.', [], 200)
+           return successResponse(res, 'OTP Sent Successful.', [], 200)
         }
     } catch (err) {
         next(err)
@@ -151,7 +152,14 @@ const VerifyToken = async (req, res, next) => {
         }
         await UserRepo.updateUser(id, true)
         await TokenRepo.deleteToken({ userId: id, token: token?.token })
-        return successResponse(res, "Email verified successfully", [], 200)
+        const userData = {
+            name: user.name,
+            email : user?.email,
+            image: user.image,
+            role: user.role,
+            _id : user?._id
+        }
+        return successResponse(res, "Email verified successfully", {userData}, 200)
     } catch (error) {
         next(error)
     }

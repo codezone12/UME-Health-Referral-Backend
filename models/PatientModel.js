@@ -101,6 +101,10 @@ let Patient = new Schema({
         type: Boolean,
         default : false
     },
+    pending:{
+        type:Boolean,
+        default:false
+    },
     updateRequest: {
         type: Boolean,
         default : false
