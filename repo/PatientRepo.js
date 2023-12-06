@@ -4,7 +4,7 @@ const PatientModel = require('../models/PatientModel');
  * @returns {Array}
  */
 const getAllPatients = async () => {
-  return await PatientModel.find({active:true});
+  return await PatientModel.find({active:true}).populate([{path : "consultant"}]);
 };
 
 /**

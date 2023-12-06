@@ -17,6 +17,15 @@ const generateOTP = () => {
     const otp = Math.floor(100000 + Math.random() * 900000);
     return otp.toString();
 };
+
+const getConsultants = async (req, res, next) => {
+    const consultants = await UserRepo.getAllUsers({role:"consultant"})
+    if (!consultants) {
+        return badRequest(res, "No consultant found", [], 404)
+    }
+    return successResponse(res, "Consultants fetched successfully", consultants, 200)
+}
+
 const createNewUser = async (req, res, next) => {
     try {
         const { name, email, password, role } = req.body
@@ -223,5 +232,6 @@ module.exports = {
     VerifyToken,
     resendOTP,
     updateUserProfile,
-    getUserById
+    getUserById,
+    getConsultants
 }

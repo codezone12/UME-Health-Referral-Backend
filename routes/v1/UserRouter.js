@@ -10,6 +10,7 @@ const uploadImage = upload.single('image');
 
 
 router.post('/',  UserController.createNewUser)
+router.get('/',  UserController.getConsultants)
 router.post('/login', UserController.login)
 router.get('/:id', UserController.getUserById)
 router.post('/otp', UserController.VerifyToken)

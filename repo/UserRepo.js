@@ -10,8 +10,8 @@ const UserRoleObject = {
 /**
  * @returns {Array}
  */
-const getAllUsers = async () => {
-    return await UserModel.find({})
+const getAllUsers = async (obj) => {
+    return await UserModel.find(obj)
   };
 
 

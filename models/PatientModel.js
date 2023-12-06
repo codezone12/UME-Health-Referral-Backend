@@ -29,6 +29,11 @@ let Patient = new Schema({
         type: String,
         required: true,
     },
+    
+  consultant: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
     phoneNumber: {
         type: String,
         required: true,

@@ -55,7 +55,7 @@ let User = new Schema({
   },
   role: {
     type: String,
-    default:"User"
+    default:"consultant"
   },
   active: {
     type: Boolean,
