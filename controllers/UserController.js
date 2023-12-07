@@ -183,8 +183,8 @@ try {
     let imageUrl;
     if (req.file) {
         try {
-            const result = await cloudinary.uploader.upload(req.file.buffer.toString('base64'));
-            imageUrl = result.secure_url;
+            const result = await cloudinary.uploader.upload(req?.file?.path);
+            imageUrl = result?.secure_url;
             console.log('imageURL', imageUrl);
           } catch (uploadError) {
             console.error('Error uploading image to Cloudinary:', uploadError);
@@ -204,8 +204,15 @@ try {
     if (!updatedUser) {
       return errorResponse(res, 'Failed to update user profile', [], 500);
     }
-
-    successResponse(res, 'Profile updated successfully', updatedUser, 200);
+    console.log("updatedUser", updatedUser);
+    const userData = {
+        name: updatedUser?.name,
+        email,
+        image: updatedUser?.image,
+        role: updatedUser?.role,
+        _id : updatedUser?._id
+    }
+    successResponse(res, 'Profile updated successfully', {...updatedUser?._doc, userData}, 200);
   } catch (err) {
     next(err);
   }

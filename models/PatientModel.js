@@ -113,6 +113,14 @@ let Patient = new Schema({
     updateRequest: {
         type: Boolean,
         default : false
+    },
+    adminResponse : {
+        type : Boolean,
+        default: false
+    },
+    finalReport : {
+        type : String,
+        default: ""
     }
 },
 { 

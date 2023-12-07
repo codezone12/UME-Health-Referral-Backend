@@ -8,6 +8,7 @@ router.post('/update',  PatientController.patientUpdateRequest);
 router.post('/sendmail',  PatientController.patientProfile);
 router.post('/', upload.single('pdf'), PatientController.createPatient);
 router.get('/:id', PatientController.getPatientById);
+router.patch('/report/:id', upload.single('finalReport'),PatientController.uploadReportByAdmin);
 router.patch('/:id', upload.single('pdf'),PatientController.updatePatient);
 router.delete('/:id', PatientController.deletePatient);
 

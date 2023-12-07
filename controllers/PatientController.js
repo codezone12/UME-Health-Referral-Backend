@@ -215,6 +215,42 @@ const patientProfile = async (req, res, next) =>{
 }
 
 
+
+const uploadReportByAdmin = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    if (req.file) {
+
+      cloudinary.uploader.upload_stream(
+        { resource_type: 'raw', public_id: `patient_files/${Date.now()}.pdf` },
+        async (error, result) => {
+          if (error) {
+            console.error('error===>',error);
+            return errorResponse(res, "Error uploading report", error);
+          }
+
+          const finalReport = result.secure_url;
+          console.log('finalReport====', finalReport);
+          const updatedPatient = await PatientRepo.updatePatient(id, { finalReport, adminResponse: true });
+
+          if (!updatedPatient) {
+            return badRequest(res, "Something went wrong, please try again", []);
+          }
+
+          return successResponse(res, "Report submitted successfully", updatedPatient, 200);
+        }
+      ).end(req.file.buffer);;
+    } else {
+      return errorResponse(res, "No file provided", []);
+    }
+  } catch (error) {
+    console.error('Unhandled error:', error);
+    next(error)
+  }
+};
+
+
 module.exports = {
   getAllPatients,
   createPatient,
@@ -222,5 +258,6 @@ module.exports = {
   updatePatient,
   deletePatient,
   patientUpdateRequest,
-  patientProfile
+  patientProfile,
+  uploadReportByAdmin
 };
