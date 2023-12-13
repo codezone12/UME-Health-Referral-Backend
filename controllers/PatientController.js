@@ -59,7 +59,7 @@ const createPatient = async (req, res, next) => {
                             );
                             successResponse(
                                 res,
-                                "Patient created successfully.",
+                                "Patient created successfully",
                                 newPatient,
                                 201
                             );
@@ -136,7 +136,7 @@ const updatePatient = async (req, res, next) => {
                                 await PatientRepo.updatePatient(id, data);
                             successResponse(
                                 res,
-                                "Patient updated successfully.",
+                                "Patient updated successfully",
                                 updatedPatient,
                                 200
                             );
