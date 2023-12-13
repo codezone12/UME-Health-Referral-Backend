@@ -34,7 +34,7 @@ const createNewUser = async (req, res, next) => {
         }
         const checkUserExistence = await UserRepo.findOneByObject({ email })
         if (checkUserExistence) {
-            return badRequest(res, "Email Already Registered", [])
+            return badRequest(res, "Email address already in use", [])
         }
         // Encrypting Password
         var salt = bcrypt.genSaltSync(10);

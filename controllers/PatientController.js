@@ -74,7 +74,7 @@ const createPatient = async (req, res, next) => {
                 const newPatient = await PatientRepo.createPatient(patientData);
                 successResponse(
                     res,
-                    "Patient created successfully.",
+                    "Patient created successfully",
                     newPatient,
                     201
                 );
@@ -154,7 +154,7 @@ const updatePatient = async (req, res, next) => {
                 );
                 successResponse(
                     res,
-                    "Patient updated successfully.",
+                    "Profile updated successfully",
                     updatedPatient,
                     200
                 );
@@ -226,7 +226,7 @@ const patientUpdateRequest = async (req, res, next) => {
             console.log("Cant sent mail wait 12 hours");
             return errorResponse(
                 res,
-                "Email already sent",
+                "A copy of the referral has been sent to your email",
                 [],
                 httpStatus.INTERNAL_SERVER_ERROR
             );
