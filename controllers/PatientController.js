@@ -238,7 +238,7 @@ const patientUpdateRequest = async (req, res, next) => {
             );
             return successResponse(
                 res,
-                "Update Reminder Sent",
+                "A reminder has been sent to UME Health and you should get an update shortly.",
                 updatedPatient,
                 200
             );

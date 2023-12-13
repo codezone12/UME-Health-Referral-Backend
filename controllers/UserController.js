@@ -54,7 +54,7 @@ const createNewUser = async (req, res, next) => {
             }
         )
         await sendMail(newUser?.email, newUser?.name, "Verify Email", otp)
-        successResponse(res, 'An Email sent to your account please verify', newUser, 201)
+        successResponse(res, "Please check your email for your OTP", newUser, 201)
 
     } catch (err) {
         next(err)
@@ -67,12 +67,12 @@ const login = async (req, res, next) => {
         const { email, password } = req.body
         let User = await UserRepo.findOneByObject({ email })
         if (!User) {
-            return badRequest(res, 'User Not Found', [])
+            return badRequest(res, "User not found. Please ensure you are using the right credentials", [])
         }
 
         const isPasswordMatch = bcrypt.compareSync(password, User.password);
         if (!isPasswordMatch) {
-            return badRequest(res, 'Password Does not Match!', [], 403)
+            return badRequest(res, "Incorrect password, please try again", [], 403)
         }
         if (!User?.verified) {
             let token = await TokenRepo.findOneByObject({ userId: User?._id })
@@ -101,7 +101,7 @@ const login = async (req, res, next) => {
         console.log("[UserController:login] Logged in Successfully")
         const token = jwt.sign({ User }, process.env.JWT_SECRET)
 
-        successResponse(res, 'Login Successful.', { userData, token }, 200)
+        successResponse(res, "Login successful", { userData, token }, 200)
     } catch (err) {
         next(err)
     }
@@ -113,7 +113,7 @@ const resendOTP = async (req, res, next) => {
         let User = await UserRepo.findOneByObject({ email })
         console.log('email', email);
         if (!User) {
-            return badRequest(res, 'User Not Found', [])
+            return badRequest(res, "User not found. Please ensure you are using the right credentials", [])
         }
         if (!User?.verified) {
             let token = await TokenRepo.findOneByObject({ userId: User?._id })
@@ -130,7 +130,7 @@ const resendOTP = async (req, res, next) => {
                 )
                 await sendMail(User?.email, User?.name, "Verify Email", newtoken?.token)
         
-           return successResponse(res, 'OTP Sent Successful.', [], 200)
+           return successResponse(res, "OTP resent successfully", [], 200)
         }
     } catch (err) {
         next(err)
@@ -212,7 +212,7 @@ try {
         role: updatedUser?.role,
         _id : updatedUser?._id
     }
-    successResponse(res, 'Profile updated successfully', {...updatedUser?._doc, userData}, 200);
+    successResponse(res, "Profile updated successfully", {...updatedUser?._doc, userData}, 200);
   } catch (err) {
     next(err);
   }
@@ -224,7 +224,7 @@ const getUserById = async (req, res, next) => {
       const user = await UserRepo.findOneByObject({_id:userId});
   
       if (!user) {
-        return errorResponse(res, 'User not found', [], 404);
+        return errorResponse(res, "User not found. Please ensure you are using the right credentials", [], 404);
       }
   
       return successResponse(res, 'User data retrieved successfully', user, 200);
