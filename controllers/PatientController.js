@@ -159,8 +159,8 @@ const updatePatient = async (req, res, next) => {
                 const admin = await UserModel.findOne({ role: "Admin" });
                 await referralConfirmation(
                     consultant.name,
-                    "mubeen@mailinator.com",
-                    "Your UME Health OTP Request"
+                    "codezone67@gmail.com",
+                    "A new UME Health referral has been created"
                 );
                 successResponse(
                     res,

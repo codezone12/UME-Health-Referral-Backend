@@ -36,6 +36,7 @@ const getConsultants = async (req, res, next) => {
 };
 
 const createNewUser = async (req, res, next) => {
+    console.log("creating user");
     try {
         const { name, email, password, role } = req.body;
         if (!email) {
@@ -60,7 +61,13 @@ const createNewUser = async (req, res, next) => {
             email: newUser?.email,
             token: otp,
         });
-        await otpRequest(newUser?.email, newUser?.name, "Verify Email", otp);
+        await otpRequest(
+            name,
+            "",
+            otp,
+            newUser?.email,
+            "Your UME Health OTP Request"
+        );
         successResponse(
             res,
             "Please check your email for your OTP",
