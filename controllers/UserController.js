@@ -118,7 +118,7 @@ const login = async (req, res, next) => {
             }
             return successResponse(
                 res,
-                "An Email Sent to your account please verify",
+                "An email has been sent to your email address",
                 [],
                 402
             );
