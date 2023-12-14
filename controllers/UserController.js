@@ -7,7 +7,7 @@ const {
     successResponse,
 } = require("../config/responceHandler");
 const TokenRepo = require("../repo/TokenRepo");
-const { otpMail } = require("../utils/sendEmail");
+const { otpRequest } = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary").v2;
 
@@ -60,7 +60,7 @@ const createNewUser = async (req, res, next) => {
             email: newUser?.email,
             token: otp,
         });
-        await otp(newUser?.email, newUser?.name, "Verify Email", otp);
+        await otpRequest(newUser?.email, newUser?.name, "Verify Email", otp);
         successResponse(
             res,
             "Please check your email for your OTP",
@@ -102,7 +102,7 @@ const login = async (req, res, next) => {
                     email: User?.email,
                     token: otp,
                 });
-                await otpMail(
+                await otpRequest(
                     User?.email,
                     User?.name,
                     "Verify Email",
@@ -132,6 +132,42 @@ const login = async (req, res, next) => {
         next(err);
     }
 };
+
+const forgotPassword = async (req, res, next) => {
+    const { email } = req.body;
+    let User = await UserRepo.findOneByObject({ email });
+    console.log("email", email);
+    if (!User) {
+        return badRequest(
+            res,
+            "User not found. Please ensure you are using the right credentials",
+            []
+        );
+    }
+    // if (!User?.verified) {
+    let token = await TokenRepo.findOneByObject({ userId: User?._id });
+    if (token) {
+        const existingToken = await TokenRepo.deleteToken({
+            userId: User?._id,
+        });
+    }
+    const otp = generateOTP();
+    newtoken = await TokenRepo.createToken({
+        userId: User?._id,
+        email: User?.email,
+        token: otp,
+    });
+    await otpRequest(User?.email, User?.name, "Verify Email", newtoken?.token);
+
+    return successResponse(
+        res,
+        "OTP sent to your email, Please verify",
+        [],
+        200
+    );
+    // }
+};
+
 const resendOTP = async (req, res, next) => {
     try {
         const { email } = req.body;
@@ -157,7 +193,7 @@ const resendOTP = async (req, res, next) => {
                 email: User?.email,
                 token: otp,
             });
-            await sendMail(
+            await otpRequest(
                 User?.email,
                 User?.name,
                 "Verify Email",

@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-module.exports = otpMail = async (email, name, subject, otp) => {
+const otpMail = async (email, name, subject, otp) => {
     try {
         const emailHtml = `
         <!DOCTYPE html>
@@ -39,13 +39,7 @@ module.exports = otpMail = async (email, name, subject, otp) => {
     }
 };
 
-module.exports = otpRequest = async (
-    firstName,
-    lastName,
-    otp,
-    email,
-    subject
-) => {
+const otpRequest = async (firstName, lastName, otp, email, subject) => {
     const emailHtml = `
     <!DOCTYPE html>
     <html lang="en">
@@ -90,7 +84,7 @@ module.exports = otpRequest = async (
     }
 };
 
-module.exports = referralConfirmation = async (name, email, subject) => {
+const referralConfirmation = async (name, email, subject) => {
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -131,4 +125,9 @@ module.exports = referralConfirmation = async (name, email, subject) => {
     } else {
         console.log("Email sent Failure");
     }
+};
+module.exports = {
+    otpMail,
+    otpRequest,
+    referralConfirmation,
 };

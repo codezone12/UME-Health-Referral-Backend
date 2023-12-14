@@ -9,6 +9,8 @@ const nodemailer = require("nodemailer");
 const patientModel = require("../models/PatientModel");
 const userModel = require("../models/UserModel");
 const httpStatus = require("http-status");
+const { referralConfirmation } = require("../utils/sendEmail");
+const UserModel = require("../models/UserModel");
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -19,6 +21,7 @@ cloudinary.config({
  * @returns {Array}
  */
 const getAllPatients = async (req, res, next) => {
+    console.log("getAllPatients");
     try {
         const patients = await PatientRepo.getAllPatients();
         successResponse(res, "Patients retrieved successfully.", patients, 200);
@@ -152,6 +155,13 @@ const updatePatient = async (req, res, next) => {
                     id,
                     data
                 );
+                const consultant = await UserModel.findById(data.consultant);
+                const admin = await UserModel.findOne({ role: "Admin" });
+                await referralConfirmation(
+                    consultant.name,
+                    "mubeen@mailinator.com",
+                    "Your UME Health OTP Request"
+                );
                 successResponse(
                     res,
                     "Profile updated successfully",
@@ -185,6 +195,7 @@ const deletePatient = async (req, res, next) => {
 };
 
 const patientUpdateRequest = async (req, res, next) => {
+    console.log("patientUpdateRequest");
     const { id, patientName } = req.body;
     console.log("patient", patientName);
 
@@ -249,11 +260,12 @@ const patientUpdateRequest = async (req, res, next) => {
 };
 
 const patientProfile = async (req, res, next) => {
+    console.log("patientProfile");
     const { pdfURL, id, name } = req.body;
     try {
         const mailOptions = {
             from: "sohailshabir282@gmail.com",
-            to: "codezone67@gmail.com",
+            to: "mubeen@mailinator.com",
             subject: "Request for Update",
             html: `
         <p>Dear Admin,</p>
