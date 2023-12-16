@@ -175,19 +175,18 @@ const resendOTP = async (req, res, next) => {
         });
       }
       const otp = generateOTP();
-      const newtoken = await TokenRepo.createToken({
+      newtoken = await TokenRepo.createToken({
         userId: User?._id,
         email: User?.email,
         token: otp,
       });
-
       await otpRequest(
         User?.email,
         User?.name,
         "Verify Email",
         newtoken?.token
       );
-      console.log(User);
+
       return successResponse(res, "OTP resent successfully", [], 200);
     }
   } catch (err) {

@@ -137,14 +137,36 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <title>Your UME Health Patient Referral</title>
     </head>
     <body>
-      <p>!Hello, ${name}</p>
+      <p>Hello!, ${name}</p>
     
     
+<<<<<<< HEAD
       <p>UME Health has submitted a patient referral and you can find it under the UME Health patients referral portal by clicking on <a href="www.refer.umehealth.co.uk">www.refer.umehealth.co.uk</a> . 
       If you need any further assistance, please send us an email at <a href="mailto:clientrelations@umegroup.com">clientrelations@umegroup.com</a></p>
+=======
+      <p>A new referral request has been submitted by ${name}. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
+>>>>>>> 865d649c55fedb8f1361bb4c9a497a99c02b6819
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
+
+      <p>17 Harley Street, Marylebone, London W1G 9QH</p>
+      <p>Telephone: 0207 467 6190</p>
+      <p> <a href = bookings@umegroup.com>Email:bookings@umegroup.com<a/></p>
+      <p>Web: www.umehealth.co.uk</p>
+
+      <h6>Disclaimer and Confidentiality Note:</h6>
+
+    <p>Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.<p/>
+
+    <p>It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.</p>
+
+    <p>The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.</p>
+
+    <p>UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.</p>
+
+    <p>UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
+    Registered in the UK. Registration number: OC333533</p>
     </body>
     </html>
     `;
