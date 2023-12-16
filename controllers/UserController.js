@@ -187,6 +187,10 @@ const resendOTP = async (req, res, next) => {
                 []
             );
         }
+        let token = await TokenRepo.findOneByObject({ userId: User?._id });
+        if (token) {
+            await TokenRepo.deleteToken({ userId: User?._id });
+        }      
         if (!User?.verified) {
             let token = await TokenRepo.findOneByObject({ userId: User?._id });
             if (token) {
