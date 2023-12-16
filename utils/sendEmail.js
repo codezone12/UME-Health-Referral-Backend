@@ -126,8 +126,51 @@ const referralConfirmation = async (name, email, subject) => {
         console.log("Email sent Failure");
     }
 };
+
+const referralConfirm = async (name, email, subject, pdfLink) => {
+    const emailHtml = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Referral created</title>
+    </head>
+    <body>
+      <p>!Hello, ${name}</p>
+    
+    
+      <p>You can see a copy of referal by clicking <a href=4${pdfLink}>here</a>.</a></p>
+    
+      <p>Regards,<br>
+      UME Health Client Relations Team</p>
+    </body>
+    </html>
+    `;
+    const transporter = nodemailer.createTransport({
+        host: process.env.HOST,
+        service: process.env.SERVICE,
+        port: Number(process.env.EMAIL_PORT),
+        secure: Boolean(process.env.SECURE),
+        auth: {
+            user: process.env.USER,
+            pass: process.env.PASSWORD,
+        },
+    });
+    const resp = await transporter.sendMail({
+        to: email,
+        subject: subject,
+        html: emailHtml,
+    });
+    if (resp) {
+        console.log("Email sent Successfully");
+    } else {
+        console.log("Email sent Failure");
+    }
+};
 module.exports = {
     otpMail,
     otpRequest,
     referralConfirmation,
+    referralConfirm,
 };

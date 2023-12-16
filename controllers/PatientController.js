@@ -9,7 +9,7 @@ const nodemailer = require("nodemailer");
 const patientModel = require("../models/PatientModel");
 const userModel = require("../models/UserModel");
 const httpStatus = require("http-status");
-const { referralConfirmation } = require("../utils/sendEmail");
+const { referralConfirmation, referralConfirm } = require("../utils/sendEmail");
 const UserModel = require("../models/UserModel");
 
 cloudinary.config({
@@ -158,9 +158,21 @@ const updatePatient = async (req, res, next) => {
                 const consultant = await UserModel.findById(data.consultant);
                 const admin = await UserModel.findOne({ role: "Admin" });
                 await referralConfirmation(
-                    consultant.name,
+                    admin.name,
                     "codezone67@gmail.com",
                     "A new UME Health referral has been created"
+                );
+                await referralConfirm(
+                    consultant.name,
+                    consultant.email,
+                    "A new UME Health referral has been created",
+                    updatedPatient.pdfURL
+                );
+                await referralConfirm(
+                    updatedPatient.name,
+                    updatedPatient.email,
+                    "A new UME Health referral has been created",
+                    updatedPatient.pdfURL
                 );
                 successResponse(
                     res,
