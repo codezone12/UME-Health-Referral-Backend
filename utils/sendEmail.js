@@ -170,10 +170,29 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
   }
 };
 
-const resetPassword = async (options) => {
-  // sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
+const resetPasswordEmail = async (resetUrl, email, subject) => {
+  const emailHtml = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reset Your Password</title>
+      </head>
+      <body>
+        <p>Dear,</p>
+      
+        <p>Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: <a href=${resetUrl}>${resetUrl}</a> </p>
+      
+        <p>If you didn't forget your password, please ignore this email!</p>
+      
+        <p>Regards,<br>
+        UME Health Client Relations Team</p>
+      </body>
+      </html>    
+      `;
 
-  // 1) Create a transporter
   const transporter = nodemailer.createTransport({
     host: process.env.HOST,
     service: process.env.SERVICE,
@@ -200,5 +219,5 @@ module.exports = {
   otpRequest,
   referralConfirmation,
   referralConfirm,
-  resetPassword,
+  resetPasswordEmail,
 };

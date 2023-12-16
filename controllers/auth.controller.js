@@ -1,8 +1,8 @@
 const httpStatus = require("http-status");
 const User = require("../models/UserModel");
 const catchAsync = require("../utils/catchAsync");
-const sendEmail = require("../utils/email");
 const AppError = require("../utils/appError");
+const { resetPasswordEmail } = require("../utils/sendEmail");
 // import { resetPassword } from "../utils/sendEmail";
 const {
   authService,
@@ -80,18 +80,16 @@ const forgotPassword = catchAsync(async (req, res, next) => {
   // )}/api/users/resetPassword/${resetToken}`;
 
   // RESETURL
-  const resetURL = `${req.protocol}://${req.get(
-    "host"
-  )}/api/users/resetPassword/${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL} .\nIf you didn't forget your password, please ignore this email!`;
+  // const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL} .\nIf you didn't forget your password, please ignore this email!`;
 
   try {
-    await sendEmail({
-      email: user.email,
-      subject: "Your password reset token(valid for 10 min)",
-      message,
-    });
+    const resetUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/reset-password/${resetToken}`;
+    console.log(resetUrl);
+
+    await resetPasswordEmail(resetUrl, email, "Reset Your Password");
 
     res.status(200).json({
       status: "success",
@@ -123,7 +121,7 @@ const resetPassword = catchAsync(async (req, res, next) => {
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });
-
+  console.log(user);
   // 2) If token has not expired, and there is user, set the new password
   if (!user) {
     return next(new AppError("Invalid or expired token", 400));
