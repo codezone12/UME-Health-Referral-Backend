@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const otpMail = async (email, name, subject, otp) => {
-    try {
-        const emailHtml = `
+  try {
+    const emailHtml = `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -18,29 +18,29 @@ const otpMail = async (email, name, subject, otp) => {
         </body>
         </html>
     `;
-        const transporter = nodemailer.createTransport({
-            host: process.env.HOST,
-            service: process.env.SERVICE,
-            port: Number(process.env.EMAIL_PORT),
-            secure: Boolean(process.env.SECURE),
-            auth: {
-                user: process.env.USER,
-                pass: process.env.PASSWORD,
-            },
-        });
-        await transporter.sendMail({
-            to: email,
-            subject: subject,
-            html: emailHtml,
-        });
-        console.log("Email sent Successfully");
-    } catch (error) {
-        console.log(`Email not sent ${error}`);
-    }
+    const transporter = nodemailer.createTransport({
+      host: process.env.HOST,
+      service: process.env.SERVICE,
+      port: Number(process.env.EMAIL_PORT),
+      secure: Boolean(process.env.SECURE),
+      auth: {
+        user: process.env.USER,
+        pass: process.env.PASSWORD,
+      },
+    });
+    await transporter.sendMail({
+      to: email,
+      subject: subject,
+      html: emailHtml,
+    });
+    console.log("Email sent Successfully");
+  } catch (error) {
+    console.log(`Email not sent ${error}`);
+  }
 };
 
 const otpRequest = async (firstName, lastName, otp, email, subject) => {
-    const emailHtml = `
+  const emailHtml = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -62,30 +62,30 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
     </html>    
     `;
 
-    const transporter = nodemailer.createTransport({
-        host: process.env.HOST,
-        service: process.env.SERVICE,
-        port: Number(process.env.EMAIL_PORT),
-        secure: Boolean(process.env.SECURE),
-        auth: {
-            user: process.env.USER,
-            pass: process.env.PASSWORD,
-        },
-    });
-    const resp = await transporter.sendMail({
-        to: email,
-        subject: subject,
-        html: emailHtml,
-    });
-    if (resp) {
-        console.log("Email sent Successfully");
-    } else {
-        console.log("Email sent Failure");
-    }
+  const transporter = nodemailer.createTransport({
+    host: process.env.HOST,
+    service: process.env.SERVICE,
+    port: Number(process.env.EMAIL_PORT),
+    secure: Boolean(process.env.SECURE),
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASSWORD,
+    },
+  });
+  const resp = await transporter.sendMail({
+    to: email,
+    subject: subject,
+    html: emailHtml,
+  });
+  if (resp) {
+    console.log("Email sent Successfully");
+  } else {
+    console.log("Email sent Failure");
+  }
 };
 
 const referralConfirmation = async (name, email, subject) => {
-    const emailHtml = `<!DOCTYPE html>
+  const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
@@ -105,72 +105,100 @@ const referralConfirmation = async (name, email, subject) => {
     </body>
     </html>
     `;
-    const transporter = nodemailer.createTransport({
-        host: process.env.HOST,
-        service: process.env.SERVICE,
-        port: Number(process.env.EMAIL_PORT),
-        secure: Boolean(process.env.SECURE),
-        auth: {
-            user: process.env.USER,
-            pass: process.env.PASSWORD,
-        },
-    });
-    const resp = await transporter.sendMail({
-        to: email,
-        subject: subject,
-        html: emailHtml,
-    });
-    if (resp) {
-        console.log("Email sent Successfully");
-    } else {
-        console.log("Email sent Failure");
-    }
+  const transporter = nodemailer.createTransport({
+    host: process.env.HOST,
+    service: process.env.SERVICE,
+    port: Number(process.env.EMAIL_PORT),
+    secure: Boolean(process.env.SECURE),
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASSWORD,
+    },
+  });
+  const resp = await transporter.sendMail({
+    to: email,
+    subject: subject,
+    html: emailHtml,
+  });
+  if (resp) {
+    console.log("Email sent Successfully");
+  } else {
+    console.log("Email sent Failure");
+  }
 };
 
 const referralConfirm = async (name, email, subject, pdfLink) => {
-    const emailHtml = `<!DOCTYPE html>
+  const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Referral created</title>
+      <title>Your UME Health Patient Referral</title>
     </head>
     <body>
       <p>!Hello, ${name}</p>
     
     
-      <p>You can see a copy of referal by clicking <a href=4${pdfLink}>here</a>.</a></p>
+      <p>UME Health has submitted a patient referral and you can find it under the UME Health patients referral portal by clicking on <a href="www.refer.umehealth.co.uk">www.refer.umehealth.co.uk</a> . 
+      If you need any further assistance, please send us an email at <a href="mailto:clientrelations@umegroup.com">clientrelations@umegroup.com</a></p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
     </body>
     </html>
     `;
-    const transporter = nodemailer.createTransport({
-        host: process.env.HOST,
-        service: process.env.SERVICE,
-        port: Number(process.env.EMAIL_PORT),
-        secure: Boolean(process.env.SECURE),
-        auth: {
-            user: process.env.USER,
-            pass: process.env.PASSWORD,
-        },
-    });
-    const resp = await transporter.sendMail({
-        to: email,
-        subject: subject,
-        html: emailHtml,
-    });
-    if (resp) {
-        console.log("Email sent Successfully");
-    } else {
-        console.log("Email sent Failure");
-    }
+  const transporter = nodemailer.createTransport({
+    host: process.env.HOST,
+    service: process.env.SERVICE,
+    port: Number(process.env.EMAIL_PORT),
+    secure: Boolean(process.env.SECURE),
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASSWORD,
+    },
+  });
+  const resp = await transporter.sendMail({
+    to: email,
+    subject: subject,
+    html: emailHtml,
+  });
+  if (resp) {
+    console.log("Email sent Successfully");
+  } else {
+    console.log("Email sent Failure");
+  }
+};
+
+const resetPassword = async (options) => {
+  // sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+  // 1) Create a transporter
+  const transporter = nodemailer.createTransport({
+    host: process.env.HOST,
+    service: process.env.SERVICE,
+    port: Number(process.env.EMAIL_PORT),
+    secure: Boolean(process.env.SECURE),
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASSWORD,
+    },
+  });
+  const resp = await transporter.sendMail({
+    to: email,
+    subject: subject,
+    html: emailHtml,
+  });
+  if (resp) {
+    console.log("Email sent Successfully");
+  } else {
+    console.log("Email sent Failure");
+  }
 };
 module.exports = {
-    otpMail,
-    otpRequest,
-    referralConfirmation,
-    referralConfirm,
+  otpMail,
+  otpRequest,
+  referralConfirmation,
+  referralConfirm,
+  resetPassword,
 };
