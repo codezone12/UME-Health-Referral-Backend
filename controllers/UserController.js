@@ -159,7 +159,7 @@ const forgotPassword = async (req, res, next) => {
         });
     }
     const otp = generateOTP();
-    newtoken = await TokenRepo.createToken({
+    const newtoken = await TokenRepo.createToken({
         userId: User?._id,
         email: User?.email,
         token: otp,
@@ -342,4 +342,5 @@ module.exports = {
     updateUserProfile,
     getUserById,
     getConsultants,
+    forgotPassword,
 };

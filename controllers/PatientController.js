@@ -164,7 +164,7 @@ const updatePatient = async (req, res, next) => {
                 );
                 await referralConfirm(
                     consultant.name,
-                    consultant.email,
+                    "naveed@mailinator.com",
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL
                 );
