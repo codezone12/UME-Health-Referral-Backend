@@ -312,4 +312,5 @@ module.exports = {
   updateUserProfile,
   getUserById,
   getConsultants,
+  forgotPassword,
 };

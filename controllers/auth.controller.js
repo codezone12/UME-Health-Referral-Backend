@@ -1,6 +1,7 @@
 const httpStatus = require("http-status");
 const User = require("../models/UserModel");
 const catchAsync = require("../utils/catchAsync");
+const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
 const { resetPasswordEmail } = require("../utils/sendEmail");
 // import { resetPassword } from "../utils/sendEmail";
