@@ -138,7 +138,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-      <p>Hello!, ${name}</p>
+      <p>Hello!</p>
     
     
       <p>A new referral request has been submitted by ${name}. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
