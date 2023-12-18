@@ -97,7 +97,7 @@ const referralConfirmation = async (name, email, subject) => {
      <body>
        <p>Hello,</p>
     
-       <p>A new referral request has been submitted by <strong>${name}</strong>. UME Health will aim to respond to the referral request within 48 hours.</p>
+       <p>A new referral request has been submitted. UME Health will aim to respond to the referral request within 48 hours.</p>
     
        <p>If you need any further assistance, please send us an email at <a href="mailto:clientrelations@umegroup.com">clientrelations@umegroup.com</a></p>
     
@@ -141,15 +141,17 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <p>Hello!</p>
     
     
-      <p>A new referral request has been submitted by ${name}. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
+      <p>A new referral request has been submitted. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
-
-      <p>17 Harley Street, Marylebone, London W1G 9QH</p>
-      <p>Telephone: 0207 467 6190</p>
-      <p> <a href = bookings@umegroup.com>Email:bookings@umegroup.com<a/></p>
-      <p>Web: www.umehealth.co.uk</p>
+      <div style={{ marginTop: 0 }}>
+      <p style={{ margin: 0 }}>17 Harley Street, Marylebone, London W1G 9QH</p>
+      <p style={{ margin: 0 }}>Telephone: 0207 467 6190</p>
+      <p style={{ margin: 0 }}>Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
+      <p style={{ margin: 0 }}>Web: www.umehealth.co.uk</p>
+    </div>
+    
 
       <h6>Disclaimer and Confidentiality Note:</h6>
 
