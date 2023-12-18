@@ -7,6 +7,7 @@ router.post("/", UserController.createNewUser);
 router.get("/", UserController.getConsultants);
 router.post("/login", UserController.login);
 router.post("/forgotPassword", UserController.forgotPassword);
+router.post("/resetPassword", UserController.resetPassword);
 router.get("/:id", UserController.getUserById);
 router.post("/otp", UserController.VerifyToken);
 router.post("/resend/otp", UserController.resendOTP);
