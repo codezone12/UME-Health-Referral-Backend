@@ -163,26 +163,26 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
-      <div style={{ marginTop: 0 }}>
-      <p style={{ margin: 0 }}>17 Harley Street, Marylebone, London W1G 9QH</p>
-      <p style={{ margin: 0 }}>Telephone: 0207 467 6190</p>
-      <p style={{ margin: 0 }}>Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
-      <p style={{ margin: 0 }}>Web: www.umehealth.co.uk</p>
+      <p>
+      17 Harley Street, Marylebone, London W1G 9QH<br>
+      Telephone: 0207 467 6190<br>
+      Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
+      Web: www.umehealth.co.uk<br>
     </div>
     
-
+<p>
       <h6>Disclaimer and Confidentiality Note:</h6>
 
-    <p>Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.<p/>
+    Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
 
-    <p>It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.</p>
+    It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.
 
-    <p>The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.</p>
+    The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.
 
-    <p>UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.</p>
+    UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.
 
-    <p>UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
-    Registered in the UK. Registration number: OC333533</p>
+    UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
+    Registered in the UK. Registration number: OC333533
     </body>
     </html>
     `;
