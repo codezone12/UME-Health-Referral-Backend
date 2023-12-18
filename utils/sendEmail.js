@@ -85,25 +85,26 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
 };
 
 const referralConfirmation = async (name, email, subject) => {
-    const emailHtml = `<!DOCTYPE html>
-    // <html lang="en">
-    // <head>
-    //   <meta charset="UTF-8">
-    //   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    //   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    //   <title>A new UME Health referral has been created</title>
-    // </head>
-    // <body>
-    //   <p>Hello,</p>
+    const emailHtml = 
+    `<!DOCTYPE html>
+     <html lang="en">
+     <head>
+       <meta charset="UTF-8">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>A new UME Health referral has been created</title>
+     </head>
+     <body>
+       <p>Hello,</p>
     
-    //   <p>A new referral request has been submitted by <strong>${name}</strong>. UME Health will aim to respond to the referral request within 48 hours.</p>
+       <p>A new referral request has been submitted by <strong>${name}</strong>. UME Health will aim to respond to the referral request within 48 hours.</p>
     
-    //   <p>If you need any further assistance, please send us an email at <a href="mailto:clientrelations@umegroup.com">clientrelations@umegroup.com</a></p>
+       <p>If you need any further assistance, please send us an email at <a href="mailto:clientrelations@umegroup.com">clientrelations@umegroup.com</a></p>
     
-    //   <p>Regards,<br>
-    //   UME Health Client Relations Team</p>
-    // </body>
-    // </html>
+       <p>Regards,<br>
+       UME Health Client Relations Team</p>
+     </body>
+     </html>
     `;
     const transporter = nodemailer.createTransport({
         host: process.env.HOST,
