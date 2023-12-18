@@ -208,7 +208,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
     }
 };
 
-const informConsultant = async (email, subject) => {
+const informConsultant = async (email, subject,name) => {
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
