@@ -84,9 +84,8 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
     }
 };
 
-const referralConfirmation = async (name, email, subject) => {
-    const emailHtml = 
-    `<!DOCTYPE html>
+const referralConfirmation = async (name, email, subject, pdfLink) => {
+    const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
@@ -208,9 +207,72 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
         console.log("Email sent Failure");
     }
 };
+
+const informConsultant = async (email, subject) => {
+    const emailHtml = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Referral created</title>
+    </head>
+    <body>
+      <p>Hello!</p>
+    
+    
+      <p>UME Health has submitted a patient referral and you can find it under the UME Health patients referral portal by clicking on <a href="www.refer.umehealth.co.uk">www.refer.umehealth.co.uk</a>. If you need any further assistance, please send us an email at <a href ="mailto:clientrelations@umegroup.com>clientrelations@umegroup.com</p?</p>
+    
+      <p>Regards,<br>
+      UME Health Client Relations Team</p>
+      <div style={{ marginTop: 0 }}>
+      <p style={{ margin: 0 }}>17 Harley Street, Marylebone, London W1G 9QH</p>
+      <p style={{ margin: 0 }}>Telephone: 0207 467 6190</p>
+      <p style={{ margin: 0 }}>Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
+      <p style={{ margin: 0 }}>Web: www.umehealth.co.uk</p>
+    </div>
+    
+
+      <h6>Disclaimer and Confidentiality Note:</h6>
+
+    <p>Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.<p/>
+
+    <p>It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.</p>
+
+    <p>The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.</p>
+
+    <p>UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.</p>
+
+    <p>UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
+    Registered in the UK. Registration number: OC333533</p>
+    </body>
+    </html>
+    `;
+    const transporter = nodemailer.createTransport({
+        host: process.env.HOST,
+        service: process.env.SERVICE,
+        port: Number(process.env.EMAIL_PORT),
+        secure: Boolean(process.env.SECURE),
+        auth: {
+            user: process.env.USER,
+            pass: process.env.PASSWORD,
+        },
+    });
+    const resp = await transporter.sendMail({
+        to: email,
+        subject: subject,
+        html: emailHtml,
+    });
+    if (resp) {
+        console.log("Email sent Successfully");
+    } else {
+        console.log("Email sent Failure");
+    }
+};
 module.exports = {
     otpMail,
     otpRequest,
     referralConfirmation,
     referralConfirm,
+    informConsultant,
 };
