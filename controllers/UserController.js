@@ -233,6 +233,7 @@ const resendOTP = async (req, res, next) => {
                     userId: User?._id,
                 });
             }
+
             const otp = generateOTP();
             newtoken = await TokenRepo.createToken({
                 userId: User?._id,

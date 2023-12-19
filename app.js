@@ -8,14 +8,17 @@ const passport = require("passport");
 const httpStatus = require("http-status");
 const config = require("./config/config");
 const morgan = require("./config/morgan");
-// const { jwtStrategy } = require('./config/passport');
 const routes = require("./routes/v1");
 const { errorConverter, errorHandler } = require("./middlewares/error");
 const ApiError = require("./utils/ApiError");
 
 const app = express();
 
-app.use(cors());
+// Configure CORS to allow only specific origin
+app.use(cors({
+  origin: 'https://ume-health.vercel.app',
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+}));
 
 if (config.env !== "test") {
     app.use(morgan.successHandler);
@@ -38,10 +41,6 @@ app.use(mongoSanitize());
 // gzip compression
 app.use(compression());
 
-// enable cors
-app.use(cors());
-app.options("*", cors());
-
 // v1 api routes
 app.use("/v1", routes);
 
@@ -57,3 +56,4 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 module.exports = app;
+
