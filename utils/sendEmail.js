@@ -208,7 +208,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
     }
 };
 
-const informConsultant = async (email, subject,name) => {
+const informConsultant = async (name, email, subject, pdfLink) => {
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -221,9 +221,9 @@ const informConsultant = async (email, subject,name) => {
       <p>Hello!</p>
     
     
-      <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
+      <p>A new referral request has been submitted by <strong>  </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
     
-      <p>Regards,<br>
+      <p>Regards,<br>${name}
       UME Health Client Relations Team</p>
       <p>
       17 Harley Street, Marylebone, London W1G 9QH<br>
