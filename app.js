@@ -11,16 +11,6 @@ const morgan = require("./config/morgan");
 const routes = require("./routes/v1");
 const { errorConverter, errorHandler } = require("./middlewares/error");
 const ApiError = require("./utils/ApiError");
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const xss = require("xss-clean");
-const mongoSanitize = require("express-mongo-sanitize");
-const compression = require("compression");
-const httpStatus = require("http-status");
-const morgan = require("./config/morgan");
-const config = require("./config/config");
-const routes = require("./routes/v1");
 
 const app = express();
 
