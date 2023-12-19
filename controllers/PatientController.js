@@ -120,7 +120,7 @@ const updatePatient = async (req, res, next) => {
     try {
         const { id } = req.params;
         const data = req.body;
-        console.log("data", data, req.body);
+        // console.log("data", data, req.body);
         const consultant = await UserModel.findById(data.consultant);
         if (req.file) {
             cloudinary.uploader
@@ -160,11 +160,11 @@ const updatePatient = async (req, res, next) => {
                     id,
                     data
                 );
-
+                const patient = await patientModel.findOne({ _id: id });
                 const admin = await UserModel.findOne({ role: "Admin" });
                 await referralConfirmation(
                     admin.name,
-                    "codezone67@gmail.com",
+                    admin.email,
                     "A new UME Health referral has been created",
                     data.pdfURL
                 );
@@ -175,8 +175,8 @@ const updatePatient = async (req, res, next) => {
                     updatedPatient.pdfURL
                 );
                 await referralConfirm(
-                    updatedPatient.name,
-                    updatedPatient.email,
+                    patient.firstName,
+                    patient.email,
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL
                 );

@@ -50,7 +50,7 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
       <title>Your UME Health OTP Request</title>
     </head>
     <body>
-      <p>Dear ${(firstName, " ", lastName)},</p>
+      <p>Dear ${firstName}</p>
     
       <p>Thank you for registering on the UME Health patients referral portal. Your OTP is <strong>${otp}</strong>, please use it to complete your registration on our platform.</p>
     

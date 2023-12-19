@@ -166,8 +166,9 @@ const forgotPassword = async (req, res, next) => {
         email: email,
         token: otp,
     });
+    console.log({ User });
     await otpRequest(
-        User?.firstName,
+        User?.name,
         User.lastName,
         newtoken?.token,
         User.email,
@@ -217,8 +218,8 @@ const resetPassword = async (req, res, next) => {
 const resendOTP = async (req, res, next) => {
     try {
         const { email } = req.body;
-        let User = await UserRepo.findOneByObject({ email });
-        console.log("email", email);
+        let User = await UserModel.findOne({ email });
+        console.log("email", User);
         if (!User) {
             return badRequest(
                 res,
@@ -241,10 +242,11 @@ const resendOTP = async (req, res, next) => {
                 token: otp,
             });
             await otpRequest(
-                User?.email,
                 User?.name,
-                "Verify Email",
-                newtoken?.token
+                User?.lastName,
+                newtoken?.token,
+                User.email,
+                "Verify Email"
             );
 
             return successResponse(res, "OTP resent successfully", [], 200);
