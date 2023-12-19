@@ -15,11 +15,14 @@ const ApiError = require("./utils/ApiError");
 const app = express();
 
 // Configure CORS to allow only specific origin
-app.use(cors({
-  origin: 'https://ume-health.vercel.app',
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  credentials: true,
-}));
+const corsOptions = {
+    origin: ['https://ume-health.vercel.app', 'http://localhost:3000'],
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    credentials: true,
+  };
+  
+  app.use(cors(corsOptions));
+  
 
 if (config.env !== "test") {
     app.use(morgan.successHandler);
