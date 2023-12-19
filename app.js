@@ -11,6 +11,16 @@ const morgan = require("./config/morgan");
 const routes = require("./routes/v1");
 const { errorConverter, errorHandler } = require("./middlewares/error");
 const ApiError = require("./utils/ApiError");
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const mongoSanitize = require("express-mongo-sanitize");
+const compression = require("compression");
+const httpStatus = require("http-status");
+const morgan = require("./config/morgan");
+const config = require("./config/config");
+const routes = require("./routes/v1");
 
 const app = express();
 
@@ -18,6 +28,7 @@ const app = express();
 app.use(cors({
   origin: 'https://ume-health.vercel.app',
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  credentials: true,
 }));
 
 if (config.env !== "test") {
@@ -56,4 +67,3 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 module.exports = app;
-
