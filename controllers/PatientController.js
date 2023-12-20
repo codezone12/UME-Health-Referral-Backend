@@ -372,9 +372,14 @@ const uploadReportByAdmin = async (req, res, next) => {
                             "updatedPatient====",
                             updatedPatient.consultant
                         );
+                        const consultant = await userModel.findOne({
+                            _id: updatedPatient.consultant,
+                        });
                         await informConsultant(
-                            "naveed@mailinator.com",
-                            "Your UME Health Patient Referral"
+                            consultant.name,
+                            consultant.email,
+                            "Referral created",
+                            finalReport
                         );
                         return successResponse(
                             res,

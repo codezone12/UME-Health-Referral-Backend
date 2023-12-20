@@ -143,9 +143,9 @@ const login = async (req, res, next) => {
 
 const forgotPassword = async (req, res, next) => {
     const { email } = req.body;
-    console.log("forgot password");
-    let User = await UserRepo.findOneByObject({ email });
-    console.log("email", email);
+    console.log("forgot password", email);
+    let User = await UserModel.findOne({ email: email });
+    console.log("email", User);
     if (!User) {
         return badRequest(
             res,
@@ -185,13 +185,13 @@ const forgotPassword = async (req, res, next) => {
 };
 
 const resetPassword = async (req, res, next) => {
-    const { otp, newPassword } = req.body;
-    console.log("required credentials", otp, newPassword);
+    const { otp, password, email } = req.body;
+    console.log("required credentials", otp, password, email);
 
-    if (!otp || !newPassword) {
+    if (!otp || !password) {
         return badRequest(res, "OTP and new password are required", [], 400);
     }
-    const user = await UserRepo.findOneByObject({ email: req.body.email });
+    const user = await UserRepo.findOneByObject({ email: email });
     if (!user) {
         return badRequest(res, "Invalid Email", [], 400);
     }
@@ -202,7 +202,7 @@ const resetPassword = async (req, res, next) => {
     }
 
     var salt = bcrypt.genSaltSync(10);
-    var hashPass = bcrypt.hashSync(newPassword, salt);
+    var hashPass = bcrypt.hashSync(password, salt);
     const response = await UserModel.findOneAndUpdate(
         { _id: user?._id },
         { password: hashPass },
