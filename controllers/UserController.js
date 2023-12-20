@@ -113,7 +113,7 @@ const login = async (req, res, next) => {
                 await otpRequest(
                     User?.email,
                     User?.name,
-                    "Verify Email",
+                    "Your UME Health OTP Request",
                     token?.token
                 );
             }
