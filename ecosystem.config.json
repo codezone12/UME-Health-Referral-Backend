@@ -1,0 +1,10 @@
+{
+    "apps": [
+      {
+        "name": "create-nodejs-express-app",
+        "script": "./app.js",
+        "watch": true
+      }
+    ]
+  }
+  
