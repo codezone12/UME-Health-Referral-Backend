@@ -227,12 +227,12 @@ const patientUpdateRequest = async (req, res, next) => {
             to: "codezone67@gmail.com",
             subject: "Request for Update",
             html: `
-        <p>Hello D,</p>
-        <p>We hope this message finds you well.</p>
-        <p>We would like to request an update regarding referral of patient ${patientName}. Please provide any additional information or updates that may be relevant to your case.</p>
-        <p>Thank you for your cooperation.</p>
-        <p>Best regards,</p>
-        <p>From:${user.name}</p>
+        <p>Hello,</p>
+        <p>Consultant Name ${user.name} has requested an update on the referral they made for the patient ${patientName}.
+        We would like to request an update regarding referral of patient ${patientName}. Please provide any additional information or updates that may be relevant to your case.</p>
+        Thank you for your cooperation.</p>
+        <p>Regards, 
+        UME Health Client Relations Team</p>
       `,
         };
         const transporter = nodemailer.createTransport({
