@@ -214,8 +214,8 @@ const deletePatient = async (req, res, next) => {
 
 const patientUpdateRequest = async (req, res, next) => {
     console.log("patientUpdateRequest");
-    const { id, patientName } = req.body;
-    console.log("patient", patientName);
+    const { id, patientName,name } = req.body;
+    console.log("patient", patientName,name);
 
     try {
         const patient = await patientModel.findOne({ _id: id });
@@ -228,8 +228,8 @@ const patientUpdateRequest = async (req, res, next) => {
             subject: "Request for Update",
             html: `
         <p>Hello,</p>
-        <p>Consultant Name <strong>${user.name} </strong> has requested an update on the referral they made for the patient <trong>${patientName}.</strong></p>
-        <p>Regards, 
+        <p>Consultant Name <strong>${name} </strong> has requested an update on the referral they made for the patient <strong>${patientName}.</strong></p>
+        <p>Regards, <br>
         UME Health Client Relations Team</p>
       `,
         };
