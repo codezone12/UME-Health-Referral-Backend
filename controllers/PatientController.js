@@ -228,7 +228,7 @@ const patientUpdateRequest = async (req, res, next) => {
             subject: "Request for Update",
             html: `
         <p>Hello,</p>
-        <p>Consultant <strong>${consultant.name} </strong> has requested an update on the referral they made for the patient <strong>${patientName}.</strong></p>
+        <p>Consultant <strong>${user.name} </strong> has requested an update on the referral they made for the patient <strong>${patientName}.</strong></p>
         <p>Regards, <br>
         UME Health Client Relations Team</p>
       `,
