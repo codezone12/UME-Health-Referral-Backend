@@ -228,9 +228,7 @@ const patientUpdateRequest = async (req, res, next) => {
             subject: "Request for Update",
             html: `
         <p>Hello,</p>
-        <p>Consultant Name ${user.name} has requested an update on the referral they made for the patient ${patientName}.
-        We would like to request an update regarding referral of patient ${patientName}. Please provide any additional information or updates that may be relevant to your case.</p>
-        Thank you for your cooperation.</p>
+        <p>Consultant Name <strong>${user.name} </strong> has requested an update on the referral they made for the patient <trong>${patientName}.</strong></p>
         <p>Regards, 
         UME Health Client Relations Team</p>
       `,
