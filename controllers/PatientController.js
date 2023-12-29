@@ -227,7 +227,7 @@ const patientUpdateRequest = async (req, res, next) => {
             to: "codezone67@gmail.com",
             subject: "Request for Update",
             html: `
-        <p>Dear Admin,</p>
+        <p>Hello D,</p>
         <p>We hope this message finds you well.</p>
         <p>We would like to request an update regarding referral of patient ${patientName}. Please provide any additional information or updates that may be relevant to your case.</p>
         <p>Thank you for your cooperation.</p>
@@ -286,7 +286,7 @@ const patientProfile = async (req, res, next) => {
             to: "mubeen@mailinator.com",
             subject: "Request for Update",
             html: `
-        <p>Dear Admin,</p>
+        <p>Hello P,</p>
         <p>We hope this message finds you well.</p>
         <p>We would like to request an update regarding referral of patient ${name}. Please provide any additional information or updates that may be relevant to your case.</p>
         <p>PDF is attached <a href=${pdfURL} > Here</a></p>
@@ -378,7 +378,7 @@ const uploadReportByAdmin = async (req, res, next) => {
                         await informConsultant(
                             consultant.name,
                             consultant.email,
-                            "Referral created",
+                            "Re: Your UME Health Patient Referral",
                             finalReport
                         );
                         return successResponse(
