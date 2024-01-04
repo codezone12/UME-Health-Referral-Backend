@@ -48,9 +48,8 @@ const createPatient = async (req, res, next) => {
                 .upload_stream(
                     {
                         resource_type: "raw",
-                        public_id: `patient_files/${
-                            patientData?.firstName + " " + patientData?.lastName
-                        }${Date.now()}.pdf`,
+                        public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName
+                            }${Date.now()}.pdf`,
                     },
                     async (error, result) => {
                         if (error) {
@@ -127,9 +126,8 @@ const updatePatient = async (req, res, next) => {
                 .upload_stream(
                     {
                         resource_type: "raw",
-                        public_id: `patient_files/${
-                            data?.firstName + " " + data?.lastName
-                        }${Date.now()}.pdf`,
+                        public_id: `patient_files/${data?.firstName + " " + data?.lastName
+                            }${Date.now()}.pdf`,
                     },
                     async (error, result) => {
                         if (error) {
@@ -214,11 +212,79 @@ const deletePatient = async (req, res, next) => {
 
 const patientUpdateRequest = async (req, res, next) => {
     console.log("patientUpdateRequest");
-    const { pdfURL, id, name,patientName } = req.body;
-    console.log("patient", patientName,name,);
+    const { pdfURL, id, name, patientName: originalPatientName } = req.body;
+    console.log("patient", originalPatientName, name);
 
     try {
         const patient = await patientModel.findOne({ _id: id });
+        const patientName = patient.title + " " + patient.firstName + " " + patient.lastName;
+        console.log("patientName:", patientName);
+
+        const user = await userModel.findOne({
+            _id: patient.consultant.toString(),
+        });
+        const mailOptions = {
+            from: "sohailshabir282@gmail.com",
+            to: "codezone67@gmail.com",
+            subject: "Request for Update",
+            html: `
+                <p>Hello,</p>
+                <p>Consultant <strong>${user.name} </strong> has requested an update on the referral they made for the patient <strong>${patientName}.</strong></p>
+                <p>Regards, <br>
+                UME Health Client Relations Team</p>
+            `,
+        };
+
+        const transporter = nodemailer.createTransport({
+            host: process.env.HOST,
+            service: process.env.SERVICE,
+            port: Number(process.env.EMAIL_PORT),
+            secure: Boolean(process.env.SECURE),
+            auth: {
+                user: process.env.USER,
+                pass: process.env.PASSWORD,
+            },
+        });
+
+        const info = await transporter.sendMail(mailOptions);
+        const updatedPatient = await PatientRepo.updatePatient(id, {
+            updateRequest: true,
+        });
+
+        if (patient?.lastTimeMailSent > Date.now()) {
+            console.log("Can't send mail, wait 12 hours");
+            return errorResponse(
+                res,
+                "A copy of the referral has been sent to your email",
+                [],
+                httpStatus.INTERNAL_SERVER_ERROR
+            );
+        } else {
+            console.log("last time updated");
+            await patientModel.findOneAndUpdate(
+                { _id: id },
+                { lastTimeMailSent: Date.now() + 43200000 }
+            );
+            return successResponse(
+                res,
+                "A reminder has been sent to UME Health, and you should get an update shortly.",
+                updatedPatient,
+                200
+            );
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
+/* const patientUpdateRequest = async (req, res, next) => {
+    console.log("patientUpdateRequest");
+    const { pdfURL, id, name, patientName } = req.body;
+    console.log("patient", patientName, name,);
+
+    try {
+        const patient = await patientModel.findOne({ _id: id });
+        
         const user = await userModel.findOne({
             _id: patient.consultant.toString(),
         });
@@ -273,7 +339,7 @@ const patientUpdateRequest = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+}; */
 
 const patientProfile = async (req, res, next) => {
     console.log("patientProfile");

@@ -19,10 +19,10 @@ const corsOptions = {
     origin: ['https://ume-health.vercel.app', 'http://localhost:3000'],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     credentials: true,
-  };
-  
-  app.use(cors(corsOptions));
-  
+};
+
+app.use(cors(corsOptions));
+
 
 if (config.env !== "test") {
     app.use(morgan.successHandler);
@@ -44,7 +44,9 @@ app.use(mongoSanitize());
 
 // gzip compression
 app.use(compression());
-
+app.get('/', (req, res) => {
+    res.send('Hello, World!');
+});
 // v1 api routes
 app.use("/v1", routes);
 
