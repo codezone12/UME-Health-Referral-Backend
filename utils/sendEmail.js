@@ -145,8 +145,8 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
         console.log("Email sent Failure");
     }
 };
-const referralConfirm = async (name, email, subject, pdfLink) => {
-    const name = title+ " "+firstName+" "+lastName
+const referralConfirm = async (title, firstName, lastName, email, subject, pdfLink) => {
+    const fullName = title + " " + firstName + " " + lastName;
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -156,9 +156,9 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-      <p>Hellop! ${name}</p>
+      <p>Hellop! ${fullName}</p>
     
-      <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of the referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
+      <p>A new referral request has been submitted by <strong> ${fullName} </strong>. You can see a copy of the referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
@@ -170,18 +170,15 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       </p>
     
       <h6>Disclaimer and Confidentiality Note:</h6>
-
       <p>Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.</p>
-
       <p>It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.</p>
-
       <p>The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.</p>
-
       <p>UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.</p>
-
       <p>UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
       Registered in the UK. Registration number: OC333533</p>
     </body>
+   
+
     </html>
     `;
     const transporter = nodemailer.createTransport({
