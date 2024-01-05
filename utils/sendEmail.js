@@ -84,7 +84,8 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
     }
 };
 
-const referralConfirmation = async (firstName, email, subject, pdfLink) => {
+const referralConfirmation = async (firstName, lastName, title, email, subject, pdfLink) => {
+    const name = title + " " + firstName + " " + lastName;
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -94,10 +95,10 @@ const referralConfirmation = async (firstName, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-    <p> Hellouuu! ${firstName},</p>
+    <p> Hellouuu! ${name},</p>
     
     
-      <p>UME Health has received an imagining referral for you submitted by<strong> ${firstName} </strong>. Our bookings team will be in touch with you to book your appointment. Rest assured your referral is in safe hands. If you do need to get in touch, please email <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
+      <p>UME Health has received an imagining referral for you submitted by<strong> ${name} </strong>. Our bookings team will be in touch with you to book your appointment. Rest assured your referral is in safe hands. If you do need to get in touch, please email <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
