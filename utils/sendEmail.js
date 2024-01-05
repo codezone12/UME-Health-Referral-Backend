@@ -158,7 +158,7 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
       <p>Hello ${name},</p>
     
     
-      <p>UME Health has received an imagining referral for you submitted by <strong> ${name} </strong. Our bookings team will be in touch with you to book your appointment. Rest assured your referral is in safe hands. If you do need to get in touch, please email <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
+      <p>UME Health has received your imagining referral and we will get back to you shortly. Rest assured your referral is in safe hands. If you do need to get in touch, please email  <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
@@ -198,7 +198,8 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
     });
     const resp = await transporter.sendMail({
         to: email,
-        subject: "Your appointment with UME Health, 17 Harley Street",
+        subject: " Referral confirmation - your referral has been received
+",
         html: emailHtml,
     });
     if (resp) {
