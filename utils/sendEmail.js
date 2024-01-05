@@ -164,7 +164,7 @@ const referralConfirm = async (name,email, subject, pdfLink) => {
       UME Health Client Relations Team</p>
       <p>
       17 Harley Street, Marylebone, London W1G 9QH<br>
-      Telephone: 0207 467 6190<br>
+      Telephone: 0207 47767 6190<br>
       Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
       Web: www.umehealth.co.uk<br>
       </p>
@@ -204,67 +204,7 @@ const referralConfirm = async (name,email, subject, pdfLink) => {
 };
 
 
-/* const referralConfirm = async (name, firstName,email, subject, pdfLink) => {
-    const emailHtml = `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">  
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Referral created</title>
-    </head>
-    <body>
-      <p>Hellop! ${firstName}</p>
-    
-    
-      <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
-    
-      <p>Regards,<br>
-      UME Health Client Relations Team</p>
-      <p>
-      17 Harley Street, Marylebone, London W1G 9QH<br>
-      Telephone: 0207 467 6190<br>
-      Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
-      Web: www.umehealth.co.uk<br>
-    </div>
-    
-<p>
-      <h6>Disclaimer and Confidentiality Note:</h6>
 
-    Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
-
-    It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.
-
-    The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.
-
-    UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.
-
-    UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
-    Registered in the UK. Registration number: OC333533
-    </body>
-    </html>
-    `;
-    const transporter = nodemailer.createTransport({
-        host: process.env.HOST,
-        service: process.env.SERVICE,
-        port: Number(process.env.EMAIL_PORT),
-        secure: Boolean(process.env.SECURE),
-        auth: {
-            user: process.env.USER,
-            pass: process.env.PASSWORD,
-        },
-    });
-    const resp = await transporter.sendMail({
-        to: email,
-        subject: subject,
-        html: emailHtml,
-    });
-    if (resp) {
-        console.log("Email sent Successfully");
-    } else {
-        console.log("Email sent Failure");
-    }
-}; */
 
 const informConsultant = async (name, email, subject, pdfLink) => {
     const emailHtml = `<!DOCTYPE html>
