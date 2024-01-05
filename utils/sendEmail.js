@@ -156,7 +156,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
     </head>
     <body>
       <p>Hello!</p>
-      <img src="cid:unique-image-id" alt="Referral Image">
+      
 
       <p>A new referral request has been submitted by <strong>${name}</strong>. You can see a copy of the referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
     
@@ -196,13 +196,8 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
 
     const resp = await transporter.sendMail({
         to: email,
-        subject: subject,
+        subject:"Referral confirmation - your referral has been received" ,
         html: emailHtml,
-        attachments: [{
-            filename: 'bg.jpg',
-            path: '../controllers/bg.jpg',
-            cid: 'unique-image-id'
-        }]
     });
 
     if (resp) {
