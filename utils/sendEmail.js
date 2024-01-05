@@ -84,7 +84,7 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
     }
 };
 
-const referralConfirmation = async (name, email, subject, pdfLink) => {
+const referralConfirmation = async (firstName, email, subject, pdfLink) => {
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -94,10 +94,10 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-      <p>Hellop!</p>
+    <p> Hello! ${firstName},</p>
     
     
-      <p>A new referral request has been submitted by <strong>${name}</strong>. You can see a copy of the referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
+      <p>UME Health has received an imagining referral for you submitted by<strong> ${firstName} </strong>. Our bookings team will be in touch with you to book your appointment. Rest assured your referral is in safe hands. If you do need to get in touch, please email <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
@@ -106,7 +106,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
       Telephone: 0207 467 6190<br>
       Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
       Web: www.umehealth.co.uk<br>
-    </div>
+    </div> 
     
 <p>
       <h6>Disclaimer and Confidentiality Note:</h6>
@@ -198,7 +198,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
     });
     const resp = await transporter.sendMail({
         to: email,
-        subject: subject,
+        subject: "Your appointment with UME Health, 17 Harley Street",
         html: emailHtml,
     });
     if (resp) {
