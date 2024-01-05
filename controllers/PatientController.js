@@ -350,7 +350,7 @@ const patientProfile = async (req, res, next) => {
             to: "mubeen@mailinator.com",
             subject: "Request for Update",
             html: `
-        <p>Hello P,</p>
+        <p>Hello,</p>
         <p>We hope this message finds you well.</p>
         <p>We would like to request an update regarding referral of patient ${name}. Please provide any additional information or updates that may be relevant to your case.</p>
         <p>PDF is attached <a href=${pdfURL} > Here</a></p>
