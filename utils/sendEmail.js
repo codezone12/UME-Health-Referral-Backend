@@ -78,7 +78,7 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
     });
     const resp = await transporter.sendMail({
         to: email,
-        subject: subject,
+        subject: "Your UME Health OTP Request",
         html: emailHtml,
     });
     if (resp) {
