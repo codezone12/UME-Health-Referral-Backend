@@ -94,7 +94,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-      <p>Hello!</p>
+      <p>Hellop!</p>
     
     
       <p>A new referral request has been submitted by <strong>${name}</strong>. You can see a copy of the referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
@@ -156,7 +156,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-      <p>Hello!</p>
+      <p>Hellor!</p>
     
     
       <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
@@ -218,7 +218,7 @@ const informConsultant = async (name, email, subject, pdfLink) => {
       <title>Re: Your UME Health Patient Referral</title>
     </head>
     <body>
-      <p>Hello!</p>
+      <p>Helloq!</p>
     
     
       <p>UME Health has submitted a patient referral and you can find it under the UME Health patients referral portal by clicking on www.refer.umehealth.co.uk. If you need any further assistance, please send us an email at <a href="mailto:clientrelations@umegroup.com">clientrelations@umegroup.com</a></p>
