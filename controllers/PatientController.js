@@ -13,6 +13,7 @@ const {
     referralConfirmation,
     referralConfirm,
     informConsultant,
+    referralConfirmed,
 } = require("../utils/sendEmail");
 const UserModel = require("../models/UserModel");
 
@@ -166,7 +167,7 @@ const updatePatient = async (req, res, next) => {
                     updatedPatient.pdfURL
                 );
 
-                await referralConfirm(
+                await referralConfirmed(
                     
                      consultant.name,
                     consultant.email,
