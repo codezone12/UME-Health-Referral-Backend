@@ -145,7 +145,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
         console.log("Email sent Failure");
     }
 };
-const referralConfirmed = async (name, email, subject, pdfLink) => {
+const referralConfirmation = async (name, email, subject, pdfLink) => {
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -155,10 +155,10 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-      <p>Hello ${name}</p>
-    
-    
-      <p>UME Health has received your imagining referral and we will get back to you shortly. Rest assured your referral is in safe hands. If you do need to get in touch, please email  <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
+      <p>Hello!</p>
+      <img src="cid:unique-image-id" alt="Referral Image">
+
+      <p>A new referral request has been submitted by <strong>${name}</strong>. You can see a copy of the referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
@@ -167,21 +167,19 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
       Telephone: 0207 467 6190<br>
       Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
       Web: www.umehealth.co.uk<br>
-    </div>
-    
-<p>
-      <h6>Disclaimer and Confidentiality Note:</h6>
+    </p>
 
-    Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
+    <h6>Disclaimer and Confidentiality Note:</h6>
 
-    It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.
+    <p>Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.</p>
 
-    The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.
+    <p>It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.</p>
 
-    UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.
+    <p>The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.</p>
 
-    UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
-    Registered in the UK. Registration number: OC333533
+    <p>UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.</p>
+
+    <p>UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666</p>
     </body>
     </html>
     `;
@@ -195,6 +193,25 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
             pass: process.env.PASSWORD,
         },
     });
+
+    const resp = await transporter.sendMail({
+        to: email,
+        subject: subject,
+        html: emailHtml,
+        attachments: [{
+            filename: 'bg.jpg',
+            path: '../controllers/image/bg.jpg',
+            cid: 'unique-image-id'
+        }]
+    });
+
+    if (resp) {
+        console.log("Email sent Successfully");
+    } else {
+        console.log("Email sent Failure");
+    }
+};
+
     const resp = await transporter.sendMail({
         to: email,
         subject: "Referral confirmation - your referral has been received",
@@ -216,7 +233,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <title>Referral eated</title>
     </head>
     <body>
-      <p>Hello ${name}</p>
+      <p>Hello ${name},</p>
     
     
       <p>UME Health has received an imagining referral for you submitted by <strong> ${name} </strong. Our bookings team will be in touch with you to book your appointment. Rest assured your referral is in safe hands. If you do need to get in touch, please email <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
@@ -231,6 +248,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
     </div>
     
 <p>
+
       <h6>Disclaimer and Confidentiality Note:</h6>
 
     Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
