@@ -145,7 +145,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
         console.log("Email sent Failure");
     }
 };
-const referralConfirmation = async (name, email, subject, pdfLink) => {
+const referralConfirmed = async (name, email, subject, pdfLink) => {
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
