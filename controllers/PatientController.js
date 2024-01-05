@@ -173,7 +173,8 @@ const updatePatient = async (req, res, next) => {
                     updatedPatient.pdfURL
                 );
                 await referralConfirm(
-                    patient.name,
+                    const name=patient.title+" "+ patient.firstName+" "+patient.lastName
+                    name,
                     patient.email,
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL
