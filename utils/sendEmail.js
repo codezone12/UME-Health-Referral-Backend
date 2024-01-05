@@ -145,7 +145,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
         console.log("Email sent Failure");
     }
 };
-const referralConfirm = async (title,lastName,email, subject, pdfLink) => {
+const referralConfirm = async (name,firstName,email, subject, pdfLink) => {
  
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
@@ -156,9 +156,9 @@ const referralConfirm = async (title,lastName,email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-      <p>Hellop!  ${title} </p>
+      <p>Hellop!  ${firstName} </p>
     
-      <p>A new referral request has been submitted by <strong> ${lastName} </strong>. You can see a copy of the referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
+      <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of the referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
@@ -209,7 +209,7 @@ const referralConfirm = async (title,lastName,email, subject, pdfLink) => {
     <html lang="en">
     <head>
       <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">  
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Referral created</title>
     </head>
