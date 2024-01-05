@@ -50,13 +50,9 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
       <title>Your UME Health OTP Request</title>
     </head>
     <body>
-      <p>${firstName},</p>
-      </br>
-
-      <p>Hello</p>
+      <p>Dear ${firstName},</p>
     
-      <p>Thank you for registering on the UME Health patients referral portal. Your OTP is <strong>${otp}</strong>, please use it to complete your registration on our platform.Your OTP will expire in one hour.
-      </p>
+      <p>Thank you for registering on the UME Health patients referral portal. Your OTP is <strong>${otp}</strong>, please use it to complete your registration on our platform.</p>
     
       <p>If you need any further assistance, please send us an email at <a href="mailto:clientrelations@umegroup.com">clientrelations@umegroup.com</a></p>
     
@@ -78,7 +74,7 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
     });
     const resp = await transporter.sendMail({
         to: email,
-        subject: "Your UME Health OTP Request",
+        subject: subject,
         html: emailHtml,
     });
     if (resp) {
@@ -95,10 +91,10 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Referral tcreated</title>
+      <title>Referral created</title>
     </head>
     <body>
-      <p>Hello! </p>
+      <p>Hello!</p>
     
     
       <p>A new referral request has been submitted by <strong>${name}</strong>. You can see a copy of the referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
@@ -140,7 +136,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
     });
     const resp = await transporter.sendMail({
         to: email,
-        subject: "",
+        subject: subject,
         html: emailHtml,
     });
     if (resp) {
@@ -151,29 +147,26 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
 };
 
 const referralConfirm = async (name, email, subject, pdfLink) => {
-    const name = title + " " + firstName + " " + lastName
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Hello <strong> ${name} </strong> </title>
+      <title>Referral created</title>
     </head>
     <body>
+      <p>Hello!</p>
     
     
-    
-      <p>UME Health has received an imagining referral for you submitted by Dr name (example Dr Adam Smith).
-       Our bookings team will be in touch with you to book your appointment. Rest assured your referral is in safe hands.
-        If you do need to get in touch, please email <a href="bookings@umegroud.com">bookings@umegroup.com</a><br> </p>
+      <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
       <p>
       17 Harley Street, Marylebone, London W1G 9QH<br>
       Telephone: 0207 467 6190<br>
-      Email: <a href="bookings@umegroud.com">bookings@umegroup.com</a><br>
+      Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
       Web: www.umehealth.co.uk<br>
     </div>
     
@@ -205,7 +198,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
     });
     const resp = await transporter.sendMail({
         to: email,
-        subject: "Your appointment with UME Health, 17 Harley Street",
+        subject: subject,
         html: emailHtml,
     });
     if (resp) {
@@ -222,7 +215,7 @@ const informConsultant = async (name, email, subject, pdfLink) => {
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Re: fYour UME Health Patient Referral</title>
+      <title>Re: Your UME Health Patient Referral</title>
     </head>
     <body>
       <p>Hello!</p>
