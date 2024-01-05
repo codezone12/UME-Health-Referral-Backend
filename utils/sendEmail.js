@@ -200,7 +200,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
         html: emailHtml,
         attachments: [{
             filename: 'bg.jpg',
-            path: '../controllers/image/bg.jpg',
+            path: '../controllers/bg.jpg',
             cid: 'unique-image-id'
         }]
     });
