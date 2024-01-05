@@ -146,6 +146,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
     }
 };
 const referralConfirm = async (name, email, subject, pdfLink) => {
+    const name = title+ " "+firstName+" "+lastName
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
