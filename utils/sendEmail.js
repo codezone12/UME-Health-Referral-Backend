@@ -94,7 +94,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-      <p>Hello!</p>
+      <p>HelloC!</p>
     
     
       <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
@@ -156,7 +156,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <title>Referral eated</title>
     </head>
     <body>
-      <p>Hello!</p>
+      <p>HelloP!</p>
     
     
       <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
@@ -218,7 +218,7 @@ const informConsultant = async (name, email, subject, pdfLink) => {
       <title>Referral createded</title>
     </head>
     <body>
-      <p>Hello!</p>
+      <p>HelloR!</p>
     
     
       <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
