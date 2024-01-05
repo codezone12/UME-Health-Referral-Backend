@@ -119,72 +119,61 @@ const updatePatient = async (req, res, next) => {
     try {
         const { id } = req.params;
         const data = req.body;
-        // console.log("data", data, req.body);
+
         const consultant = await UserModel.findById(data.consultant);
+
         if (req.file) {
-            cloudinary.uploader
-                .upload_stream(
-                    {
-                        resource_type: "raw",
-                        public_id: `patient_files/${data?.firstName + " " + data?.lastName
-                            }${Date.now()}.pdf`,
-                    },
-                    async (error, result) => {
-                        if (error) {
-                            console.error(error);
-                            return next(error);
-                        }
-
-                        data.pdfURL = result.secure_url;
-
-                        try {
-                            const updatedPatient =
-                                await PatientRepo.updatePatient(id, data);
-                            successResponse(
-                                res,
-                                "Patient updated successfully",
-                                updatedPatient,
-                                200
-                            );
-                        } catch (dbError) {
-                            next(dbError);
-                        }
+            cloudinary.uploader.upload_stream(
+                {
+                    resource_type: "raw",
+                    public_id: `patient_files/${data.firstName} ${data.lastName}_${Date.now()}.pdf`,
+                },
+                async (error, result) => {
+                    if (error) {
+                        console.error(error);
+                        return next(error);
                     }
-                )
-                .end(req.file.buffer);
+
+                    data.pdfURL = result.secure_url;
+
+                    try {
+                        const updatedPatient = await PatientRepo.updatePatient(id, data);
+                        successResponse(res, "Patient updated successfully", updatedPatient, 200);
+                    } catch (dbError) {
+                        next(dbError);
+                    }
+                }
+            ).end(req.file.buffer);
         } else {
             try {
-                const updatedPatient = await PatientRepo.updatePatient(
-                    id,
-                    data
-                );
+                const updatedPatient = await PatientRepo.updatePatient(id, data);
                 const patient = await patientModel.findOne({ _id: id });
                 const admin = await UserModel.findOne({ role: "Admin" });
+
+                const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+
                 await referralConfirmation(
                     admin.name,
                     admin.email,
                     "A new UME Health referral has been created",
                     data.pdfURL
                 );
+
                 await referralConfirm(
                     consultant.name,
                     consultant.email,
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL
                 );
+
                 await referralConfirm(
-                    const name=patient.title+" "+ patient.firstName+" "+patient.lastName
                     name,
                     patient.email,
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL
                 );
-                successResponse(
-                    res,
-                    "Profile updated successfully",
-                    updatedPatient,
-                    200
-                );
+
+                successResponse(res, "Profile updated successfully", updatedPatient, 200);
             } catch (dbError) {
                 next(dbError);
             }
