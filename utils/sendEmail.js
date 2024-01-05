@@ -94,7 +94,7 @@ const referralConfirmation = async (firstName, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-    <p> Hello! ${firstName},</p>
+    <p> Hellouuu! ${firstName},</p>
     
     
       <p>UME Health has received an imagining referral for you submitted by<strong> ${firstName} </strong>. Our bookings team will be in touch with you to book your appointment. Rest assured your referral is in safe hands. If you do need to get in touch, please email <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
@@ -146,7 +146,7 @@ const referralConfirmation = async (firstName, email, subject, pdfLink) => {
     }
 };
 
-const referralConfirm = async (name, email, subject, pdfLink) => {
+const referralConfirm = async (firstName, email, subject, pdfLink) => {
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -156,10 +156,10 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-      <p>Hellor!</p>
+    <p> Hello! ${firstName},</p>
     
     
-      <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
+    <p>UME Health has received an imagining referral for you submitted by<strong> ${firstName} </strong>. Our bookings team will be in touch with you to book your appointment. Rest assured your referral is in safe hands. If you do need to get in touch, please email <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
