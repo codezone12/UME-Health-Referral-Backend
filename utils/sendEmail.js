@@ -50,9 +50,13 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
       <title>Your UME Health OTP Request</title>
     </head>
     <body>
-      <p>Dear ${firstName},</p>
+      <p>${firstName},</p>
+      </br>
+
+      <p>Hello</p>
     
-      <p>Thank you for registering on the UME Health patients referral portal. Your OTP is <strong>${otp}</strong>, please use it to complete your registration on our platform.</p>
+      <p>Thank you for registering on the UME Health patients referral portal. Your OTP is <strong>${otp}</strong>, please use it to complete your registration on our platform.Your OTP will expire in one hour.
+      </p>
     
       <p>If you need any further assistance, please send us an email at <a href="mailto:clientrelations@umegroup.com">clientrelations@umegroup.com</a></p>
     
