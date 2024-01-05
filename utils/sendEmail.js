@@ -95,10 +95,10 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Referral created</title>
+      <title>Referral tcreated</title>
     </head>
     <body>
-      <p>Hello!</p>
+      <p>Hello! </p>
     
     
       <p>A new referral request has been submitted by <strong>${name}</strong>. You can see a copy of the referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
@@ -140,7 +140,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
     });
     const resp = await transporter.sendMail({
         to: email,
-        subject: subject,
+        subject: "",
         html: emailHtml,
     });
     if (resp) {
@@ -157,7 +157,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Referral created</title>
+      <title>Referral createdp</title>
     </head>
     <body>
       <p>Hello!</p>
@@ -219,7 +219,7 @@ const informConsultant = async (name, email, subject, pdfLink) => {
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Re: Your UME Health Patient Referral</title>
+      <title>Re: fYour UME Health Patient Referral</title>
     </head>
     <body>
       <p>Hello!</p>
