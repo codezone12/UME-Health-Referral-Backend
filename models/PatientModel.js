@@ -1,34 +1,99 @@
 const mongoose = require("mongoose");
-
 const PatientModelName = "Patient";
 
 const Schema = mongoose.Schema;
 
 let Patient = new Schema(
     {
-        address: {
+        title: {
             type: String,
             required: true,
+        },
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
+        dob: {
+            type: Date,
+            required: true,
+        },
+        gender: {
+            type: String,
+            required: true,
+            enum: ["Male", "Female", "Prefer Not to Say"],
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+
+        consultant: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
+        phoneNumber: {
+            type: String,
+            required: true,
+        },
+        address: {
+            type: String,
+            default: "",
         },
         postalCode: {
             type: String,
-            required: true,
+            default: "",
         },
         city: {
             type: String,
+            default: "",
+        },
+        bodyPart: {
+            type: String,
+        },
+        clinicalIndication: {
+            type: String,
+        },
+        payment: {
+            type: String,
             required: true,
+            enum: ["Self Provider", "Insurance/Embassy"],
+        },
+        paymentMethod: {
+            type: String,
+        },
+        provider: {
+            type: String,
+        },
+        policyNumber: {
+            type: String,
         },
         clinicalInfo: {
             type: [String],
         },
+     eyeInjury: {
+    type: String,
+  },
+            pregnancy: {
+                type: String,
+                
+            },
+        eGFR: {
+    type: String,
+  },
+        
         pdfURL: {
             type: String,
+            default: "",
         },
         active: {
             type: Boolean,
             default: true,
         },
-        adminResponse: {
+        status: {
             type: Boolean,
             default: false,
         },
@@ -36,77 +101,25 @@ let Patient = new Schema(
             type: Boolean,
             default: false,
         },
-        clinicalIndication: {
-            type: String,
-        },
-        consultant: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-        },
-        date: {
-            type: Date,
-        },
-        dob: {
-            type: Date,
-        },
-        eGFR: {
-            type: String,
-        },
-        email: {
-            type: String,
-            required: true,
-        },
-        eyeInjury: {
-            type: String,
-        },
-        finalReport: {
-            type: String,
-            default: "",
-        },
-        firstName: {
-            type: String,
-        },
-        gender: {
-            type: String,
-        },
-        lastName: {
-            type: String,
-        },
-        phoneNumber: {
-            type: String,
-            required: true,
-        },
-        metalImplant: {
-            type: String,  // Add the missing field if it should be part of the schema
-        },
-        pregnancyStatus: {
-            type: String,  // You can add this field if it is part of the schema
-        },
-        status: {
+        pending: {
             type: Boolean,
             default: false,
-        },
-        title: {
-            type: String,
         },
         updateRequest: {
             type: Boolean,
             default: false,
         },
-        updatedAt: {
-            type: Date,
+        adminResponse: {
+            type: Boolean,
+            default: false,
         },
-        __v: {
+        finalReport: {
+            type: String,
+            default: "",
+        },
+        lastTimeMailSent: {
             type: Number,
         },
-        _id: {
-            type: String,
-        },
-        // Add other fields as needed
     },
     {
         timestamps: true,
