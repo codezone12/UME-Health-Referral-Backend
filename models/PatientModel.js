@@ -39,18 +39,18 @@ let Patient = new Schema(
             type: String,
             required: true,
         },
-        address: {
-            type: String,
-            default: "",
-        },
-        postalCode: {
-            type: String,
-            default: "",
-        },
-        city: {
-            type: String,
-            default: "",
-        },
+ address: {
+    type: String,
+    required: true,
+  },
+  postalCode: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
         bodyPart: {
             type: String,
         },
@@ -74,27 +74,21 @@ let Patient = new Schema(
         clinicalInfo: {
             type: [String],
         },
-        safety: {
-            pacemaker: {
-                type: String,
-                enum: ["Yes", "No"],
-            },
-            eyeInjury: {
-                type: String,
-                enum: ["Yes", "No"],
-            },
-            pregnancy: {
-                type: String,
-                enum: ["Yes", "No", "Not applicable", "Unknown"],
-            },
-            eGFR: {
-                type: String,
-            },
-        },
-        pdfURL: {
-            type: String,
-            default: "",
-        },
+         clinicalIndication: {
+    type: String,
+  },
+       eGFR: {
+    type: String,
+  },
+ eyeInjury: {
+    type: String,
+  },
+  finalReport: {
+    type: String,
+  },
+       pdfURL: {
+    type: String,
+  },
         active: {
             type: Boolean,
             default: true,
