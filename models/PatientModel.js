@@ -3,35 +3,119 @@ const PatientModelName = "Patient";
 
 const Schema = mongoose.Schema;
 
-let Patient = new Schema({
-    active: { type: Boolean, },
-    address: { type: String, },
-    name: { type: String, },
-    adminResponse: { type: Boolean, },
-    approved: { type: Boolean, },
-    city: { type: String, },
-    clinicalIndication: { type: String, },
-    clinicalInfo: { type: [String], },
-    consultant: { type: mongoose.Schema.Types.ObjectId, ref: 'Consultant', },
-    createdAt: { type: Date, default: Date.now },
-    dob: { type: Date, },
-    email: { type: String, },
-    eGFR: { type: String },  // Adding eGFR field based on provided data
-    eyeInjury: { type: String, },  // Adding eyeInjury field based on provided data
-    finalReport: { type: String, default: '' },
-    firstName: { type: String, },
-    gender: { type: String, },
-    lastName: { type: String, },
-    metalImplant: { type: String, },
-    payment: { type: String, },
-    pdfURL: { type: String, },
-    pending: { type: Boolean, },
-    phoneNumber: { type: String, },
-    postalCode: { type: String, },
-    status: { type: Boolean, },
-    title: { type: String, },
-    updateRequest: { type: Boolean, },
-    updatedAt: { type: Date, default: Date.now },
-})
+let Patient = new Schema(
+    {
+        title: {
+            type: String,
+            required: true,
+        },
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
+        dob: {
+            type: Date,
+            required: true,
+        },
+        gender: {
+            type: String,
+            required: true,
+            enum: ["Male", "Female", "Prefer Not to Say"],
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+
+        consultant: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
+        phoneNumber: {
+            type: String,
+            required: true,
+        },
+        address: {
+            type: String,
+            default: "",
+        },
+        postalCode: {
+            type: String,
+            default: "",
+        },
+        city: {
+            type: String,
+            default: "",
+        },
+        bodyPart: {
+            type: String,
+        },
+        clinicalIndication: {
+            type: String,
+        },
+        payment: {
+            type: String,
+            required: true,
+            enum: ["Self Provider", "Insurance/Embassy"],
+        },
+        paymentMethod: {
+            type: String,
+        },
+        provider: {
+            type: String,
+        },
+        policyNumber: {
+            type: String,
+        },
+        clinicalInfo: {
+            type: [String],
+        },
+        eGFR: { type: String ,},  // Adding eGFR field based on provided data
+    eyeInjury: { type: String, },
+        pdfURL: {
+            type: String,
+            default: "",
+        },
+        active: {
+            type: Boolean,
+            default: true,
+        },
+        status: {
+            type: Boolean,
+            default: false,
+        },
+        approved: {
+            type: Boolean,
+            default: false,
+        },
+        pending: {
+            type: Boolean,
+            default: false,
+        },
+        updateRequest: {
+            type: Boolean,
+            default: false,
+        },
+        adminResponse: {
+            type: Boolean,
+            default: false,
+        },
+        finalReport: {
+            type: String,
+            default: "",
+        },
+        lastTimeMailSent: {
+            type: Number,
+        },
+    },
+    {
+        timestamps: true,
+        collection: PatientModelName,
+    }
+);
 
 module.exports = mongoose.model(PatientModelName, Patient);
