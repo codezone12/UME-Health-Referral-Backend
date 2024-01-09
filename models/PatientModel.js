@@ -41,8 +41,7 @@ let Patient = new Schema(
         },
         policyNumber:{
             type: String,
-            
-        }
+        },
         address: {
             type: String,
             default: "",
