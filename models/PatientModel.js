@@ -39,6 +39,12 @@ let Patient = new Schema(
             type: String,
             required: true,
         },
+        policyNumber:{
+            type: String,
+        },
+        provider:{
+            type: String,
+        },
         address: {
             type: String,
             default: "",
@@ -74,23 +80,10 @@ let Patient = new Schema(
         clinicalInfo: {
             type: [String],
         },
-        safety: {
-            pacemaker: {
-                type: String,
-                enum: ["Yes", "No"],
-            },
-            eyeInjury: {
-                type: String,
-                enum: ["Yes", "No"],
-            },
-            pregnancy: {
-                type: String,
-                enum: ["Yes", "No", "Not applicable", "Unknown"],
-            },
-            eGFR: {
-                type: String,
-            },
-        },
+        eGFR: { type: String ,},  // Adding eGFR field based on provided data
+    metalImplant: { type: String, },
+        eyeInjury: { type: String, },
+       date :{type: Date,},
         pdfURL: {
             type: String,
             default: "",
