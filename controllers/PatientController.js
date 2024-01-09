@@ -161,15 +161,15 @@ const updatePatient = async (req, res, next) => {
                 );
 
                 await referralConfirm(
-                   name,
+                    name,
                     patient.email,
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL
                 );
 
                 await referralConfirmed(
-                    
-                     consultant.name,
+
+                    consultant.name,
                     consultant.email,
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL
@@ -224,6 +224,18 @@ const patientUpdateRequest = async (req, res, next) => {
                 <p>Consultant <strong>${user.name} </strong> has requested an update on the referral they made for the patient <strong>${patientName}.</strong></p>
                 <p>Regards, <br>
                 UME Health Client Relations Team</p>
+                <h6>Disclaimer and Confidentiality Note:</h6>
+
+                Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
+            
+                It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.
+            
+                The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.
+            
+                UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.
+            
+                UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
+                Registered in the UK. Registration number: OC333533
             `,
         };
 

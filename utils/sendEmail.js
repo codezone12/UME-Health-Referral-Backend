@@ -94,10 +94,11 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
       <title>Referral created</title>
     </head>
     <body>
-      <p>HelloC!</p>
+      <p>Hello!</p>
     
     
-      <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
+      <p>A new referral request has been submitted by ${name} and you can access it by clicking on <a href="www.refer.umehealth.co.uk">www.refer.umehealth.co.uk</a>< Please contact the patient directly to confirm the appointment date and time.
+      </p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
@@ -136,7 +137,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
     });
     const resp = await transporter.sendMail({
         to: email,
-        subject: subject,
+        subject: ` New referral from ${name}`,
         html: emailHtml,
     });
     if (resp) {
@@ -220,13 +221,15 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <p>Hello ${name},</p>
     
     
-      <p>UME Health has received an imagining referral for you submitted by ${name}. Our bookings team will be in touch with you to book your appointment. Rest assured your referral is in safe hands. If you do need to get in touch, please email  <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
+      <p>UME Health has received an imagining referral for you submitted by ${name}.
+       Our bookings team will be in touch with you to book your appointment.
+        Rest assured your referral is in safe hands. If you do need to get in touch,
+         please email  <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
       <p>
       17 Harley Street, Marylebone, London W1G 9QH<br>
-      Telephone: 0207 467 6190<br>
       Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
       Web: www.umehealth.co.uk<br>
     </div>
@@ -280,10 +283,15 @@ const informConsultant = async (name, email, subject, pdfLink) => {
       <title>Referral createded</title>
     </head>
     <body>
-      <p>HelloR!</p>
+      <p>Dear ${name} </p>
     
     
-      <p>A new referral request has been submitted by <strong> ${name} </strong>. You can see a copy of referral by <a href=${pdfLink}>clicking here</a>. UME Health will aim to respond to the referral request within 48 hours.</p>
+      <p>UME Health has uploaded  ${name} report to the 
+      <a href="www.refer.umehealth.co.uk   ">www.refer.umehealth.co.uk   </a>and you will find it under the “My Referrals” tab. 
+
+If you need any further assistance, please send us an email at   <a href="clientrelations@umegroup.com">clientrelations@umegroup.com</a>
+
+ </p>
     
       <p>Regards,<br>
       UME Health Client Relations Team</p>
@@ -322,7 +330,7 @@ const informConsultant = async (name, email, subject, pdfLink) => {
     });
     const resp = await transporter.sendMail({
         to: email,
-        subject: subject,
+        subject: "Re: Your patient’s imaging report is ready",
         html: emailHtml,
     });
     if (resp) {
