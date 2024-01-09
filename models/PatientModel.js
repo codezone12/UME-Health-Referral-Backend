@@ -75,7 +75,8 @@ let Patient = new Schema(
             type: [String],
         },
         eGFR: { type: String ,},  // Adding eGFR field based on provided data
-    eyeInjury: { type: String, },
+    metalImplant: { type: String, },
+        eyeInjury: { type: String, },
         pdfURL: {
             type: String,
             default: "",
