@@ -345,24 +345,46 @@ const patientUpdateRequest = async (req, res, next) => {
     }
 }; */
 
-const patientProfile = async (req, res, next) => {
-    console.log("patientProfile");
-    const { pdfURL, id, name } = req.body;
+
+const patientUpdateRequest = async (req, res, next) => {
+    console.log("patientUpdateRequest");
+    const { pdfURL, id, name, patientName: originalPatientName } = req.body;
+    console.log("patient", originalPatientName, name);
+
     try {
+        const patient = await patientModel.findOne({ _id: id });
+        const patientName = patient.title + " " + patient.firstName + " " + patient.lastName;
+        console.log("patientName:", patientName);
+
+        const user = await userModel.findOne({
+            _id: patient.consultant.toString(),
+        });
+        const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
         const mailOptions = {
             from: "sohailshabir282@gmail.com",
-            to: "mubeen@mailinator.com",
-            subject: "Request for Update",
+            to: "codezone67@gmail.com",
+            subject: "Re: referral update request",
             html: `
-        <p>Hello,</p>
-        <p>We hope this message finds you well.</p>
-        <p>We would like to request an update regarding referral of patient ${name}. Please provide any additional information or updates that may be relevant to your case.</p>
-        <p>PDF is attached <a href=${pdfURL} > Here</a></p>
-        <p>Thank you for your cooperation.</p>
-        <p>Best regards,</p>
-        <p>Your Organization</p>
-      `,
+                <p>Hello,</p>
+                <p><strong>${user.name} </strong> has requested an update on the referral they made for the patient <strong>${patientName}.</strong></p>
+                <p>Regards, <br>
+                UME Health Client Relations Team</p>
+                <img src="${imageUrl}" alt="UME Health Image" />
+                <h2>Disclaimer and Confidentiality Note:</h2>
+
+                Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
+            
+                It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.
+            
+                The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.
+            
+                UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.
+            
+                UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
+                Registered in the UK. Registration number: OC333533
+            `,
         };
+
         const transporter = nodemailer.createTransport({
             host: process.env.HOST,
             service: process.env.SERVICE,
@@ -373,6 +395,37 @@ const patientProfile = async (req, res, next) => {
                 pass: process.env.PASSWORD,
             },
         });
+
+        const info = await transporter.sendMail(mailOptions);
+        const updatedPatient = await PatientRepo.updatePatient(id, {
+            updateRequest: true,
+        });
+
+        if (patient?.lastTimeMailSent > Date.now()) {
+            console.log("Can't send mail, wait 12 hours");
+            return errorResponse(
+                res,
+                "A copy of the referral has been sent to your email",
+                [],
+                httpStatus.INTERNAL_SERVER_ERROR
+            );
+        } else {
+            console.log("last time updated");
+            await patientModel.findOneAndUpdate(
+                { _id: id },
+                { lastTimeMailSent: Date.now() + 43200000 }
+            );
+            return successResponse(
+                res,
+                "A reminder has been sent to UME Health, and you should get an update shortly.",
+                updatedPatient,
+                200
+            );
+        }
+    } catch (error) {
+        next(error);
+    }
+};
 
         const info = await transporter.sendMail(mailOptions);
         if (info) {
