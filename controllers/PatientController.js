@@ -226,8 +226,8 @@ const patientUpdateRequest = async (req, res, next) => {
                 <p>Regards, <br>
                 UME Health Client Relations Team</p>
                 
-                 <img src="${imageUrl}" alt="UME Health Image" style="height: 50px;"/>
-                 // <img src="${imageUrl}" alt="UME Health Image" style="width: 120px; height: 120px;" />
+                 <img src="${imageUrl}" alt="UME Health Image" style="height: 70px;"/>
+                
 
                 <h2>Disclaimer and Confidentiality Note:</h2>
 
