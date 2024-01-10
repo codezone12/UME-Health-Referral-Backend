@@ -443,11 +443,13 @@ const uploadReportByAdmin = async (req, res, next) => {
                         const consultant = await userModel.findOne({
                             _id: updatedPatient.consultant,
                         });
+                        // Pass the 'id' to the informConsultant function
                         await informConsultant(
                             consultant.name,
                             consultant.email,
                             "Re: Your UME Health Patient Referral",
-                            finalReport
+                            finalReport,
+                            id
                         );
                         return successResponse(
                             res,
