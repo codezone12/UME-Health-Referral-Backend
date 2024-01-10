@@ -150,6 +150,10 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
     }
 }
 const referralConfirmed = async (name, email, subject, pdfLink) => {
+    
+        const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
+
+
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -167,6 +171,8 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
       <p>Regards,<br>
       UME Health Client Relations Team</p>
       <p>
+      <img src="${imageUrl}" alt="UME Health Image" style="height: 50px;"/>
+      <br>
       17 Harley Street, Marylebone, London W1G 9QH<br>
       Telephone: 0207 467 6190<br>
       Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
@@ -283,6 +289,7 @@ const informConsultant = async (name, email, subject, pdfLink, id) => {
     const user = await userModel.findOne({
         _id: patient.consultant.toString(),
     });
+ const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
 
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
@@ -306,6 +313,9 @@ If you need any further assistance, please send us an email at   <a href="client
       <p>Regards,<br>
       UME Health Client Relations Team</p>
       <p>
+       <img src="${imageUrl}" alt="UME Health Image" style="height: 50px;"/>
+       <br>
+      
       17 Harley Street, Marylebone, London W1G 9QH<br>
       Telephone: 0207 467 6190<br>
       Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
