@@ -152,15 +152,13 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
 const referralConfirmed = async (name, email, subject, pdfLink) => {
     
         const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
-
-
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Referral eated</title>
+      <title></title>
     </head>
     <body>
       <p>Hello ${name},</p>
