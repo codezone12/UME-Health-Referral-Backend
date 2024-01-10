@@ -226,7 +226,7 @@ const patientUpdateRequest = async (req, res, next) => {
                 <p>Regards, <br>
                 UME Health Client Relations Team</p>
                 
-                 <img src="${imageUrl}" alt="UME Health Image" style="width: 200px; height: 200px;" />
+                 <img src="${imageUrl}" alt="UME Health Image" style="height: 100px;" />
                 <h2>Disclaimer and Confidentiality Note:</h2>
 
                 Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
