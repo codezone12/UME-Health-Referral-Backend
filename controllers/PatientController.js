@@ -218,13 +218,13 @@ const patientUpdateRequest = async (req, res, next) => {
         const mailOptions = {
             from: "sohailshabir282@gmail.com",
             to: "codezone67@gmail.com",
-            subject: "Request for Update",
+            subject: "Re: referral update request",
             html: `
                 <p>Hello,</p>
                 <p>Consultant <strong>${user.name} </strong> has requested an update on the referral they made for the patient <strong>${patientName}.</strong></p>
                 <p>Regards, <br>
                 UME Health Client Relations Team</p>
-                <h6>Disclaimer and Confidentiality Note:</h6>
+                <h2>Disclaimer and Confidentiality Note:</h2>
 
                 Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
             
