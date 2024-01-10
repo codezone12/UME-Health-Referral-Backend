@@ -216,6 +216,9 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
     }
 };
 const referralConfirm = async (name, email, subject, pdfLink) => {
+    const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
+
+
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -236,6 +239,8 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <p>Regards,<br>
       UME Health Client Relations Team</p>
       <p>
+        <img src="${imageUrl}" alt="UME Health Image" style="height: 50px;"/>
+      <br>
       17 Harley Street, Marylebone, London W1G 9QH<br>
       Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
       Web: www.umehealth.co.uk<br>
