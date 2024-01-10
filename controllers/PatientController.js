@@ -359,7 +359,6 @@ const patientUpdateRequest = async (req, res, next) => {
         const user = await userModel.findOne({
             _id: patient.consultant.toString(),
         });
-        const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
         const mailOptions = {
             from: "sohailshabir282@gmail.com",
             to: "codezone67@gmail.com",
@@ -369,7 +368,6 @@ const patientUpdateRequest = async (req, res, next) => {
                 <p><strong>${user.name} </strong> has requested an update on the referral they made for the patient <strong>${patientName}.</strong></p>
                 <p>Regards, <br>
                 UME Health Client Relations Team</p>
-                <img src="${imageUrl}" alt="UME Health Image" />
                 <h2>Disclaimer and Confidentiality Note:</h2>
 
                 Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
@@ -420,29 +418,6 @@ const patientUpdateRequest = async (req, res, next) => {
                 "A reminder has been sent to UME Health, and you should get an update shortly.",
                 updatedPatient,
                 200
-            );
-        }
-    } catch (error) {
-        next(error);
-    }
-};
-
-        const info = await transporter.sendMail(mailOptions);
-        if (info) {
-            const updatePatient = await PatientRepo?.updatePatient(id, {
-                pending: true,
-            });
-            return successResponse(
-                res,
-                "Request Update Sent Successfully",
-                info,
-                200
-            );
-        } else {
-            return errorResponse(
-                res,
-                "Something went wrong please try again ",
-                []
             );
         }
     } catch (error) {
