@@ -1,4 +1,7 @@
 const nodemailer = require("nodemailer");
+const patientModel = require("../models/PatientModel");
+const userModel = require("../models/UserModel");
+
 const otpMail = async (email, name, subject, otp) => {
     try {
         const emailHtml = `
@@ -273,7 +276,14 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
     }
 };
 
-const informConsultant = async (name, email, subject, pdfLink) => {
+const informConsultant = async (name, email, subject, pdfLink, id) => {
+    const patient = await patientModel.findOne({ _id: id });
+    const patientName = patient.title + " " + patient.firstName + " " + patient.lastName;
+    
+    const user = await userModel.findOne({
+        _id: patient.consultant.toString(),
+    });
+
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -286,8 +296,8 @@ const informConsultant = async (name, email, subject, pdfLink) => {
       <p>Dear ${name} </p>
     
     
-      <p>UME Health has uploaded  ${name} report to the 
-      <a href="www.refer.umehealth.co.uk   ">www.refer.umehealth.co.uk   </a>and you will find it under the “My Referrals” tab. 
+      <p>UME Health has uploaded  ${patientName} report to the 
+      <a href="www.refer.umehealth.co.uk">www.refer.umehealth.co.uk   </a>and you will find it under the “My Referrals” tab. 
 
 If you need any further assistance, please send us an email at   <a href="clientrelations@umegroup.com">clientrelations@umegroup.com</a>
 
