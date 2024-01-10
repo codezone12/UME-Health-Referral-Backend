@@ -226,8 +226,11 @@ const patientUpdateRequest = async (req, res, next) => {
                 <p>Regards, <br>
                 UME Health Client Relations Team</p>
                 
-                 <img src="${imageUrl}" alt="UME Health Image" style="height: 70px;"/>
-                
+                 <img src="${imageUrl}" alt="UME Health Image" style="height: 50px;"/>
+                 17 Harley Street, Marylebone, London W1G 9QH<br>
+                 Telephone: 0207 467 6190<br>
+                 Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
+                 Web: www.umehealth.co.uk<br>
 
                 <h2>Disclaimer and Confidentiality Note:</h2>
 
