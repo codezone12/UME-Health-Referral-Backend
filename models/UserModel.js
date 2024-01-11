@@ -21,7 +21,7 @@ let User = new Schema(
     image: {
       type: String,
       default:
-        "https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg",
+        "https://res.cloudinary.com/dyp0k8avo/image/upload/v1704997809/WhatsApp_Image_2024-01-11_at_10.27.49_AM_rudqst.jpg",
     },
     email: {
       type: String,
