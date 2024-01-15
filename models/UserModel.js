@@ -88,7 +88,7 @@ let User = new Schema(
   consultant: {
         type: Schema.Types.ObjectId,
         ref: 'Patient', 
-        default: null,
+        default: "",
     },
   {
     timestamps: true,
