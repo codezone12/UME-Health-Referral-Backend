@@ -85,11 +85,6 @@ let User = new Schema(
     passwordResetToken: String,
     passwordResetExpires: Date,
   },
-  consultant: {
-        type: Schema.Types.ObjectId,
-        ref: 'Patient', 
-        default: "",
-    },
   {
     timestamps: true,
     collection: UserModelName,
