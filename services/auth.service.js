@@ -24,7 +24,7 @@ const { tokenTypes } = require('../config/tokens');
   // Check if the user exists and the password matches
   if (!user || !(await user.isPasswordMatch(password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
-  } */
+  } 
 
   // Check if the user status is "inactive"
   if (user.statusId === 'inactive') {
@@ -32,7 +32,7 @@ const { tokenTypes } = require('../config/tokens');
   }
 
   return user;
-};
+};*/
 
 
 /**
