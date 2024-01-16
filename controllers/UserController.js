@@ -80,7 +80,7 @@ const createNewUser = async (req, res, next) => {
     }
 };
 
-const login = async (req, res, next) => {
+/* const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         let User = await UserRepo.findOneByObject({ email });
@@ -139,7 +139,82 @@ const login = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+}; */
+const login = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        let user = await UserRepo.findOneByObject({ email });
+
+        if (!user) {
+            return badRequest(
+                res,
+                "User not found. Please ensure you are using the right credentials",
+                []
+            );
+        }
+
+        const isPasswordMatch = bcrypt.compareSync(password, user.password);
+
+        if (!isPasswordMatch) {
+            return badRequest(
+                res,
+                "Incorrect password, please try again",
+                [],
+                403
+            );
+        }
+
+        if (user.statusId === 'inactive') {
+            return badRequest(
+                res,
+                "User account is inactive. Please contact support for assistance",
+                [],
+                403
+            );
+        }
+
+        if (!user.verified) {
+            let token = await TokenRepo.findOneByObject({ userId: user._id });
+            if (!token) {
+                const otp = generateOTP();
+                const token = await TokenRepo.createToken({
+                    userId: user._id,
+                    email: user.email,
+                    token: otp,
+                });
+                await otpRequest(
+                    user.email,
+                    user.name,
+                    "Your UME Health OTP Request",
+                    token?.token
+                );
+
+                return successResponse(
+                    res,
+                    "An email has been sent to your email address",
+                    [],
+                    402
+                );
+            }
+        }
+
+        const userData = {
+            name: user.name,
+            email,
+            image: user.image,
+            role: user.role,
+            _id: user._id,
+        };
+
+        console.log("[UserController:login] Logged in Successfully");
+        const token = jwt.sign({ user }, process.env.JWT_SECRET);
+
+        successResponse(res, "Login successful", { userData, token }, 200);
+    } catch (err) {
+        next(err);
+    }
 };
+
 
 const forgotPassword = async (req, res, next) => {
     const { email } = req.body;
