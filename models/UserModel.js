@@ -29,6 +29,9 @@ let User = new Schema(
     password: {
       type: String,
     },
+    statusId: {
+      type: String,
+    },
     practitionerSpecialty: {
       type: String,
       default: "",
