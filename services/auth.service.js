@@ -11,13 +11,29 @@ const { tokenTypes } = require('../config/tokens');
  * @param {string} password
  * @returns {Promise<User>}
  */
-const loginUserWithEmailAndPassword = async (email, password) => {
+/* const loginUserWithEmailAndPassword = async (email, password) => {
   const user = await userService.getUserByEmail(email);
   if (!user || !(await user.isPasswordMatch(password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
   }
   return user;
+}; */
+const loginUserWithEmailAndPassword = async (email, password) => {
+  const user = await userService.getUserByEmail(email);
+
+  // Check if the user exists and the password matches
+  if (!user || !(await user.isPasswordMatch(password))) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+  }
+
+  // Check if the user status is "inactive"
+  if (user.statusId === 'inactive') {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'User account is inactive');
+  }
+
+  return user;
 };
+
 
 /**
  * Logout
