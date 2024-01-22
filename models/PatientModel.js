@@ -125,11 +125,12 @@ let Patient = new Schema(
         },
         
     },
+            },
     {
         timestamps: true,
         collection: PatientModelName,
     },
-    },
+    
 );
 
 module.exports = mongoose.model(PatientModelName, Patient);
