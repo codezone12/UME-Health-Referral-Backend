@@ -71,7 +71,7 @@ let Patient = new Schema(
         policyNumber: {
             type: String,
         },
-        referral: [{
+        referral:{
         _id: {
                 type: Schema.Types.ObjectId,
                 default: mongoose.Types.ObjectId,
@@ -126,7 +126,7 @@ let Patient = new Schema(
         lastTimeMailSent: {
             type: Number,
         }, 
-        }],
+        },
     },
     {
         timestamps: true,
