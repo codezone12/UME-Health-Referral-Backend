@@ -30,6 +30,7 @@ let Patient = new Schema(
             type: String,
             required: true,
         },
+
         consultant: {
             type: Schema.Types.ObjectId,
             ref: "User",
@@ -38,10 +39,10 @@ let Patient = new Schema(
             type: String,
             required: true,
         },
-        policyNumber: {
+        policyNumber:{
             type: String,
         },
-        provider: {
+        provider:{
             type: String,
         },
         address: {
@@ -56,7 +57,7 @@ let Patient = new Schema(
             type: String,
             default: "",
         },
-        payment: {
+ payment: {
             type: String,
             required: true,
             enum: ["Self Provider", "Insurance/Embassy"],
@@ -64,66 +65,65 @@ let Patient = new Schema(
         paymentMethod: {
             type: String,
         },
+        provider: {
+            type: String,
+        },
+        policyNumber: {
+            type: String,
+        },
         referral: {
             bodyPart: {
-                type: String,
-            },
-            clinicalIndication: {
-                type: String,
-            },
-            clinicalInfo: {
-                type: [String],
-            },
-            eGFR: {
-                type: String,
-            },
-            metalImplant: {
-                type: String,
-            },
-            eyeInjury: {
-                type: String,
-            },
-            date: {
-                type: Date,
-            },
-            pdfURL: {
-                type: String,
-                default: "",
-                unique: true,
-            },
-            active: {
-                type: Boolean,
-                default: true,
-            },
-            status: {
-                type: Boolean,
-                default: false,
-            },
-            approved: {
-                type: Boolean,
-                default: false,
-            },
-            pending: {
-                type: Boolean,
-                default: false,
-            },
-            updateRequest: {
-                type: Boolean,
-                default: false,
-            },
-            adminResponse: {
-                type: Boolean,
-                default: false,
-            },
-            finalReport: {
-                type: String,
-                default: "",
-            },
+            type: String,
+        },
+        clinicalIndication: {
+            type: String,
+        },
+          clinicalInfo: {
+            type: [String],
+        },
+        eGFR: { type: String ,},  // Adding eGFR field based on provided data
+    metalImplant: { type: String, },
+        eyeInjury: { type: String, },
+       date :{type: Date,},
+        pdfURL: {
+            type: String,
+            default: "",
+            unique:true,
+        },
+        active: {
+            type: Boolean,
+            default: true,
+        },
+        status: {
+            type: Boolean,
+            default: false,
+        },
+        approved: {
+            type: Boolean,
+            default: false,
+        },
+        pending: {
+            type: Boolean,
+            default: false,
+        },
+        updateRequest: {
+            type: Boolean,
+            default: false,
+        },
+        adminResponse: {
+            type: Boolean,
+            default: false,
+        },
+        finalReport: {
+            type: String,
+            default: "",
+        },
         },
         lastTimeMailSent: {
             type: Number,
-        },
+       
     },
+         },
     {
         timestamps: true,
         collection: PatientModelName,
