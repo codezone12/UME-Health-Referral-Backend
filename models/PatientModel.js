@@ -57,6 +57,7 @@ let Patient = new Schema(
             type: String,
             default: "",
         },
+       
         payment: {
             type: String,
             required: true,
@@ -71,18 +72,13 @@ let Patient = new Schema(
         policyNumber: {
             type: String,
         },
-        referral:{
-        _id: {
-                type: Schema.Types.ObjectId,
-                default: mongoose.Types.ObjectId,
-            },
-        bodyPart: {
+        referral:[{
+         bodyPart: {
             type: String,
         },
         clinicalIndication: {
             type: String,
         },
-
         clinicalInfo: {
             type: [String],
         },
@@ -125,8 +121,8 @@ let Patient = new Schema(
         },
         lastTimeMailSent: {
             type: Number,
-        }, 
         },
+        }],
     },
     {
         timestamps: true,
