@@ -71,7 +71,7 @@ let Patient = new Schema(
         policyNumber: {
             type: String,
         },
-        referal:{
+        referal:]{
             
         bodyPart: {
             type: String,
@@ -123,12 +123,13 @@ let Patient = new Schema(
         lastTimeMailSent: {
             type: Number,
         },
-        },
+        
     },
     {
         timestamps: true,
         collection: PatientModelName,
-    }
+    },
+    },
 );
 
 module.exports = mongoose.model(PatientModelName, Patient);
