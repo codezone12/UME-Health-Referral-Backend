@@ -35,6 +35,10 @@ let Patient = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User",
         },
+         referral: {
+            type: Schema.Types.ObjectId,
+            ref: "Patient",
+        },
         phoneNumber: {
             type: String,
             required: true,
@@ -57,7 +61,13 @@ let Patient = new Schema(
             type: String,
             default: "",
         },
- payment: {
+        bodyPart: {
+            type: String,
+        },
+        clinicalIndication: {
+            type: String,
+        },
+        payment: {
             type: String,
             required: true,
             enum: ["Self Provider", "Insurance/Embassy"],
@@ -71,14 +81,7 @@ let Patient = new Schema(
         policyNumber: {
             type: String,
         },
-        referral: {
-            bodyPart: {
-            type: String,
-        },
-        clinicalIndication: {
-            type: String,
-        },
-          clinicalInfo: {
+        clinicalInfo: {
             type: [String],
         },
         eGFR: { type: String ,},  // Adding eGFR field based on provided data
@@ -118,12 +121,10 @@ let Patient = new Schema(
             type: String,
             default: "",
         },
-        },
         lastTimeMailSent: {
             type: Number,
-       
+        },
     },
-         },
     {
         timestamps: true,
         collection: PatientModelName,
