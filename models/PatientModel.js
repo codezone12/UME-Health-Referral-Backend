@@ -57,12 +57,7 @@ let Patient = new Schema(
             type: String,
             default: "",
         },
-        bodyPart: {
-            type: String,
-        },
-        clinicalIndication: {
-            type: String,
-        },
+
         payment: {
             type: String,
             required: true,
@@ -71,7 +66,16 @@ let Patient = new Schema(
         paymentMethod: {
             type: String,
         },
-        clinicalInfo: {
+
+        referral: {
+        
+                    bodyPart: {
+            type: String,
+        },
+        clinicalIndication: {
+            type: String,
+        },
+                    clinicalInfo: {
             type: [String],
         },
         eGFR: {
@@ -119,17 +123,7 @@ let Patient = new Schema(
             type: String,
             default: "",
         },
-        referral: {
-            referredBy: {
-                type: Schema.Types.ObjectId,
-                ref: "User",
-            },
-            referralReason: {
-                type: String,
-            },
-            referralNotes: {
-                type: String,
-            },
+
         },
         lastTimeMailSent: {
             type: Number,
