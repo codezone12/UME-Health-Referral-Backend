@@ -72,7 +72,10 @@ let Patient = new Schema(
             type: String,
         },
         referral:{
-        
+        _id: {
+                type: Schema.Types.ObjectId,
+                default: mongoose.Types.ObjectId,
+            },
         bodyPart: {
             type: String,
         },
