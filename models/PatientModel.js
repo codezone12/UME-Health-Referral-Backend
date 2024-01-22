@@ -72,7 +72,7 @@ let Patient = new Schema(
         policyNumber: {
             type: String,
         },
-        referral:[{
+        referral:{
          bodyPart: {
             type: String,
         },
@@ -122,7 +122,7 @@ let Patient = new Schema(
         lastTimeMailSent: {
             type: Number,
         },
-        }],
+        },
     },
     {
         timestamps: true,
