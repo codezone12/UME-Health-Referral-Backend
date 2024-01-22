@@ -57,7 +57,12 @@ let Patient = new Schema(
             type: String,
             default: "",
         },
-       
+        bodyPart: {
+            type: String,
+        },
+        clinicalIndication: {
+            type: String,
+        },
         payment: {
             type: String,
             required: true,
@@ -70,13 +75,6 @@ let Patient = new Schema(
             type: String,
         },
         policyNumber: {
-            type: String,
-        },
-        referral:{
-         bodyPart: {
-            type: String,
-        },
-        clinicalIndication: {
             type: String,
         },
         clinicalInfo: {
@@ -121,7 +119,6 @@ let Patient = new Schema(
         },
         lastTimeMailSent: {
             type: Number,
-        },
         },
     },
     {
