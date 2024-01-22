@@ -30,7 +30,6 @@ let Patient = new Schema(
             type: String,
             required: true,
         },
-
         consultant: {
             type: Schema.Types.ObjectId,
             ref: "User",
@@ -57,7 +56,6 @@ let Patient = new Schema(
             type: String,
             default: "",
         },
-
         payment: {
             type: String,
             required: true,
@@ -66,70 +64,66 @@ let Patient = new Schema(
         paymentMethod: {
             type: String,
         },
-
         referral: {
-        
-                    bodyPart: {
-            type: String,
+            bodyPart: {
+                type: String,
+            },
+            clinicalIndication: {
+                type: String,
+            },
+            clinicalInfo: {
+                type: [String],
+            },
+            eGFR: {
+                type: String,
+            },
+            metalImplant: {
+                type: String,
+            },
+            eyeInjury: {
+                type: String,
+            },
+            date: {
+                type: Date,
+            },
+            pdfURL: {
+                type: String,
+                default: "",
+                unique: true,
+            },
+            active: {
+                type: Boolean,
+                default: true,
+            },
+            status: {
+                type: Boolean,
+                default: false,
+            },
+            approved: {
+                type: Boolean,
+                default: false,
+            },
+            pending: {
+                type: Boolean,
+                default: false,
+            },
+            updateRequest: {
+                type: Boolean,
+                default: false,
+            },
+            adminResponse: {
+                type: Boolean,
+                default: false,
+            },
+            finalReport: {
+                type: String,
+                default: "",
+            },
         },
-        clinicalIndication: {
-            type: String,
-        },
-                    clinicalInfo: {
-            type: [String],
-        },
-        eGFR: {
-            type: String,
-        },
-        metalImplant: {
-            type: String,
-        },
-        eyeInjury: {
-            type: String,
-        },
-        date: {
-            type: Date,
-        },
-        pdfURL: {
-            type: String,
-            default: "",
-
-        },
-        active: {
-            type: Boolean,
-            default: true,
-        },
-        status: {
-            type: Boolean,
-            default: false,
-        },
-        approved: {
-            type: Boolean,
-            default: false,
-        },
-        pending: {
-            type: Boolean,
-            default: false,
-        },
-        updateRequest: {
-            type: Boolean,
-            default: false,
-        },
-        adminResponse: {
-            type: Boolean,
-            default: false,
-        },
-        finalReport: {
-            type: String,
-            default: "",
-        },
-
-        },
-
         lastTimeMailSent: {
             type: Number,
         },
-            },
+    },
     {
         timestamps: true,
         collection: PatientModelName,
