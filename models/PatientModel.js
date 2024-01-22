@@ -125,10 +125,11 @@ let Patient = new Schema(
         },
 
         },
+         },
         lastTimeMailSent: {
             type: Number,
         },
-    },
+   
     {
         timestamps: true,
         collection: PatientModelName,
