@@ -1,5 +1,3 @@
-
-
 const mongoose = require("mongoose");
 const PatientModelName = "Patient";
 
@@ -37,18 +35,14 @@ let Patient = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User",
         },
-        referral: {
-            type: Schema.Types.ObjectId,
-            ref: "ReferralModelName",
-        },
         phoneNumber: {
             type: String,
             required: true,
         },
-        policyNumber: {
+        policyNumber:{
             type: String,
         },
-        provider: {
+        provider:{
             type: String,
         },
         address: {
@@ -86,14 +80,14 @@ let Patient = new Schema(
         clinicalInfo: {
             type: [String],
         },
-        eGFR: { type: String, },  // Adding eGFR field based on provided data
-        metalImplant: { type: String, },
+        eGFR: { type: String ,},  // Adding eGFR field based on provided data
+    metalImplant: { type: String, },
         eyeInjury: { type: String, },
-        date: { type: Date, },
+       date :{type: Date,},
         pdfURL: {
             type: String,
             default: "",
-            unique: true,
+            unique:true,
         },
         active: {
             type: Boolean,
