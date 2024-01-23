@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+/* const mongoose = require("mongoose");
 const ReferralModelName = "Referral";
 
 const Schema = mongoose.Schema;
@@ -65,4 +65,4 @@ let Referral = new Schema(
     }
 );
 
-module.exports = mongoose.model(ReferralModelName, Referral);
+module.exports = mongoose.model(ReferralModelName, Referral); */
