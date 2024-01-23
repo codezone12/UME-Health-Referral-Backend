@@ -74,14 +74,14 @@ let Patient = new Schema(
         policyNumber: {
             type: String,
         },
-        clinicalInfo: {
-            type: [String],
+       clinicalInfo: {
+            type: [String], // Assuming clinicalInfo is an array of strings
         },
        
         eGFR: { type: String ,},  // Adding eGFR field based on provided data
     metalImplant: { type: String, },
         eyeInjury: { type: String, },
-       date :{type: Date,},
+       createdAt  :{type: Date,},
         pdfURL: {
             type: String,
             default: "",
