@@ -95,7 +95,7 @@ let Patient = new Schema(
         },
          referral: {
             type: Schema.Types.ObjectId,
-            ref: "Referral",
+            ref: "ReferralModelName",
         },
         phoneNumber: {
             type: String,
