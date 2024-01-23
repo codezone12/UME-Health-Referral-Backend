@@ -82,9 +82,10 @@ let Patient = new Schema(
     metalImplant: { type: String, },
         eyeInjury: { type: String, },
        createdAt  :{type: Date,},
-        pdfURL: {
+pdfURL: {
             type: String,
-            default: "",
+            default: "null",
+            unique: true,
         },
         active: {
             type: Boolean,
