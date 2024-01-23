@@ -48,18 +48,6 @@ let User = new Schema(
       type: String,
       default: "",
     },
-    secretaryName: {
-      type: String,
-      default: "",
-    },
-        secretaryTelephone: {
-      type: String,
-      default: "",
-    },
-      secretaryEmail: {
-      type: String,
-      default: "",
-    }, 
     street: {
       type: String,
       default: "",
