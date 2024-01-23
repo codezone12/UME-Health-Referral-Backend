@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const PatientModelName = "Patient";
+
 const Schema = mongoose.Schema;
+
 let Patient = new Schema(
     {
         title: {
@@ -28,6 +30,7 @@ let Patient = new Schema(
             type: String,
             required: true,
         },
+
         consultant: {
             type: Schema.Types.ObjectId,
             ref: "User",
@@ -35,6 +38,12 @@ let Patient = new Schema(
         phoneNumber: {
             type: String,
             required: true,
+        },
+        policyNumber:{
+            type: String,
+        },
+        provider:{
+            type: String,
         },
         address: {
             type: String,
@@ -74,10 +83,11 @@ let Patient = new Schema(
         eGFR: { type: String ,},  // Adding eGFR field based on provided data
     metalImplant: { type: String, },
         eyeInjury: { type: String, },
-       date :{type: Date,}
+       date :{type: Date,},
         pdfURL: {
             type: String,
             default: "",
+            unique:true,
         },
         active: {
             type: Boolean,
@@ -116,4 +126,5 @@ let Patient = new Schema(
         collection: PatientModelName,
     }
 );
+
 module.exports = mongoose.model(PatientModelName, Patient);
