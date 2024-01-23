@@ -87,8 +87,7 @@ let Patient = new Schema(
         pdfURL: {
             type: String,
             default: "",
-            unique:true,
-        },
+            },
         active: {
             type: Boolean,
             default: true,
