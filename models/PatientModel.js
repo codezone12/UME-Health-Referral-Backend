@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const PatientModelName = "Patient";
-
 const Schema = mongoose.Schema;
-
 let Patient = new Schema(
     {
         title: {
@@ -30,7 +28,6 @@ let Patient = new Schema(
             type: String,
             required: true,
         },
-
         consultant: {
             type: Schema.Types.ObjectId,
             ref: "User",
@@ -87,7 +84,7 @@ let Patient = new Schema(
         pdfURL: {
             type: String,
             default: "",
-            },
+        },
         active: {
             type: Boolean,
             default: true,
@@ -125,5 +122,4 @@ let Patient = new Schema(
         collection: PatientModelName,
     }
 );
-
 module.exports = mongoose.model(PatientModelName, Patient);
