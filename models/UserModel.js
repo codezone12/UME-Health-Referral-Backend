@@ -44,7 +44,7 @@ let User = new Schema(
       type: String,
       default: "",
     },
-/*     registrationNumber: {
+    registrationNumber: {
       type: String,
       default: "",
     },
@@ -59,7 +59,7 @@ let User = new Schema(
       secretaryEmail: {
       type: String,
       default: "",
-    }, */
+    },
     street: {
       type: String,
       default: "",
