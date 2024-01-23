@@ -30,7 +30,7 @@ const patientSchema = new mongoose.Schema({
     consultant: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User", // Assuming there is a User model
-        required: true,
+       
     },
     createdAt: {
         type: Date,
