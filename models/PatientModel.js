@@ -59,7 +59,7 @@ const Referral = new Schema(
         collection: ReferralModelName,
     }
 );
-const Schema = mongoose.Schema;
+
 
 let Patient = new Schema(
     {
