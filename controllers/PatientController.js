@@ -7,6 +7,7 @@ const {
 const cloudinary = require("cloudinary").v2;
 const nodemailer = require("nodemailer");
 const patientModel = require("../models/PatientModel");
+const referralModel = require("../models/ReferralModel")
 const userModel = require("../models/UserModel");
 const httpStatus = require("http-status");
 const {
@@ -49,8 +50,10 @@ const createPatient = async (req, res, next) => {
                 .upload_stream(
                     {
                         resource_type: "raw",
-                        public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName
-                            }${Date.now()}.pdf`,
+                        public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName}${Date.now()}.pdf`,
+
+                        /* public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName
+                            }${Date.now()}.pdf`, */
                     },
                     async (error, result) => {
                         if (error) {
@@ -94,6 +97,67 @@ const createPatient = async (req, res, next) => {
     }
 };
 
+/**
+ * @param {Object} req.body - Patient data
+ * @returns {referralModel}
+ */
+
+const createReferral = async (req, res, next) => {
+    try {
+        const patientData = req.body;
+
+        if (req.file) {
+            // Upload the PDF file to Cloudinary
+            cloudinary.uploader
+                .upload_stream(
+                    {
+                        resource_type: "raw",
+                        public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName}${Date.now()}.pdf`,
+
+                        /* public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName
+                            }${Date.now()}.pdf`, */
+                    },
+                    async (error, result) => {
+                        if (error) {
+                            console.error(error);
+                            return next(error);
+                        }
+
+                        patientData.pdfURL = result.secure_url;
+
+                        try {
+                            const newPatient = await ReferralRepo.createReferral(
+                                patientData
+                            );
+                            successResponse(
+                                res,
+                                "Referral created successfully",
+                                newPatient,
+                                201
+                            );
+                        } catch (dbError) {
+                            next(dbError);
+                        }
+                    }
+                )
+                .end(req.file.buffer);
+        } else {
+            try {
+                const newPatient = await ReferralRepo.createReferral(patientData);
+                successResponse(
+                    res,
+                    "Referral created successfully",
+                    newPatient,
+                    201
+                );
+            } catch (dbError) {
+                next(dbError);
+            }
+        }
+    } catch (error) {
+        next(error);
+    }
+};
 /**
  * @param {Object} req.params - Patient ID
  * @returns {PatientModel}
@@ -550,6 +614,7 @@ const uploadReportByAdmin = async (req, res, next) => {
 
 module.exports = {
     getAllPatients,
+    createReferral,
     createPatient,
     getPatientById,
     updatePatient,
