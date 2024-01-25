@@ -24,6 +24,20 @@ cloudinary.config({
     api_secret: process.env.SECRET_KEY,
 });
 
+/**
+ * @returns {Array}
+ */
+
+const getAllReferrals = async (req, res, next) => {
+    console.log("getAllReferrals");
+    try {
+        const referrals = await ReferralRepo.getAllReferrals();
+        successResponse(res, "Referrals retrieved successfully.", referrals, 200);
+    } catch (error) {
+        next(error);
+    }
+};
+
 
 /**
  * @param {Object} req.body - Patient data
@@ -161,6 +175,8 @@ const createReferral = async (req, res, next) => {
 
 
 module.exports = {
+    getAllReferrals,
     createReferral,
+
 
 };
