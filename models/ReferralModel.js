@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 let Referral = new Schema(
     {
         _id: {
-            type: Schema.Types.ObjectId,
+
             auto: true,
         },
 
