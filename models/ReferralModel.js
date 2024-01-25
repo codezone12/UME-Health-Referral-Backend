@@ -32,6 +32,34 @@ let Referral = new Schema(
             default: "null",
             unique: true,
         },
+         active: {
+            type: Boolean,
+            default: true,
+        },
+        status: {
+            type: Boolean,
+            default: false,
+        },
+        approved: {
+            type: Boolean,
+            default: false,
+        },
+        pending: {
+            type: Boolean,
+            default: false,
+        },
+        updateRequest: {
+            type: Boolean,
+            default: false,
+        },
+        adminResponse: {
+            type: Boolean,
+            default: false,
+        },
+        finalReport: {
+            type: String,
+            default: "",
+        },
         lastTimeMailSent: {
             type: Number,
         },
