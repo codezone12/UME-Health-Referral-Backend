@@ -3,8 +3,8 @@ const ReferralModel = require('../models/ReferralModel');
 /**
  * @returns {Array}
  */
-const getAllPatients = async () => {
-    return await PatientModel.find({ active: true }).populate([{ path: "consultant" }]);
+const getAllReferrals = async () => {
+    return await ReferralModel.find({ active: true }).populate([{ path: "consultant" }]);
 };
 
 /**
@@ -41,7 +41,7 @@ const deletePatient = async (id) => {
 };
 
 module.exports = {
-    getAllPatients,
+    getAllReferrals,
     createReferral,
     findOnePatientByObject,
     updatePatient,
