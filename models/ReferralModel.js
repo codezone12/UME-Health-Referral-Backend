@@ -15,15 +15,7 @@ let Referral = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User",
         },
-        patient: {
-            type: Schema.Types.ObjectId,
-            ref: "Patient",
-        },
-
-
-       
-       
-        bodyPart: {
+     bodyPart: {
             type: String,
         },
         clinicalIndication: {
@@ -46,34 +38,7 @@ let Referral = new Schema(
         },
 
 
-        active: {
-            type: Boolean,
-            default: true,
-        },
-        status: {
-            type: Boolean,
-            default: false,
-        },
-        approved: {
-            type: Boolean,
-            default: false,
-        },
-        pending: {
-            type: Boolean,
-            default: false,
-        },
-        updateRequest: {
-            type: Boolean,
-            default: false,
-        },
-        adminResponse: {
-            type: Boolean,
-            default: false,
-        },
-        finalReport: {
-            type: String,
-            default: "",
-        },
+      
         lastTimeMailSent: {
             type: Number,
         },
