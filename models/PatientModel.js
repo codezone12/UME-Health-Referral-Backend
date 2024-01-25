@@ -32,6 +32,10 @@ let Patient = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User",
         },
+        referral: {
+            type: Schema.Types.ObjectId,
+            ref: "Referral",
+        },
         phoneNumber: {
             type: String,
             required: true,
