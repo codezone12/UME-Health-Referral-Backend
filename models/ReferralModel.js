@@ -6,10 +6,10 @@ const Schema = mongoose.Schema;
 let Referral = new Schema(
     {
 
-        /* patient: {
+         patient: {
             type: Schema.Types.ObjectId,
             ref: "Patient",
-        }, */
+        }, 
         consultant: {
             type: Schema.Types.ObjectId,
             ref: "User",
