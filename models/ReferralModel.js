@@ -5,31 +5,11 @@ const Schema = mongoose.Schema;
 
 let Referral = new Schema(
     {
-        title: {
-            type: String,
-            required: true,
-        },
-        firstName: {
-            type: String,
-            required: true,
-        },
-        lastName: {
-            type: String,
-            required: true,
-        },
-        dob: {
-            type: Date,
-            required: true,
-        },
-        gender: {
-            type: String,
-            required: true,
-            enum: ["Male", "Female", "Prefer Not to Say"],
-        },
-        email: {
-            type: String,
-            required: true,
-        },
+
+    
+      
+        
+      
 
         consultant: {
             type: Schema.Types.ObjectId,
@@ -40,48 +20,17 @@ let Referral = new Schema(
             ref: "Patient",
         },
 
-        phoneNumber: {
-            type: String,
-            required: true,
-        },
-        policyNumber: {
-            type: String,
-        },
-        provider: {
-            type: String,
-        },
-        address: {
-            type: String,
-            default: "",
-        },
-        postalCode: {
-            type: String,
-            default: "",
-        },
-        city: {
-            type: String,
-            default: "",
-        },
+
+       
+       
         bodyPart: {
             type: String,
         },
         clinicalIndication: {
             type: String,
         },
-        payment: {
-            type: String,
-            required: true,
-            enum: ["Self Provider", "Insurance/Embassy"],
-        },
-        paymentMethod: {
-            type: String,
-        },
-        provider: {
-            type: String,
-        },
-        policyNumber: {
-            type: String,
-        },
+
+      
         clinicalInfo: {
             type: [String],
         },
