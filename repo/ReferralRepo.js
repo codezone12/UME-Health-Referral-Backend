@@ -3,47 +3,51 @@ const ReferralModel = require('../models/ReferralModel');
 /**
  * @returns {Array}
  */
- const getAllReferrals = async () => {
+const getAllReferrals = async () => {
     return await ReferralModel.find({ active: true }).populate([{ path: "consultant" }]);
 };
- 
+
 /**
  * @param {Object} patientData
- * @returns {PatientModel}
+ * @returns {ReferralModel}
  */
 const createReferral = async (patientData) => {
+    return await ReferralModel.create(patientData);
+};
+const Referral = async (patientData) => {
     return await ReferralModel.create(patientData);
 };
 
 /**
  * @param {Object} filter
- * @returns {PatientModel}
+ * @returns {ReferralModel}
  */
-const findOnePatientByObject = async (filter) => {
-    return await PatientModel.findOne(filter);
+const findOneReferralByObject = async (filter) => {
+    return await ReferralModel.findOne(filter);
 };
 
 /**
  * @param {string} id - Patient ID
  * @param {Object} updatedData - Updated data for the patient
- * @returns {PatientModel}
+ * @returns {ReferralModel}
  */
-const updatePatient = async (id, updatedData) => {
-    return await PatientModel.findOneAndUpdate({ _id: id }, { $set: updatedData }, { new: true });
+const updateReferral = async (id, updatedData) => {
+    return await ReferralModel.findOneAndUpdate({ _id: id }, { $set: updatedData }, { new: true });
 };
 
 /**
  * @param {string} id - Patient ID
  * @returns {boolean}
  */
-const deletePatient = async (id) => {
-    return await PatientModel.findOneAndUpdate({ _id: id }, { active: false }, { new: true });
+const deleteReferral = async (id) => {
+    return await ReferralModel.findOneAndUpdate({ _id: id }, { active: false }, { new: true });
 };
 
 module.exports = {
-       getAllReferrals, 
+    getAllReferrals,
     createReferral,
-    findOnePatientByObject,
-    updatePatient,
-    deletePatient,
+    findOneReferralByObject,
+    updateReferral,
+    deleteReferral,
+    Referral,
 };

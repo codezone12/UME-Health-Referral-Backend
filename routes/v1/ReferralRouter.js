@@ -5,8 +5,14 @@ const ReferralController = require('../../controllers/ReferralController')
 
 const upload = require('../../middlewares/multer')
 
- router.get('/', ReferralController.getAllReferrals); 
+router.get('/', ReferralController.getAllReferrals);
+router.get('/:id', ReferralController.getReferralById);
+
 router.post('/', upload.single('pdf'), ReferralController.createReferral);
+router.post('/:id', upload.single('pdf'), ReferralController.Referral);
+router.patch('/:id', upload.single('pdf'), ReferralController.updateReferral);
+
+router.delete('/:id', ReferralController.deleteReferral);
 
 
 module.exports = router;
