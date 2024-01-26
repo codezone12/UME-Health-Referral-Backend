@@ -24,7 +24,6 @@ cloudinary.config({
     api_key: process.env.API_KEY,
     api_secret: process.env.SECRET_KEY,
 });
-
 const getAllReferrals = async (req, res, next) => {
     console.log("getAllReferrals");
     try {
