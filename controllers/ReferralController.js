@@ -5,6 +5,7 @@ const {
     successResponse,
     errorResponse,
 } = require("../config/responceHandler");
+
 const cloudinary = require("cloudinary").v2;
 const nodemailer = require("nodemailer");
 const patientModel = require("../models/PatientModel");
@@ -24,7 +25,7 @@ cloudinary.config({
     api_key: process.env.API_KEY,
     api_secret: process.env.SECRET_KEY,
 });
-const getAllReferrals = async (req, res, next) => {
+/* const getAllReferrals = async (req, res, next) => {
     console.log("getAllReferrals");
     try {
         const referrals = await ReferralRepo.getAllReferrals();
@@ -32,7 +33,7 @@ const getAllReferrals = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+}; */
 
 
 /**
@@ -171,7 +172,7 @@ const createReferral = async (req, res, next) => {
 
 
 module.exports = {
-    getAllReferrals,
+    /*   getAllReferrals, */
     createReferral,
 
 
