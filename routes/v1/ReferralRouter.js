@@ -5,7 +5,7 @@ const ReferralController = require('../../controllers/ReferralController')
 
 const upload = require('../../middlewares/multer')
 
-/* router.get('/', ReferralController.getAllReferrals); */
+ router.get('/', ReferralController.getAllReferrals); 
 router.post('/', upload.single('pdf'), ReferralController.createReferral);
 
 
