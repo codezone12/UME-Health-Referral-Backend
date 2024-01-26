@@ -171,7 +171,7 @@ const createReferral = async (req, res, next) => {
 
 
 module.exports = {
-
+getAllReferrals,
     createReferral,
 
 
