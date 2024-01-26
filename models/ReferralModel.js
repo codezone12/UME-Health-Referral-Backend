@@ -5,7 +5,18 @@ const Schema = mongoose.Schema;
 
 let Referral = new Schema(
     {
-
+  title: {
+            type: String,
+            required: true,
+        },
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
          patient: {
             type: Schema.Types.ObjectId,
             ref: "Patient",
