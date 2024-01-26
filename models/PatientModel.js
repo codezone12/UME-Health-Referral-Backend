@@ -32,10 +32,10 @@ let Patient = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User",
         },
-       referral: {
+/*        referral: {
             type: Schema.Types.ObjectId,
             ref: "Referral",
-        }, 
+        }, */ 
         phoneNumber: {
             type: String,
             required: true,
@@ -58,12 +58,12 @@ let Patient = new Schema(
             type: String,
             default: "",
         },
-        bodyPart: {
+/*         bodyPart: {
             type: String,
         },
         clinicalIndication: {
             type: String,
-        },
+        }, */
         payment: {
             type: String,
             required: true,
@@ -78,14 +78,14 @@ let Patient = new Schema(
         policyNumber: {
             type: String,
         },
-       clinicalInfo: {
+/*        clinicalInfo: {
             type: [String], // Assuming clinicalInfo is an array of strings
         },
        
         eGFR: { type: String ,},  // Adding eGFR field based on provided data
     metalImplant: { type: String, },
         eyeInjury: { type: String, },
-       createdAt  :{type: Date,},
+       createdAt  :{type: Date,}, */
 pdfURL: {
             type: String,
             default: "null",
