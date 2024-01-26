@@ -1,4 +1,5 @@
-const ReferralRepo = require("../repo/ReferralRepo");
+/* const ReferralRepo = require("../repo/ReferralRepo"); */
+const ReferralRepo = require("../repo/ReferralRepo")
 const {
     badRequest,
     successResponse,
@@ -24,7 +25,15 @@ cloudinary.config({
     api_secret: process.env.SECRET_KEY,
 });
 
-
+const getAllReferrals = async (req, res, next) => {
+    console.log("getAllReferrals");
+    try {
+        const referrals = await ReferralRepo.getAllReferrals();
+        successResponse(res, "Referrals retrieved successfully.", referrals, 200);
+    } catch (error) {
+        next(error);
+    }
+};
 
 
 /**
@@ -163,7 +172,7 @@ const createReferral = async (req, res, next) => {
 
 
 module.exports = {
-
+    getAllReferrals,
     createReferral,
 
 
