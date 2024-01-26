@@ -1,5 +1,7 @@
 /* const ReferralRepo = require("../repo/ReferralRepo"); */
-const ReferralRepo = require("../repo/ReferralRepo")
+/* const ReferralRepo = require("../repo/ReferralRepo"); */
+const path = require("path");
+const ReferralRepo = require(path.join(__dirname, "../repo/ReferralRepo"));
 const {
     badRequest,
     successResponse,
