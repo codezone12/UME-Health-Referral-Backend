@@ -25,9 +25,10 @@ cloudinary.config({
 });
 
 /**
- * @returns {Array}
+ *
+/*  @returns {Array} */
  */
-
+/* 
 const getAllReferrals = async (req, res, next) => {
     console.log("getAllReferrals");
     try {
@@ -36,7 +37,7 @@ const getAllReferrals = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+}; */
 
 
 /**
