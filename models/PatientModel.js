@@ -32,18 +32,18 @@ let Patient = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User",
         },
-/*        referral: {
-            type: Schema.Types.ObjectId,
-            ref: "Referral",
-        }, */ 
+        /*        referral: {
+                    type: Schema.Types.ObjectId,
+                    ref: "Referral",
+                }, */
         phoneNumber: {
             type: String,
             required: true,
         },
-        policyNumber:{
+        policyNumber: {
             type: String,
         },
-        provider:{
+        provider: {
             type: String,
         },
         address: {
@@ -58,12 +58,12 @@ let Patient = new Schema(
             type: String,
             default: "",
         },
-/*         bodyPart: {
-            type: String,
-        },
-        clinicalIndication: {
-            type: String,
-        }, */
+        /*         bodyPart: {
+                    type: String,
+                },
+                clinicalIndication: {
+                    type: String,
+                }, */
         payment: {
             type: String,
             required: true,
@@ -78,15 +78,15 @@ let Patient = new Schema(
         policyNumber: {
             type: String,
         },
-/*        clinicalInfo: {
-            type: [String], // Assuming clinicalInfo is an array of strings
-        },
-       
-        eGFR: { type: String ,},  // Adding eGFR field based on provided data
-    metalImplant: { type: String, },
-        eyeInjury: { type: String, },
-       createdAt  :{type: Date,}, */
-pdfURL: {
+        /*        clinicalInfo: {
+                    type: [String], // Assuming clinicalInfo is an array of strings
+                },
+               
+                eGFR: { type: String ,},  // Adding eGFR field based on provided data
+            metalImplant: { type: String, },
+                eyeInjury: { type: String, },
+               createdAt  :{type: Date,}, */
+        pdfURL: {
             type: String,
             default: "null",
             unique: true,

@@ -217,11 +217,11 @@ const updateReferral = async (req, res, next) => {
         } else {
             try {
                 const updateReferral = await ReferralRepo.updateReferral(id, data);
-                const patient = await patientModel.findOne({ _id: id });
+                const referral = await referralModel.findOne({ _id: id });
                 const admin = await UserModel.findOne({ role: "Admin" });
 
-                const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
-
+                /*                 const name = `${referral.title} ${referral.firstName} ${referral.lastName}`;
+                 */
                 await referralConfirmation(
                     admin.name,
                     admin.email,
@@ -229,22 +229,22 @@ const updateReferral = async (req, res, next) => {
                     data.pdfURL
                 );
 
-                await referralConfirm(
-                    name,
-                    patient.email,
-                    "A new UME Health referral has been created",
-                    updatedPatient.pdfURL
-                );
+                /*   await referralConfirm(
+                      name,
+                      patient.email,
+                      "A new UME Health referral has been created",
+                      updateReferral.pdfURL
+                  ); */
 
                 await referralConfirmed(
 
                     consultant.name,
                     consultant.email,
                     "A new UME Health referral has been created",
-                    updatedPatient.pdfURL
+                    updateReferral.pdfURL
                 );
 
-                successResponse(res, "Profile updated successfully", updatedPatient, 200);
+                successResponse(res, "Profile updated successfully", updateReferral, 200);
             } catch (dbError) {
                 next(dbError);
             }
@@ -273,6 +273,77 @@ const deleteReferral = async (req, res, next) => {
 
 
 
+const uploadReportByAdmin = async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+        if (req.file) {
+            cloudinary.uploader
+                .upload_stream(
+                    {
+                        resource_type: "raw",
+                        public_id: `patient_files/${Date.now()}.pdf`,
+                    },
+                    async (error, result) => {
+                        if (error) {
+                            console.error("error===>", error);
+                            return errorResponse(
+                                res,
+                                "Error uploading report",
+                                error
+                            );
+                        }
+
+                        const finalReport = result.secure_url;
+                        console.log("finalReport====", finalReport);
+                        const updatedReferral = await ReferralRepo.updateReferral(
+                            id,
+                            {
+                                finalReport,
+                                adminResponse: true,
+                                pending: false,
+                            }
+                        );
+
+                        if (!updatedReferral) {
+                            return badRequest(
+                                res,
+                                "Something went wrong, please try again",
+                                []
+                            );
+                        }
+                        console.log(
+                            "updatedPatient====",
+                            updatedReferral.consultant
+                        );
+                        const consultant = await userModel.findOne({
+                            _id: updatedReferral.consultant.id,
+                        });
+                        // Pass the 'id' to the informConsultant function
+                        /*  await informConsultant(
+                             consultant.name,
+                             consultant.email,
+                             "Re: Your UME Health Patient Referral",
+                             finalReport,
+                             id
+                         );
+                         return successResponse(
+                             res,
+                             "Report submitted successfully",
+                             updatedPatient,
+                             200
+                         ); */
+                    }
+                )
+                .end(req.file.buffer);
+        } else {
+            return errorResponse(res, "No file provided", []);
+        }
+    } catch (error) {
+        console.error("Unhandled error:", error);
+        next(error);
+    }
+};
 module.exports = {
     getAllReferrals,
     createReferral,
@@ -280,6 +351,7 @@ module.exports = {
     updateReferral,
     deleteReferral,
     newReferral,
+    uploadReportByAdmin
 
 
 };
