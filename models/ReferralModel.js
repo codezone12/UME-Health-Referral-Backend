@@ -27,7 +27,7 @@ let Referral = new Schema(
         },
         mobility: {
             type: String,
-            enum: ["Mobile", "Non Mobile"],
+            enum: ["Mobile", "Non-Mobile"],
         },
         pregnancyStatus: {
             type: String,
