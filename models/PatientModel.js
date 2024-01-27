@@ -91,7 +91,7 @@ pdfURL: {
             default: "null",
             unique: true,
         },
-       /*  active: {
+         active: {
             type: Boolean,
             default: true,
         },
@@ -118,7 +118,7 @@ pdfURL: {
         finalReport: {
             type: String,
             default: "",
-        }, */
+        }, 
         lastTimeMailSent: {
             type: Number,
         },
