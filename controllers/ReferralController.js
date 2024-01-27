@@ -103,7 +103,7 @@ const createReferral = async (req, res, next) => {
 
 
 
-const Referral = async (req, res, next) => {
+const newReferral = async (req, res, next) => {
     try {
         const patientData = req.body;
 
@@ -112,11 +112,11 @@ const Referral = async (req, res, next) => {
             cloudinary.uploader
                 .upload_stream(
                     {
-                        resource_type: "raw",
-                        public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName}${Date.now()}.pdf`,
-
-                        /* public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName
-                            }${Date.now()}.pdf`, */
+                        /*  resource_type: "raw",
+                         public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName}${Date.now()}.pdf`,
+  */
+                        public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName
+                            }${Date.now()}.pdf`,
                     },
                     async (error, result) => {
                         if (error) {
@@ -127,13 +127,13 @@ const Referral = async (req, res, next) => {
                         patientData.pdfURL = result.secure_url;
 
                         try {
-                            const newPatient = await ReferralRepo.Referral(
+                            const newReferral = await ReferralRepo.newReferral(
                                 patientData
                             );
                             successResponse(
                                 res,
                                 "Referral created successfully",
-                                newPatient,
+                                newReferral,
                                 201
                             );
                         } catch (dbError) {
@@ -144,11 +144,11 @@ const Referral = async (req, res, next) => {
                 .end(req.file.buffer);
         } else {
             try {
-                const newPatient = await ReferralRepo.Referral(patientData);
+                const newReferral = await ReferralRepo.newReferral(patientData);
                 successResponse(
                     res,
                     "Referral created successfully",
-                    newPatient,
+                    newReferral,
                     201
                 );
             } catch (dbError) {
@@ -279,7 +279,7 @@ module.exports = {
     getReferralById,
     updateReferral,
     deleteReferral,
-    Referral,
+    newReferral,
 
 
 };

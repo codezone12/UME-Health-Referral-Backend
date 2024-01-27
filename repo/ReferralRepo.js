@@ -14,7 +14,7 @@ const getAllReferrals = async () => {
 const createReferral = async (patientData) => {
     return await ReferralModel.create(patientData);
 };
-const Referral = async (patientData) => {
+const newReferral = async (patientData) => {
     return await ReferralModel.create(patientData);
 };
 
@@ -49,5 +49,5 @@ module.exports = {
     findOneReferralByObject,
     updateReferral,
     deleteReferral,
-    Referral,
+    newReferral,
 };

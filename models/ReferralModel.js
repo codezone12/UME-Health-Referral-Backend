@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 
 let Referral = new Schema(
     {
-  title: {
+        title: {
             type: String,
-            
+
         },
         firstName: {
             type: String,
@@ -15,16 +15,25 @@ let Referral = new Schema(
         },
         lastName: {
             type: String,
-        
+
         },
-         patient: {
+        patient: {
             type: Schema.Types.ObjectId,
             ref: "Patient",
-        }, 
+        },
         consultant: {
             type: Schema.Types.ObjectId,
             ref: "User",
         },
+        mobility: {
+            type: String,
+            enum: ["Mobile", "Non Mobile"],
+        },
+        pregnancyStatus: {
+            type: String,
+            enum: ["Yes", "No", "Not applicable", "unknown"],
+        },
+
         bodyPart: {
             type: String,
         },
@@ -40,10 +49,10 @@ let Referral = new Schema(
         date: { type: Date },
         pdfURL: {
             type: String,
-            default: "null",
-            unique: true,
+            default: "",
+            /*  unique: true, */
         },
-         active: {
+        active: {
             type: Boolean,
             default: true,
         },
