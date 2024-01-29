@@ -220,8 +220,8 @@ const updateReferral = async (req, res, next) => {
                 const referral = await referralModel.findOne({ _id: id });
                 const admin = await UserModel.findOne({ role: "Admin" });
 
-                /*                 const name = `${referral.title} ${referral.firstName} ${referral.lastName}`;
-                 */
+                const name = `${referral.title} ${referral.firstName} ${referral.lastName}`;
+
                 await referralConfirmation(
                     admin.name,
                     admin.email,
@@ -229,12 +229,12 @@ const updateReferral = async (req, res, next) => {
                     data.pdfURL
                 );
 
-                /*   await referralConfirm(
-                      name,
-                      patient.email,
-                      "A new UME Health referral has been created",
-                      updateReferral.pdfURL
-                  ); */
+                await referralConfirm(
+                    name,
+                    patient.email,
+                    "A new UME Health referral has been created",
+                    updateReferral.pdfURL
+                );
 
                 await referralConfirmed(
 

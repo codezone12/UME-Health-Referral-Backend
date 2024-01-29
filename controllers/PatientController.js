@@ -17,6 +17,7 @@ const {
     referralConfirmed,
 } = require("../utils/sendEmail");
 const UserModel = require("../models/UserModel");
+const ReferralModel = require("../models/ReferralModel");
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -272,12 +273,12 @@ const patientUpdateRequest = async (req, res, next) => {
     console.log("patient", originalPatientName, name);
 
     try {
-        const patient = await patientModel.findOne({ _id: id });
-        const patientName = patient.title + " " + patient.firstName + " " + patient.lastName;
+        const referral = await ReferralModel.findOne({ _id: id });
+        const patientName = referral.title + " " + referral.firstName + " " + referral.lastName;
         console.log("patientName:", patientName);
 
         const user = await userModel.findOne({
-            _id: patient.consultant.toString(),
+            _id: referral.consultant.toString(),
         });
         const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
         const mailOptions = {
