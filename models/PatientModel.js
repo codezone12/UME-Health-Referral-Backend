@@ -91,7 +91,7 @@ let Patient = new Schema(
             default: "null",
             unique: true,
         },
-        active: {
+         active: {
             type: Boolean,
             default: true,
         },
@@ -118,7 +118,7 @@ let Patient = new Schema(
         finalReport: {
             type: String,
             default: "",
-        },
+        }, 
         lastTimeMailSent: {
             type: Number,
         },
