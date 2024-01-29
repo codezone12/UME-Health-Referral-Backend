@@ -231,7 +231,7 @@ const updateReferral = async (req, res, next) => {
 
                 await referralConfirm(
                     name,
-                    patient.email,
+                    referral.email,
                     "A new UME Health referral has been created",
                     updateReferral.pdfURL
                 );
