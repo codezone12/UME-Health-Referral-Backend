@@ -19,6 +19,9 @@ let Patient = new Schema(
             type: Date,
             required: true,
         },
+        date: {
+            type: Date,
+        },
         gender: {
             type: String,
             required: true,
@@ -88,10 +91,10 @@ let Patient = new Schema(
                createdAt  :{type: Date,}, */
         pdfURL: {
             type: String,
-            default: "null",
-            unique: true,
+            default: "",
+            /* unique: true, */
         },
-         active: {
+        active: {
             type: Boolean,
             default: true,
         },
@@ -115,10 +118,14 @@ let Patient = new Schema(
             type: Boolean,
             default: false,
         },
+        rf: {
+            type: Boolean,
+            default: false,
+        },
         finalReport: {
             type: String,
             default: "",
-        }, 
+        },
         lastTimeMailSent: {
             type: Number,
         },

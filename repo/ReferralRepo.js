@@ -31,9 +31,15 @@ const findOneReferralByObject = async (filter) => {
  * @param {Object} updatedData - Updated data for the patient
  * @returns {ReferralModel}
  */
-const updateReferral = async (id, updatedData) => {
+/* const updateReferral = async (id, updatedData) => {
     return await ReferralModel.findOneAndUpdate({ _id: id }, { $set: updatedData }, { new: true });
 };
+ */
+
+const updateReferralById = async (id, updatedData) => {
+    return await ReferralModel.findOneAndUpdate({ _id: id }, { $set: updatedData }, { new: true });
+};
+
 
 /**
  * @param {string} id - Patient ID
@@ -47,7 +53,7 @@ module.exports = {
     getAllReferrals,
     createReferral,
     findOneReferralByObject,
-    updateReferral,
+    updateReferralById,
     deleteReferral,
     newReferral,
 };

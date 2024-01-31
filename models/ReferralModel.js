@@ -17,6 +17,52 @@ let Referral = new Schema(
             type: String,
 
         },
+        dob: {
+            type: Date,
+
+        },
+        date: {
+            type: Date,
+        },
+        gender: {
+            type: String,
+
+            enum: ["Male", "Female", "Prefer Not to Say"],
+        },
+        phoneNumber: {
+            type: String,
+        },
+        /*  policyNumber: {
+             type: String,
+         }, */
+        provider: {
+            type: String,
+        },
+        address: {
+            type: String,
+            default: "",
+        },
+        postalCode: {
+            type: String,
+            default: "",
+        },
+        city: {
+            type: String,
+            default: "",
+        },
+        payment: {
+            type: String,
+            enum: ["Self Provider", "Insurance/Embassy"],
+        },
+        paymentMethod: {
+            type: String,
+        },
+        /*  provider: {
+             type: String,
+         }, */
+        policyNumber: {
+            type: String,
+        },
         patient: {
             type: Schema.Types.ObjectId,
             ref: "Patient",
@@ -39,6 +85,10 @@ let Referral = new Schema(
 
         bodyPart: {
             type: String,
+        },
+        rf: {
+            type: Boolean,
+            default: false,
         },
         clinicalIndication: {
             type: String,

@@ -1,7 +1,7 @@
 /* const ReferralRepo = require("../repo/ReferralRepo"); */
-/* const ReferralRepo = require("../repo/ReferralRepo"); */
-const path = require("path");
-const ReferralRepo = require(path.join(__dirname, "../repo/ReferralRepo"));
+const ReferralRepo = require("../repo/ReferralRepo");
+/* const path = require("path");
+const ReferralRepo = require(path.join(__dirname, "../repo/ReferralRepo")); */
 const {
     badRequest,
     successResponse,
@@ -184,8 +184,80 @@ const getReferralById = async (req, res, next) => {
  * @param {Object} req.params - Patient ID
  * @param {Object} req.body - Updated patient data
  * @returns {referralModel}
+ * 
  */
+
 const updateReferral = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const data = req.body;
+
+        const consultant = await UserModel.findById(data.consultant);
+
+        if (req.file) {
+            // Handle file upload to Cloudinary
+            cloudinary.uploader.upload_stream(
+                {
+                    resource_type: "raw",
+                    public_id: `patient_files/${data.firstName} ${data.lastName}_${Date.now()}.pdf`,
+                },
+                async (error, result) => {
+                    if (error) {
+                        console.error(error);
+                        return next(error);
+                    }
+
+                    data.pdfURL = result.secure_url;
+
+                    try {
+                        const updatedReferral = await ReferralRepo.updateReferralById(id, data);
+                        successResponse(res, "Patient updated successfully", updatedReferral, 200);
+                    } catch (dbError) {
+                        next(dbError);
+                    }
+                }
+            ).end(req.file.buffer);
+        } else {
+            try {
+                const updatedReferral = await ReferralRepo.updateReferralById(id, data);
+                const referral = await referralModel.findOne({ _id: id });
+                const admin = await UserModel.findOne({ role: "Admin" });
+
+                const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+
+                await referralConfirmation(
+                    admin.name,
+                    admin.email,
+                    "A new UME Health referral has been created",
+                    data.pdfURL
+                );
+
+                await referralConfirm(
+                    name,
+                    referral.email,
+                    "A new UME Health referral has been created",
+                    updatedReferral.pdfURL
+                );
+
+                await referralConfirmed(
+
+                    consultant.name,
+                    consultant.email,
+                    "A new UME Health referral has been created",
+                    updatedReferral.pdfURL
+                );
+
+                successResponse(res, "Profile updated successfully", updatedReferral, 200);
+            } catch (dbError) {
+                next(dbError);
+            }
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
+/* const updateReferral = async (req, res, next) => {
     try {
         const { id } = req.params;
         const data = req.body;
@@ -207,7 +279,75 @@ const updateReferral = async (req, res, next) => {
                     data.pdfURL = result.secure_url;
 
                     try {
-                        const updateReferral = await ReferralRepo.updateReferral(id, data);
+                        const updatedReferral = await ReferralRepo.updateReferral(id, data);
+                        successResponse(res, "Patient updated successfully", updatedReferral, 200);
+                    } catch (dbError) {
+                        next(dbError);
+                    }
+                }
+            ).end(req.file.buffer);
+        } else {
+            try {
+                const updatedReferral = await ReferralRepo.updateReferral(id, data);
+                const referral = await referralModel.findOne({ _id: id });
+                const admin = await UserModel.findOne({ role: "Admin" });
+
+                const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+
+                await referralConfirmation(
+                    admin.name,
+                    admin.email,
+                    "A new UME Health referral has been created",
+                    data.pdfURL
+                );
+
+                await referralConfirm(
+                    name,
+                    referral.email,
+                    "A new UME Health referral has been created",
+                    updatedReferral.pdfURL
+                );
+
+                await referralConfirmed(
+
+                    consultant.name,
+                    consultant.email,
+                    "A new UME Health referral has been created",
+                    updatedReferral.pdfURL
+                );
+
+                successResponse(res, "Profile updated successfully", updatedReferral, 200);
+            } catch (dbError) {
+                next(dbError);
+            }
+        }
+    } catch (error) {
+        next(error);
+    }
+}; */
+/* const updateReferral = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const data = req.body;
+
+        const consultant = await UserModel.findById(data.consultant);
+
+        if (req.file) {
+            cloudinary.uploader.upload_stream(
+                {
+                    resource_type: "raw",
+                    public_id: `patient_files/${data.firstName} ${data.lastName}_${Date.now()}.pdf`,
+                },
+                async (error, result) => {
+                    if (error) {
+                        console.error(error);
+                        return next(error);
+                    }
+
+                    data.pdfURL = result.secure_url;
+
+                    try {
+                        const updatedReferral = await ReferralRepo.updateReferral(id, data);
                         successResponse(res, "Referral updated successfully", updateReferral, 200);
                     } catch (dbError) {
                         next(dbError);
@@ -216,7 +356,7 @@ const updateReferral = async (req, res, next) => {
             ).end(req.file.buffer);
         } else {
             try {
-                const updateReferral = await ReferralRepo.updateReferral(id, data);
+                const updatedReferral = await ReferralRepo.updateReferral(id, data);
                 const referral = await referralModel.findOne({ _id: id });
                 const admin = await UserModel.findOne({ role: "Admin" });
 
@@ -233,7 +373,7 @@ const updateReferral = async (req, res, next) => {
                     name,
                     referral.email,
                     "A new UME Health referral has been created",
-                    updateReferral.pdfURL
+                    updatedReferral.pdfURL
                 );
 
                 await referralConfirmed(
@@ -241,13 +381,100 @@ const updateReferral = async (req, res, next) => {
                     consultant.name,
                     consultant.email,
                     "A new UME Health referral has been created",
-                    updateReferral.pdfURL
+                    updatedReferral.pdfURL
                 );
 
                 successResponse(res, "Profile updated successfully", updateReferral, 200);
             } catch (dbError) {
                 next(dbError);
             }
+        }
+    } catch (error) {
+        next(error);
+    }
+}; */
+const referralUpdateRequest = async (req, res, next) => {
+    console.log("ReferralUpdateRequest");
+    const { pdfURL, id, name, patientName: originalPatientName } = req.body;
+    console.log("referral", originalPatientName, name);
+
+    try {
+        const referral = await referralModel.findOne({ _id: id });
+        const patientName = referral.title + " " + referral.firstName + " " + referral.lastName;
+        console.log("patientName:", patientName);
+
+        const user = await userModel.findOne({
+            _id: referral.consultant.toString(),
+        });
+        const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
+        const mailOptions = {
+            from: "sohailshabir282@gmail.com",
+            to: "codezone67@gmail.com",
+            subject: "Re: referral update request",
+            html: `
+                <p>Hello,</p>
+                <p><strong>${user.name} </strong> has requested an update on the referral they made for the patient <strong>${patientName}.</strong></p>
+                <p>Regards, <br>
+                UME Health Client Relations Team</p>
+                
+                 <img src="${imageUrl}" alt="UME Health Image" style="height: 50px;"/>
+                  <br>
+                 17 Harley Street, Marylebone, London W1G 9QH<br>
+                 Telephone: 0207 467 6190<br>
+                 Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
+                 Web: www.umehealth.co.uk<br>
+
+                <h2>Disclaimer and Confidentiality Note:</h2>
+
+                Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
+            
+                It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.
+            
+                The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.
+            
+                UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.
+            
+                UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
+                Registered in the UK. Registration number: OC333533
+            `,
+        };
+
+        const transporter = nodemailer.createTransport({
+            host: process.env.HOST,
+            service: process.env.SERVICE,
+            port: Number(process.env.EMAIL_PORT),
+            secure: Boolean(process.env.SECURE),
+            auth: {
+                user: process.env.USER,
+                pass: process.env.PASSWORD,
+            },
+        });
+
+        const info = await transporter.sendMail(mailOptions);
+        const updatedReferral = await PatientRepo.updateReferral(id, {
+            updateRequest: true,
+        });
+
+        if (patient?.lastTimeMailSent > Date.now()) {
+            console.log("Can't send mail, wait 12 hours");
+            return errorResponse(
+                res,
+                "A copy of the referral has been sent to your email",
+                [],
+                httpStatus.INTERNAL_SERVER_ERROR
+            );
+        } else {
+            console.log("last time updated");
+            await referralModel.findOneAndUpdate(
+                { _id: id },
+                { lastTimeMailSent: Date.now() + 43200000 }
+            );
+            return successResponse(
+                res,
+                "A reminder has been sent to UME Health, and you should get an update shortly.",
+                updatedPatient,
+                200
+            );
         }
     } catch (error) {
         next(error);
@@ -296,7 +523,7 @@ const uploadReportByAdmin = async (req, res, next) => {
 
                         const finalReport = result.secure_url;
                         console.log("finalReport====", finalReport);
-                        const updatedReferral = await ReferralRepo.updateReferral(
+                        const updatedReferral = await ReferralRepo.updateReferralById(
                             id,
                             {
                                 finalReport,
@@ -349,6 +576,7 @@ module.exports = {
     createReferral,
     getReferralById,
     updateReferral,
+    referralUpdateRequest,
     deleteReferral,
     newReferral,
     uploadReportByAdmin
