@@ -46,6 +46,7 @@ const getAllReferrals = async (req, res, next) => {
 const createReferral = async (req, res, next) => {
     try {
         const patientData = req.body;
+        console.log(patientData)
 
         if (req.file) {
             // Upload the PDF file to Cloudinary
@@ -187,7 +188,7 @@ const getReferralById = async (req, res, next) => {
  * 
  */
 
-const updateReferral = async (req, res, next) => {
+/* const updateReferral = async (req, res, next) => {
     try {
         const { id } = req.params;
         const data = req.body;
@@ -211,8 +212,8 @@ const updateReferral = async (req, res, next) => {
 
                     try {
                         const updatedReferral = await ReferralRepo.updateReferralById(id, data);
-                        successResponse(res, "Patient updated successfully", updatedReferral, 200);
-                    } catch (dbError) {
+                        successResponse(res, "Referral updated successfully", updatedReferral, 200);
+} catch (dbError) {
                         next(dbError);
                     }
                 }
@@ -223,8 +224,9 @@ const updateReferral = async (req, res, next) => {
                 const referral = await referralModel.findOne({ _id: id });
                 const admin = await UserModel.findOne({ role: "Admin" });
 
-                const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
-
+                const name = `${referral.title} ${referral.firstName} ${referral.lastName}`;
+                console.log("dadrta:", updatedReferral)
+                console.log("name;", name)
                 await referralConfirmation(
                     admin.name,
                     admin.email,
@@ -248,6 +250,85 @@ const updateReferral = async (req, res, next) => {
                 );
 
                 successResponse(res, "Profile updated successfully", updatedReferral, 200);
+            } catch (dbError) {
+                console.log("errrr")
+                next(dbError);
+            }
+        }
+    } catch (error) {
+        next(error);
+    }
+}; */
+
+
+
+
+
+/**
+ * @param {Object} req.params - Patient ID
+ * @param {Object} req.body - Updated patient data
+ * @returns {PatientModel}
+ */
+const updateReferral = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const data = req.body;
+
+        const consultant = await UserModel.findById(data.consultant);
+
+        if (req.file) {
+            cloudinary.uploader.upload_stream(
+                {
+                    resource_type: "raw",
+                    public_id: `patient_files/${data.firstName} ${data.lastName}_${Date.now()}.pdf`,
+                },
+                async (error, result) => {
+                    if (error) {
+                        console.error(error);
+                        return next(error);
+                    }
+
+                    data.pdfURL = result.secure_url;
+
+                    try {
+                        const updatedReferral = await ReferralRepo.updateReferralById(id, data);
+                        successResponse(res, "Referral updated successfully", updatedReferral, 200);
+                    } catch (dbError) {
+                        next(dbError);
+                    }
+                }
+            ).end(req.file.buffer);
+        } else {
+            try {
+                const updatedPatient = await ReferralRepo.updateReferralById(id, data);
+                const patient = await referralModel.findOne({ _id: id });
+                const admin = await UserModel.findOne({ role: "Admin" });
+
+                const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+
+                await referralConfirmation(
+                    admin.name,
+                    admin.email,
+                    "A new UME Health referral has been created",
+                    data.pdfURL
+                );
+
+                await referralConfirm(
+                    name,
+                    patient.email,
+                    "A new UME Health referral has been created",
+                    updatedPatient.pdfURL
+                );
+
+                await referralConfirmed(
+
+                    consultant.name,
+                    consultant.email,
+                    "A new UME Health referral has been created",
+                    updatedPatient.pdfURL
+                );
+
+                successResponse(res, "Referral updated successfully", updatedPatient, 200);
             } catch (dbError) {
                 next(dbError);
             }
