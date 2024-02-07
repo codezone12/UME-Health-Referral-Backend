@@ -17,6 +17,15 @@ let Referral = new Schema(
             type: String,
 
         },
+        secretaryName: {
+            type: String,
+        },
+        secretaryTelephone: {
+            type: String,
+        },
+        secretaryEmail: {
+            type: String,
+        },
         dob: {
             type: Date,
 
