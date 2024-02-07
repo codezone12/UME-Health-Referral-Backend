@@ -62,7 +62,7 @@ const createReferral = async (req, res, next) => {
                 // Construct the public_id using the formatted date
                 public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
             } else {
-                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${patientData.date}.pdf`;
+                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
             }
 
             // Upload the PDF file to Cloudinary
