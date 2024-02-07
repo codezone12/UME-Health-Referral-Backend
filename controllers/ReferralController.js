@@ -47,18 +47,118 @@ const createReferral = async (req, res, next) => {
     try {
         const patientData = req.body;
 
+        console.log(patientData);
+        console.log("done");
+
+        let public_id;
+
+        if (req.file) {
+            if (patientData.date) {
+                const [year, month, day] = patientData.date.split('-');
+
+                // Construct the formatted date string
+                const formattedDate = `${day}-${month}-${year}`;
+
+                // Construct the public_id using the formatted date
+                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
+            } else {
+                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${patientData.date}.pdf`;
+            }
+
+            // Upload the PDF file to Cloudinary
+            cloudinary.uploader.upload_stream(
+                {
+                    resource_type: "raw",
+                    public_id: public_id,
+                },
+
+                async (error, result) => {
+                    if (error) {
+                        console.error(error);
+                        return next(error);
+                    }
+
+                    patientData.pdfURL = result.secure_url;
+
+                    try {
+                        const newPatient = await ReferralRepo.createReferral(patientData);
+                        const admin = await UserModel.findOne({ role: "Admin" });
+                        const name = `${patientData.title} ${patientData.firstName} ${patientData.lastName}`;
+
+                        await referralConfirmation(
+                            admin.name,
+                            admin.email,
+                            "A new UME Health referral has been created",
+                            patientData.pdfURL
+                        );
+
+                        await referralConfirm(
+                            name,
+                            patientData.email,
+                            "A new UME Health referral has been created",
+                            patientData.pdfURL
+                        );
+
+                        await referralConfirmed(
+                            patientData.secretaryName,
+                            patientData.secretaryEmail,
+                            "A new UME Health referral has been created",
+                            patientData.pdfURL
+                        );
+
+                        successResponse(
+                            res,
+                            "Referral created successfully",
+                            newPatient,
+                            201
+                        );
+                    } catch (dbError) {
+                        next(dbError);
+                    }
+                }
+            ).end(req.file.buffer);
+        } else {
+            try {
+                const newPatient = await ReferralRepo.createReferral(patientData);
+
+                successResponse(
+                    res,
+                    "Referral created successfully",
+                    newPatient,
+                    201
+                );
+            } catch (dbError) {
+                next(dbError);
+            }
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+/* const createReferral = async (req, res, next) => {
+    try {
+        const patientData = req.body;
+
         console.log(patientData)
         console.log("done")
 
         if (req.file) {
-            const [year, month, day] = patientData.date.split('-');
+            if (patientData.date) {
 
-            // Construct the formatted date string
-            const formattedDate = `${day}-${month}-${year}`;
+                const [year, month, day] = patientData.date.split('-');
 
-            // Construct the public_id using the formatted date
-            const public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
+                // Construct the formatted date string
+                const formattedDate = `${day}-${month}-${year}`;
 
+                // Construct the public_id using the formatted date
+                const public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
+            } else {
+                const public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${patientData.date}.pdf`;
+
+            }
             // Upload the PDF file to Cloudinary
             cloudinary.uploader
                 .upload_stream(
@@ -134,7 +234,7 @@ const createReferral = async (req, res, next) => {
         next(error);
     }
 
-};
+}; */
 
 
 

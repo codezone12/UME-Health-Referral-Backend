@@ -39,7 +39,7 @@ const getConsultants = async (req, res, next) => {
 const createNewUser = async (req, res, next) => {
     console.log("creating user");
     try {
-        const { name, email, password, role } = req.body;
+        const { name, email, password, role, } = req.body;
         if (!email) {
             return badRequest(res, "Email Should be Correct!", email);
         }
@@ -204,6 +204,7 @@ const login = async (req, res, next) => {
             image: user.image,
             role: user.role,
             _id: user._id,
+            jobTitle: user.jobTitle
         };
 
         console.log("[UserController:login] Logged in Successfully");
