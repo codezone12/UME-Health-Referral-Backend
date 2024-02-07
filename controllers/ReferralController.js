@@ -46,6 +46,8 @@ const getAllReferrals = async (req, res, next) => {
 const createReferral = async (req, res, next) => {
     try {
         const patientData = req.body;
+                const consultant = await UserModel.findById(patientData.consultant);
+
         console.log(patientData)
         console.log("done")
 
@@ -96,8 +98,8 @@ const createReferral = async (req, res, next) => {
                             );
                             await referralConfirmed(
 
-                                patientData.consultant.name,
-                                patientData.consultant.email,
+                                consultant.name,
+                                consultant.email,
                                 "A new UME Health referral has been created",
                                 patientData.pdfURL
                             );
