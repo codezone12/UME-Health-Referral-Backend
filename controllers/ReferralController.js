@@ -105,7 +105,7 @@ const createReferral = async (req, res, next) => {
 
                             successResponse(
                                 res,
-                                "Refeerral created successfully",
+                                "Referral created successfully",
                                 newPatient,
                                 201
                             );
