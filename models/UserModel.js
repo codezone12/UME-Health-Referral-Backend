@@ -18,6 +18,15 @@ let User = new Schema(
     name: {
       type: String,
     },
+    secretaryName: {
+      type: String,
+    },
+    secretaryTelephone: {
+      type: String,
+    },
+    secretaryEmail: {
+      type: String,
+    },
     image: {
       type: String,
       default:

@@ -51,7 +51,7 @@ const createPatient = async (req, res, next) => {
                 .upload_stream(
                     {
                         resource_type: "raw",
-                        public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName}${Date.now()}.pdf`,
+                        public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName + "-" + patientData?.date}.pdf`,
 
                         /* public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName
                             }${Date.now()}.pdf`, */

@@ -80,7 +80,7 @@ let Referral = new Schema(
         },
         pregnancyStatus: {
             type: String,
-            enum: ["Yes", "No", "Not applicable", "unknown"],
+            enum: ["Yes", "No", "Not applicable", "Unknown"],
         },
 
         bodyPart: {

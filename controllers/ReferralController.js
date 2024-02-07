@@ -47,18 +47,25 @@ const createReferral = async (req, res, next) => {
     try {
         const patientData = req.body;
         console.log(patientData)
+        console.log("done")
 
         if (req.file) {
+            const [year, month, day] = patientData.date.split('-');
+
+            // Construct the formatted date string
+            const formattedDate = `${day}-${month}-${year}`;
+
+            // Construct the public_id using the formatted date
+            const public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
+
             // Upload the PDF file to Cloudinary
             cloudinary.uploader
                 .upload_stream(
                     {
                         resource_type: "raw",
-                        public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName}${Date.now()}.pdf`,
-
-                        /* public_id: `patient_files/${patientData?.firstName + " " + patientData?.lastName
-                            }${Date.now()}.pdf`, */
+                        public_id: public_id,
                     },
+
                     async (error, result) => {
                         if (error) {
                             console.error(error);
@@ -71,9 +78,26 @@ const createReferral = async (req, res, next) => {
                             const newPatient = await ReferralRepo.createReferral(
                                 patientData
                             );
+                            const admin = await UserModel.findOne({ role: "admin" })
+                            const name = `${patientData.title} ${patientData.firstName} ${patientData.lastName}`;
+
+                            /*   await referralConfirmation(
+                                  admin.name,
+                                  admin.email,
+                                  "A new UME Health referral has been created",
+                                  patientData.pdfURL
+                              ); */
+
+                            await referralConfirm(
+                                name,
+                                patientData.email,
+                                "A new UME Health referral has been created",
+                                patientData.pdfURL
+                            );
+
                             successResponse(
                                 res,
-                                "Referral created successfully",
+                                "Refeerral created successfully",
                                 newPatient,
                                 201
                             );
@@ -81,17 +105,19 @@ const createReferral = async (req, res, next) => {
                             next(dbError);
                         }
                     }
-                )
-                .end(req.file.buffer);
+                ).end(req.file.buffer);
         } else {
             try {
                 const newPatient = await ReferralRepo.createReferral(patientData);
+
+
                 successResponse(
                     res,
-                    "Referral created successfully",
+                    "Referraal created successfully",
                     newPatient,
                     201
-                );
+                )
+
             } catch (dbError) {
                 next(dbError);
             }
@@ -99,6 +125,7 @@ const createReferral = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+
 };
 
 
@@ -305,7 +332,7 @@ const updateReferral = async (req, res, next) => {
                 const admin = await UserModel.findOne({ role: "Admin" });
 
                 const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
-
+                console.log("name", name)
                 await referralConfirmation(
                     admin.name,
                     admin.email,
