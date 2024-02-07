@@ -99,7 +99,7 @@ const createReferral = async (req, res, next) => {
                                 patientData.consultant.name,
                                 patientData.consultant.email,
                                 "A new UME Health referral has been created",
-                                updatedPatient.pdfURL
+                                patientData.pdfURL
                             );
 
                             successResponse(
