@@ -78,15 +78,15 @@ const createReferral = async (req, res, next) => {
                             const newPatient = await ReferralRepo.createReferral(
                                 patientData
                             );
-                            const admin = await UserModel.findOne({ role: "admin" })
+                            const admin = await UserModel.findOne({ role: "Admin" })
                             const name = `${patientData.title} ${patientData.firstName} ${patientData.lastName}`;
 
-                            /*   await referralConfirmation(
-                                  admin.name,
-                                  admin.email,
-                                  "A new UME Health referral has been created",
-                                  patientData.pdfURL
-                              ); */
+                            await referralConfirmation(
+                                admin.name,
+                                admin.email,
+                                "A new UME Health referral has been created",
+                                patientData.pdfURL
+                            );
 
                             await referralConfirm(
                                 name,
