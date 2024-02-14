@@ -54,13 +54,13 @@ const createReferral = async (req, res, next) => {
 
         if (req.file) {
             if (patientData.currentDate) {
-                /*                 const [year, month, day] = patientData.currentDate.split('-');
-                 */
+                const [year, month, day] = patientData.currentDate.split('-');
+
                 // Construct the formatted date string
-                /*                 const formattedDate = `${day}-${month}-${year}`;
-                 */
+                const formattedDate = `${day}-${month}-${year}`;
+
                 // Construct the public_id using the formatted date
-                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${patientData.currentDate}.pdf`;
+                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
                 console.log(public_id)
             } else {
                 public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
