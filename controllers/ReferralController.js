@@ -54,11 +54,11 @@ const createReferral = async (req, res, next) => {
 
         if (req.file) {
             if (patientData.currentDate) {
-                // Format the currentDate string to a valid date format
-                const currentDate = new Date(patientData.currentDate);
+                // Parse the currentDate string to extract day, month, and year
+                const [day, month, year] = patientData.currentDate.split('-');
 
-                // Construct the formatted date string
-                const formattedDate = currentDate.toISOString().split('T')[0]; // Extract YYYY-MM-DD
+                // Construct the formatted date string in YYYY-MM-DD format
+                const formattedDate = `${year}-${month}-${day}`;
 
                 // Construct the public_id using the formatted date
                 public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
@@ -136,6 +136,7 @@ const createReferral = async (req, res, next) => {
         next(error);
     }
 };
+
 
 
 
