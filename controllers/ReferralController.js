@@ -62,11 +62,11 @@ const createReferral = async (req, res, next) => {
                 const day = currentDate.getDate();
                 const month = currentDate.getMonth() + 1; // Month is zero-based
                 const year = currentDate.getFullYear();
-                const formattedDate = `${day}/${month}/${year}`;
-                console.log(formattedDate)
-                // Construct the formatted date string
-                /*                 const formattedDate = `${day}-${month}-${year}`;
-                 */
+                /*                 const formattedDate = `${day}/${month}/${year}`; 
+                 */                /*                 console.log(formattedDate)
+                                */                // Construct the formatted date string
+                const formattedDate = `${day}-${month}-${year}`;
+
                 // Construct the public_id using the formatted date
                 public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
             } else {
