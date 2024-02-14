@@ -53,7 +53,7 @@ const createReferral = async (req, res, next) => {
         let public_id;
 
         if (req.file) {
-            if (patientData.date) {
+            if (patientData.current) {
                 const [year, month, day] = patientData.date.split('-');
 
                 // Construct the formatted date string
