@@ -36,7 +36,7 @@ let Referral = new Schema(
         },
         currentDate: {
             type: Date,
-            default: "",
+
         },
         appoinmentDate: {
             type: Date,
