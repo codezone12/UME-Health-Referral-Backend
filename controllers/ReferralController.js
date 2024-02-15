@@ -767,23 +767,25 @@ const uploadReportByAdmin = async (req, res, next) => {
                             "updatedPatient====",
                             updatedReferral.consultant
                         );
-                        const consultant = await userModel.findOne({
-                            _id: updatedReferral.consultant.id,
+                        const consultant = await referralModel.findOne({
+                            _id: updatedReferral.consultant,
+
                         });
+                        console.log(consultant)
                         // Pass the 'id' to the informConsultant function
-                        /*  await informConsultant(
-                             consultant.name,
-                             consultant.email,
-                             "Re: Your UME Health Patient Referral",
-                             finalReport,
-                             id
-                         );
-                         return successResponse(
-                             res,
-                             "Report submitted successfully",
-                             updatedPatient,
-                             200
-                         ); */
+                        await informConsultant(
+                            updatedReferral.consultant.name,
+                            updatedReferral.consultant.email,
+                            "Re: Your UME Health Patient Referral",
+                            finalReport,
+                            id
+                        );
+                        return successResponse(
+                            res,
+                            "Report submitted successfully",
+                            updatedPatient,
+                            200
+                        );
                     }
                 )
                 .end(req.file.buffer);

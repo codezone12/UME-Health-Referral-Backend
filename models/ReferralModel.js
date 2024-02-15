@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const ReferralModelName = "Referral";
-
 const Schema = mongoose.Schema;
 
 let Referral = new Schema(
