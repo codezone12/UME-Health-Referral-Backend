@@ -287,6 +287,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
 };
 
 const informConsultant = async (name, email, subject, pdfLink, id) => {
+
     const patient = await ReferralModel.findOne({ _id: id });
     const patientName = patient.title + " " + patient.firstName + " " + patient.lastName;
 

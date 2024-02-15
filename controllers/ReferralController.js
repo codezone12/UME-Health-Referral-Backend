@@ -21,6 +21,7 @@ const {
     referralConfirmed,
 } = require("../utils/sendEmail");
 const UserModel = require("../models/UserModel");
+const ReferralModel = require("../models/ReferralModel");
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -726,7 +727,7 @@ const deleteReferral = async (req, res, next) => {
 
 const uploadReportByAdmin = async (req, res, next) => {
     const { id } = req.params;
-
+    console.log(id)
     try {
         if (req.file) {
             cloudinary.uploader
@@ -767,19 +768,27 @@ const uploadReportByAdmin = async (req, res, next) => {
                             "updatedPatient====",
                             updatedReferral.consultant
                         );
-                        const consultant = await referralModel.findOne({
-                            _id: updatedReferral.consultant,
+
+                        const consultant = await ReferralModel.findOne({
+                            _id: id,
 
                         });
+                        console.log(id)
                         console.log(consultant)
+
                         // Pass the 'id' to the informConsultant function
+                        /*  const name = updatedReferral.consultant.name;
+                         const email = updatedReferral.consultant.email;
+                         console.log(name)
+                         console.log(email) */
                         await informConsultant(
-                            updatedReferral.consultant.name,
-                            updatedReferral.consultant.email,
+                            consultant.name,
+                            consultant.email,
                             "Re: Your UME Health Patient Referral",
                             finalReport,
                             id
                         );
+
                         return successResponse(
                             res,
                             "Report submitted successfully",
