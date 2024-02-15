@@ -792,7 +792,7 @@ const uploadReportByAdmin = async (req, res, next) => {
                         return successResponse(
                             res,
                             "Report submitted successfully",
-                            updatedPatient,
+                            updatedReferral,
                             200
                         );
                     }
