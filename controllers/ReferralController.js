@@ -58,16 +58,11 @@ const createReferral = async (req, res, next) => {
             /*     const currentDate = new Date(patientData.currentDate); */
 
                 // Construct the formatted date string
-                /* const formattedDate = currentDate.toISOString().split('T')[0]; // Extract YYYY-MM-DD */
-function formatDate(dateString) {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB', options);
-}
+                const formattedDate = `${day}-${month}-${year}`;
+/*                  const formattedDate = currentDate.toISOString().split('T')[0]; // Extract YYYY-MM-DD  */
 
-const formattedDate = formatDate(patientData.currentDate);
                 // Construct the public_id using the formatted date
-                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
+                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate(patientData.currentDate)}.pdf`;
             } else {
                 public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
             }
