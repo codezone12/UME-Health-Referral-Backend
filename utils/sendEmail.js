@@ -286,11 +286,11 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
     }
 };
 
-const informConsultant = async (email, subject, pdfLink, id) => {
+const informConsultant = async (name,email, subject, pdfLink, id) => {
 
     const patient = await ReferralModel.findOne({ _id: id });
     const patientName = patient.title + " " + patient.firstName + " " + patient.lastName;
-    const name = patient.consultant.name;
+   
     const user = await userModel.findOne({
         _id: patient.consultant.toString(),
     });
