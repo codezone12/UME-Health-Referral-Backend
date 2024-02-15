@@ -769,13 +769,14 @@ const uploadReportByAdmin = async (req, res, next) => {
                             updatedReferral.consultant
                         );
 
-                        const consultant = await ReferralModel.findOne({
-                            _id: id,
+                        const consultant = await UserModel.findOne({
+                            _id: updatedReferral.consultant,
 
                         });
                         console.log(id)
                         console.log(consultant)
-
+                        /*                         console.log(consultant.name)
+                         */
                         // Pass the 'id' to the informConsultant function
                         /*  const name = updatedReferral.consultant.name;
                          const email = updatedReferral.consultant.email;
