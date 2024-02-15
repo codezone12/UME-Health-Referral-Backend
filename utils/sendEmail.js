@@ -370,7 +370,10 @@ const informPatient = async (name, email, subject, pdfLink, id) => {
 
     const patient = await ReferralModel.findOne({ _id: id });
     /*     const patientName = patient.title + " " + patient.firstName + " " + patient.lastName;
- */    const date = patient.appoinmentDate
+ */
+    const date = patient.appoinmentDate;
+    const time = patient.time;
+
 
     const user = await userModel.findOne({
         _id: patient.consultant.toString(),
@@ -389,8 +392,8 @@ const informPatient = async (name, email, subject, pdfLink, id) => {
       <p>Dear ${name} </p>
     
     
-      <p>UME Health has uploaded  ${date} report to the 
-      <a href="www.refer.umehealth.co.uk">www.refer.umehealth.co.uk   </a>and you will find it under the “My Referrals” tab. 
+      <p>We are pleased to inform you that your appointment at UME Health has been confirmed for   ${date} at ${time}. Your health and well-being are our top priorities, and we are dedicated to providing you with the best care possible.
+      <a href="www.refer.umehealth.co.uk">www.refer.umehealth.co.uk </a>
 
 If you need any further assistance, please send us an email at   <a href="clientrelations@umegroup.com">clientrelations@umegroup.com</a>
 
@@ -399,8 +402,10 @@ If you need any further assistance, please send us an email at   <a href="client
       <p>Regards,<br>
       UME Health Client Relations Team</p>
       <p>
-       <img src="${imageUrl}" alt="UME Health Image" style="height: 50px;"/>
-       <br>
+      <a href="http://www.refer.umehealth.co.uk">
+      <img src="${imageUrl}" alt="UME Health Image" style="height: 50px;"/>
+  </a>
+         <br>
       
       17 Harley Street, Marylebone, London W1G 9QH<br>
       Telephone: 0207 467 6190<br>
