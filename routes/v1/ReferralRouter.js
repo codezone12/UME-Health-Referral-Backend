@@ -11,6 +11,7 @@ router.post('/update', ReferralController.referralUpdateRequest);
 router.post('/', upload.single('pdf'), ReferralController.createReferral);
 /* router.post('/:id', upload.single('pdf'), ReferralController.newReferral); */
 router.patch('/:id', upload.single('pdf'), ReferralController.updateReferral);
+router.patch('/date/:id', upload.single('pdf'), ReferralController.updateReferralbyAdmin);
 router.patch('/report/:id', upload.single('finalReport'), ReferralController.uploadReportByAdmin);
 
 router.delete('/:id', ReferralController.deleteReferral);
