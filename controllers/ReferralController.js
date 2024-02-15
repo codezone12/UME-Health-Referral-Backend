@@ -503,49 +503,118 @@ const updateReferralbyAdmin = async (req, res, next) => {
 
                     data.pdfURL = result.secure_url;
 
-
-                    const updatedReferral = await ReferralRepo.updateReferralById(id, data);
-                    if (!updatedReferral) {
-                        return badRequest(
-                            res,
-                            "Something went wrong, please try again",
-                            []
-                        );
+                    try {
+                        const updatedReferral = await ReferralRepo.updateReferralById(id, data);
+                        successResponse(res, "Referral updated successfully", updatedReferral, 200);
+                    } catch (dbError) {
+                        next(dbError);
                     }
-                    console.log(
-                        "updatedPatient====",
-                        updatedReferral.consultant
-                    );
-
-                    const updatedPatient = await ReferralRepo.updateReferralById(id, data);
-                    const patient = await referralModel.findOne({ _id: id });
-                    console.log(id)
-                    const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
-                    const email = patient.email;
-                    console.log("name", name)
-                    await informPatient(
-                        name,
-                        email,
-                        "A new UME Health referral has been created",
-                        updatedPatient.pdfURL
-                    );
-
-                    return successResponse(
-                        res,
-                        "Report submitted successfully",
-                        updatedReferral,
-                        200
-                    );
                 }
-            )
-                .end(req.file.buffer);
+            ).end(req.file.buffer);
         } else {
-            return errorResponse(res, "No file provided", []);
+            try {
+                const updatedPatient = await ReferralRepo.updateReferralById(id, data);
+                const patient = await referralModel.findOne({ _id: id });
+                const admin = await UserModel.findOne({ role: "Admin" });
+
+                const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+                console.log("name", name)
+                console.log(patient)
+
+                /*   await referralConfirmation(
+                      admin.name,
+                      admin.email,
+                      "A new UME Health referral has been created",
+                      data.pdfURL
+                  ); */
+
+                await informPatient(
+                    name,
+                    patient.email,
+                    "A new UME Health referral has been created",
+                    updatedPatient.pdfURL,
+                    id
+                );
+
+                /* await referralConfirmed(
+
+                    consultant.name,
+                    consultant.email,
+                    "A new UME Health referral has been created",
+                    updatedPatient.pdfURL
+                ); */
+
+                successResponse(res, "Referral updated successfully", updatedPatient, 200);
+            } catch (dbError) {
+                next(dbError);
+            }
         }
     } catch (error) {
-        console.error("Unhandled error:", error);
         next(error);
     }
+    /*  try {
+         const { id } = req.params;
+         const data = req.body;
+ 
+         const consultant = await UserModel.findById(data.consultant);
+ 
+         if (req.file) {
+             cloudinary.uploader.upload_stream(
+                 {
+                     resource_type: "raw",
+                     public_id: `patient_files/${data.firstName} ${data.lastName}_${Date.now()}.pdf`,
+                 },
+                 async (error, result) => {
+                     if (error) {
+                         console.error(error);
+                         return next(error);
+                     }
+ 
+                     data.pdfURL = result.secure_url;
+ 
+ 
+                     const updatedReferral = await ReferralRepo.updateReferralById(id, data);
+                     if (!updatedReferral) {
+                         return badRequest(
+                             res,
+                             "Something went wrong, please try again",
+                             []
+                         );
+                     }
+                     console.log(
+                         "updatedPatient====",
+                         updatedReferral.consultant
+                     );
+ 
+                     const updatedPatient = await ReferralRepo.updateReferralById(id, data);
+                     const patient = await referralModel.findOne({ _id: id });
+                     console.log(id)
+                     const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+                     const email = patient.email;
+                     console.log("name", name)
+                     await informPatient(
+                         name,
+                         email,
+                         "A new UME Health referral has been created",
+                         updatedPatient.pdfURL
+                     );
+ 
+                     return successResponse(
+                         res,
+                         "Report submitted successfully",
+                         updatedReferral,
+                         200
+                     );
+                 }
+             )
+                 .end(req.file.buffer);
+         } else {
+             return errorResponse(res, "No file provided", []);
+         }
+     } catch (error) {
+         console.error("Unhandled error:", error);
+         next(error);
+     } */
 };
 
 /*                     try {

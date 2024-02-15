@@ -369,8 +369,8 @@ If you need any further assistance, please send us an email at   <a href="client
 const informPatient = async (name, email, subject, pdfLink, id) => {
 
     const patient = await ReferralModel.findOne({ _id: id });
-    const patientName = patient.title + " " + patient.firstName + " " + patient.lastName;
-    const date = patient.appoinmentDate
+    /*     const patientName = patient.title + " " + patient.firstName + " " + patient.lastName;
+ */    const date = patient.appoinmentDate
 
     const user = await userModel.findOne({
         _id: patient.consultant.toString(),
