@@ -185,6 +185,7 @@ const updatePatient = async (req, res, next) => {
     try {
         const { id } = req.params;
         const data = req.body;
+        console.log("formdata;", data)
 
         const consultant = await UserModel.findById(data.consultant);
 

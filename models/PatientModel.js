@@ -5,7 +5,7 @@ let Patient = new Schema(
     {
         title: {
             type: String,
-            required: true,
+
         },
         firstName: {
             type: String,

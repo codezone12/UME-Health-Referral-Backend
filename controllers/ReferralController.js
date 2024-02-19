@@ -92,8 +92,16 @@ const createReferral = async (req, res, next) => {
                     try {
                         const newPatient = await ReferralRepo.createReferral(patientData);
                         const admin = await UserModel.findOne({ role: "Admin" });
-                        const name = `${patientData.title} ${patientData.firstName} ${patientData.lastName}`;
+                        let name;
 
+                        if (patientData.title === "Prefer Not to Say") {
+                            name = `${patientData.firstName} ${patientData.lastName}`;
+                        } else {
+                            name = `${patientData.title} ${patientData.firstName} ${patientData.lastName}`;
+                        }
+
+                        /*                         const name = `${patientData.title} ${patientData.firstName} ${patientData.lastName}`;
+                         */
                         await referralConfirmation(
                             admin.name,
                             admin.email,
@@ -421,6 +429,7 @@ const updateReferral = async (req, res, next) => {
 
         const consultant = await UserModel.findById(data.consultant);
 
+
         if (req.file) {
             cloudinary.uploader.upload_stream(
                 {
@@ -448,9 +457,15 @@ const updateReferral = async (req, res, next) => {
                 const updatedPatient = await ReferralRepo.updateReferralById(id, data);
                 const patient = await referralModel.findOne({ _id: id });
                 const admin = await UserModel.findOne({ role: "Admin" });
+                let name;
 
-                const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
-                console.log("name", name)
+                if (patient.title === "Prefer Not to Say") {
+                    name = `${patient.firstName} ${patient.lastName}`;
+                } else {
+                    name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+                }
+/*                 const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+ */                console.log("name", name)
                 await referralConfirmation(
                     admin.name,
                     admin.email,
@@ -464,10 +479,23 @@ const updateReferral = async (req, res, next) => {
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL
                 );
+                const consultant = await UserModel.findById(data.consultant);
+
+
+                let name1;
+
+                if (consultant.title === "Prefer Not to Say") {
+                    name1 = `${consultant.firstname} ${consultant.lastname}`;
+                } else {
+                    name1 = `${consultant.title} ${consultant.firstname} ${patient.lastname}`;
+                }
+                console.log("name", name1)
+                console.log(id)
+                console.log("ss", consultant)
 
                 await referralConfirmed(
 
-                    consultant.name,
+                    name1,
                     consultant.email,
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL
