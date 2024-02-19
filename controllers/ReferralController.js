@@ -101,7 +101,7 @@ const createReferral = async (req, res, next) => {
                         }
                         const cId = patientData.consultant
 
-                        const consultant = await userModel.findOne({ _id: cId });
+                        const consultant = await UserModel.findOne({ _id: cId });
 
                         const consultantName = consultant.name
 
