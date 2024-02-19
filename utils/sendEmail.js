@@ -223,12 +223,9 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
         console.log("Email sent Failure");
     }
 };
-const referralConfirm = async (name, email, cId, subject, pdfLink) => {
-    const consultant = await userModel.findOne({ _id: cId });
+const referralConfirm = async (name, email, consultantName, subject, pdfLink) => {
 
-    const consultantName = consultant.name
 
-    console.log(consultant)
 
     const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
 
