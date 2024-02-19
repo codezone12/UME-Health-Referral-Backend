@@ -517,7 +517,13 @@ const updateReferralbyAdmin = async (req, res, next) => {
                 const patient = await referralModel.findOne({ _id: id });
                 const admin = await UserModel.findOne({ role: "Admin" });
 
-                const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+                let name;
+
+                if (patient.title === "Prefer Not to Say") {
+                    name = `${patient.firstName} ${patient.lastName}`;
+                } else {
+                    name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+                }
                 console.log("name", name)
                 console.log(patient)
 
