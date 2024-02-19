@@ -2,7 +2,6 @@ const nodemailer = require("nodemailer");
 const patientModel = require("../models/PatientModel");
 const userModel = require("../models/UserModel");
 const ReferralModel = require("../models/ReferralModel");
-const UserModel = require("../models/UserModel");
 
 const otpMail = async (email, name, subject, otp) => {
     try {
@@ -225,7 +224,7 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
     }
 };
 const referralConfirm = async (name, email, cId, subject, pdfLink) => {
-    const consultant = await UserModel.findOne({ _id: cId });
+    const consultant = await userModel.findOne({ _id: cId });
 
     const consultantName = consultant.name
 
