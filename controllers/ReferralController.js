@@ -102,6 +102,7 @@ const createReferral = async (req, res, next) => {
                         console.log("c", patientData.consultant)
                         const cId = patientData.consultant
 
+
                         /*                         const name = `${patientData.title} ${patientData.firstName} ${patientData.lastName}`;
                          */
                         await referralConfirmation(
