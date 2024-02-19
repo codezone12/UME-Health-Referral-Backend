@@ -223,7 +223,7 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
         console.log("Email sent Failure");
     }
 };
-const referralConfirm = async (name, email, name1, subject, pdfLink) => {
+const referralConfirm = async (name, email, subject, pdfLink, name1) => {
 
 
 
@@ -239,10 +239,10 @@ const referralConfirm = async (name, email, name1, subject, pdfLink) => {
       <title>Referral eated</title>
     </head>
     <body>
-      <p>Hello ${name1},</p>
+      <p>Hello ${name},</p>
     
     
-      <p>UME Health has received an imagining referral for you submitted by.
+      <p>UME Health has received an imagining referral for you submitted by ${name1}.
        Our bookings team will be in touch with you to book your appointment.
         Rest assured your referral is in safe hands. If you do need to get in touch,
          please email  <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
