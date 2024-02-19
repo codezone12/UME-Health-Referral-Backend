@@ -553,7 +553,7 @@ const updateReferralbyAdmin = async (req, res, next) => {
                     name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
                 }
                 console.log("name", name)
-                console.log(name)
+                console.log("e", patient.email)
 
                 /*   await referralConfirmation(
                       admin.name,
@@ -843,8 +843,9 @@ const referralUpdateRequest = async (req, res, next) => {
                 <p><strong>${user.name} </strong> has requested an update on the referral they made for the patient <strong>${patientName}.</strong></p>
                 <p>Regards, <br>
                 UME Health Client Relations Team</p>
-                
+                <a href="https://umehealth.co.uk/">
                  <img src="${imageUrl}" alt="UME Health Image" style="height: 50px;"/>
+                 <a>
                   <br>
                  17 Harley Street, Marylebone, London W1G 9QH<br>
                  Telephone: 0207 467 6190<br>
