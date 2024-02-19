@@ -24,7 +24,7 @@ let Patient = new Schema(
         },
         gender: {
             type: String,
-            required: true,
+
             enum: ["Male", "Female", "Prefer Not to Say"],
         },
         email: {
