@@ -966,7 +966,7 @@ const uploadReportByAdmin = async (req, res, next) => {
                          console.log(name)
                          console.log(email) */
                         await informConsultant(
-                            consultant.name,
+                            name,
                             consultant.email,
                             "Re: Your UME Health Patient Referral",
                             finalReport,
