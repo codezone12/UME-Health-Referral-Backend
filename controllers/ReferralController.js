@@ -477,7 +477,8 @@ const updateReferral = async (req, res, next) => {
                     name,
                     patient.email,
                     "A new UME Health referral has been created",
-                    updatedPatient.pdfURL
+                    updatedPatient.pdfURL,
+                    id
                 );
                 const consultant = await UserModel.findById(data.consultant);
 

@@ -223,7 +223,12 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
         console.log("Email sent Failure");
     }
 };
-const referralConfirm = async (name, email, subject, pdfLink) => {
+const referralConfirm = async (name, email, id, subject, pdfLink) => {
+    const patient = await ReferralModel.findOne({ _id: id });
+    const consultant = patient.consultant.name
+
+
+
     const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
 
 
@@ -239,7 +244,7 @@ const referralConfirm = async (name, email, subject, pdfLink) => {
       <p>Hello ${name},</p>
     
     
-      <p>UME Health has received an imagining referral for you submitted by ${name}.
+      <p>UME Health has received an imagining referral for you submitted by ${consultant}.
        Our bookings team will be in touch with you to book your appointment.
         Rest assured your referral is in safe hands. If you do need to get in touch,
          please email  <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
