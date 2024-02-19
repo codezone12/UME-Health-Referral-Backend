@@ -99,6 +99,8 @@ const createReferral = async (req, res, next) => {
                         } else {
                             name = `${patientData.title} ${patientData.firstName} ${patientData.lastName}`;
                         }
+                        console.log("c", patientData.consultant)
+                        const cId = patientData.consultant
 
                         /*                         const name = `${patientData.title} ${patientData.firstName} ${patientData.lastName}`;
                          */
@@ -113,7 +115,8 @@ const createReferral = async (req, res, next) => {
                             name,
                             patientData.email,
                             "A new UME Health referral has been created",
-                            patientData.pdfURL
+                            patientData.pdfURL,
+                            cId
                         );
 
                         await referralConfirmed(
