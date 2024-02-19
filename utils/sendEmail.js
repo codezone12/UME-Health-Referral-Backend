@@ -223,7 +223,7 @@ const referralConfirmed = async (name, email, subject, pdfLink) => {
         console.log("Email sent Failure");
     }
 };
-const referralConfirm = async (name, email, consultantName, subject, pdfLink) => {
+const referralConfirm = async (name, email, name1, subject, pdfLink) => {
 
 
 
@@ -239,7 +239,7 @@ const referralConfirm = async (name, email, consultantName, subject, pdfLink) =>
       <title>Referral eated</title>
     </head>
     <body>
-      <p>Hello ${name},</p>
+      <p>Hello ${name1},</p>
     
     
       <p>UME Health has received an imagining referral for you submitted by.
