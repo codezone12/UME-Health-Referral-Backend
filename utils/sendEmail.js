@@ -89,6 +89,8 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
 };
 
 const referralConfirmation = async (name, email, subject, pdfLink) => {
+    const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
+
     const emailHtml = `<!DOCTYPE html>
     <html lang="en">
     <head>
