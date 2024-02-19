@@ -242,7 +242,7 @@ const referralConfirm = async (name, email, consultantName, subject, pdfLink) =>
       <p>Hello ${name},</p>
     
     
-      <p>UME Health has received an imagining referral for you submitted by ${consultantName}.
+      <p>UME Health has received an imagining referral for you submitted by.
        Our bookings team will be in touch with you to book your appointment.
         Rest assured your referral is in safe hands. If you do need to get in touch,
          please email  <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a></p>
