@@ -525,7 +525,7 @@ const updateReferralbyAdmin = async (req, res, next) => {
                     name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
                 }
                 console.log("name", name)
-                console.log(patient)
+                console.log(name)
 
                 /*   await referralConfirmation(
                       admin.name,
@@ -948,8 +948,16 @@ const uploadReportByAdmin = async (req, res, next) => {
                             _id: updatedReferral.consultant,
 
                         });
+                        let name;
+
+                        if (consultant.title === "Prefer Not to Say") {
+                            name = `${consultant.firstname} ${consultant.lastname}`;
+                        } else {
+                            name = `${consultant.title} ${consultant.firstname} ${patient.lastname}`;
+                        }
+                        console.log("name", name)
                         console.log(id)
-                        console.log(consultant)
+                        console.log("ss", consultant)
                         /*                         console.log(consultant.name)
                          */
                         // Pass the 'id' to the informConsultant function
