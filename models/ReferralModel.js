@@ -50,7 +50,6 @@ let Referral = new Schema(
         gender: {
             type: String,
 
-            enum: ["Male", "Female", "Prefer Not to Say"],
         },
         phoneNumber: {
             type: String,
