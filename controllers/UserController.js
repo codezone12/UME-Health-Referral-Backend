@@ -52,9 +52,9 @@ const createNewUser = async (req, res, next) => {
         if (checkUserExistence) {
             if (checkUserExistence.verified) {
                 return badRequest(res, "Please Verify Account by OTP", []);
-            } else {
-                return badRequest(res, "Email address already in use", []);
             }
+            return badRequest(res, "Email address already in use", []);
+
         }
         // Encrypting Password
         var salt = bcrypt.genSaltSync(10);
