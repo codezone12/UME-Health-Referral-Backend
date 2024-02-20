@@ -37,6 +37,7 @@ const getConsultants = async (req, res, next) => {
 };
 
 const createNewUser = async (req, res, next) => {
+    /*  console.log("creating user"); */
     try {
         const { name, email, password, role, } = req.body;
         if (!email) {
@@ -45,9 +46,17 @@ const createNewUser = async (req, res, next) => {
         const checkUserExistence = await UserRepo.findOneByObject({ email });
         console.log("c", checkUserExistence)
 
+        /*   if (checkUserExistence) { */
         if (checkUserExistence.verified === true) {
-            return badRequest(res, "Email already in use", []);
+            return badRequest(res, "Please verify your account By OTP", []);
         }
+        /* return badRequest(res, "Email address already in use", []);
+
+       } */
+
+        /* if (checkUserExistence.verified === true) {
+            return badRequest(res, "Please Verify Account by OTP", []);
+        } */
 
         // Encrypting Password
         var salt = bcrypt.genSaltSync(10);
