@@ -47,8 +47,8 @@ const createNewUser = async (req, res, next) => {
         console.log("c", checkUserExistence)
 
         /*   if (checkUserExistence) { */
-        if (checkUserExistence.verified === true) {
-            return badRequest(res, "Please verify your account By OTP", []);
+        if (checkUserExistence) {
+            return badRequest(res, "Email address already in use", []);
         }
         /* return badRequest(res, "Email address already in use", []);
 
