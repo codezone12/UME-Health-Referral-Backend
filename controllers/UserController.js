@@ -37,14 +37,15 @@ const getConsultants = async (req, res, next) => {
 };
 
 const createNewUser = async (req, res, next) => {
-    console.log("creating user");
+    /*  console.log("creating user"); */
     try {
         const { name, email, password, role, } = req.body;
         if (!email) {
             return badRequest(res, "Email Should be Correct!", email);
         }
         const checkUserExistence = await UserRepo.findOneByObject({ email });
-        if (checkUserExistence) {
+
+        if (checkUserExistence.verified) {
             return badRequest(res, "Email address already in use", []);
         }
         // Encrypting Password
