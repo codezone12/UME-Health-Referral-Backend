@@ -46,13 +46,13 @@ const createNewUser = async (req, res, next) => {
         const checkUserExistence = await UserRepo.findOneByObject({ email });
         console.log("c", checkUserExistence)
 
-        /* if (checkUserExistence.verified) {
+         if (checkUserExistence) {
             return badRequest(res, "Email address already in use", []);
-        } */
+        } 
 
-        if (checkUserExistence.verified === null) {
+        /* if (checkUserExistence.verified === null) {
             return badRequest(res, "Please Verify Account by OTP", []);
-        }
+        } */
 
         // Encrypting Password
         var salt = bcrypt.genSaltSync(10);
