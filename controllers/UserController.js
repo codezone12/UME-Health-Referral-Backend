@@ -46,11 +46,15 @@ const createNewUser = async (req, res, next) => {
         const checkUserExistence = await UserRepo.findOneByObject({ email });
         console.log("c", checkUserExistence)
 
-         if (checkUserExistence) {
+        if (checkUserExistence) {
+            if (checkUserExistence.verified === true) {
+                return badRequest(res, "Please verify your account By OTP", []);
+            }
             return badRequest(res, "Email address already in use", []);
-        } 
 
-        /* if (checkUserExistence.verified === null) {
+        }
+
+        /* if (checkUserExistence.verified === true) {
             return badRequest(res, "Please Verify Account by OTP", []);
         } */
 
