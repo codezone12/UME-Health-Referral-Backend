@@ -49,13 +49,11 @@ const createNewUser = async (req, res, next) => {
         /* if (checkUserExistence.verified) {
             return badRequest(res, "Email address already in use", []);
         } */
-        if (checkUserExistence) {
-            if (checkUserExistence.verified) {
-                return badRequest(res, "Please Verify Account by OTP", []);
-            }
-            return badRequest(res, "Email address already in use", []);
 
+        if (checkUserExistence.verified === null) {
+            return badRequest(res, "Please Verify Account by OTP", []);
         }
+
         // Encrypting Password
         var salt = bcrypt.genSaltSync(10);
         var hashPass = bcrypt.hashSync(password, salt);
