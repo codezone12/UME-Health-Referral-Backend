@@ -35,59 +35,8 @@ const getConsultants = async (req, res, next) => {
         200
     );
 };
+
 const createNewUser = async (req, res, next) => {
-    try {
-        const { name, email, password, role } = req.body;
-        if (!email) {
-            return badRequest(res, "Email Should be Correct!", email);
-        }
-        const checkUserExistence = await UserRepo.findOneByObject({ email });
-
-        if (!checkUserExistence) {
-            // User does not exist, create a new user
-            // Encrypting Password
-            var salt = bcrypt.genSaltSync(10);
-            var hashPass = bcrypt.hashSync(password, salt);
-
-            const newUser = await UserRepo.createUser(name, email, hashPass, role);
-
-            if (!newUser) {
-                return errorResponse(res, "Issue Occurred in Server", [], 500);
-            }
-
-            const otp = generateOTP();
-            const token = await TokenRepo.createToken({
-                userId: newUser?._id,
-                email: newUser?.email,
-                token: otp,
-            });
-            await otpRequest(
-                name,
-                "",
-                otp,
-                newUser?.email,
-                "Your UME Health OTP Request"
-            );
-
-            return successResponse(
-                res,
-                "Please check your email for your OTP",
-                newUser,
-                201
-            );
-        } else if (checkUserExistence.verified === true) {
-            return badRequest(res, "Please verify your account By OTP", []);
-        } else {
-            // User exists but not verified
-            return badRequest(res, "Please check your email for your OTP", []);
-        }
-    } catch (err) {
-        next(err);
-    }
-};
-
-
-/* const createNewUser = async (req, res, next) => {
     try {
         const { name, email, password, role, } = req.body;
         if (!email) {
@@ -97,16 +46,9 @@ const createNewUser = async (req, res, next) => {
         console.log("c", checkUserExistence)
 
         if (checkUserExistence.verified === true) {
-            return badRequest(res, "Please verify your account By OTP", []);
-        } else {
-            successResponse(
-                res,
-                "Please check your email for your OTP",
-                newUser,
-                201
-            );
+            return badRequest(res, "Email already in use", []);
         }
-        
+
         // Encrypting Password
         var salt = bcrypt.genSaltSync(10);
         var hashPass = bcrypt.hashSync(password, salt);
@@ -138,7 +80,7 @@ const createNewUser = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-}; */
+};
 
 /* const login = async (req, res, next) => {
     try {
