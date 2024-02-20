@@ -144,7 +144,7 @@ const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         let user = await UserRepo.findOneByObject({ email });
-
+        console.log(user)
         if (!user) {
             return badRequest(
                 res,
@@ -174,29 +174,36 @@ const login = async (req, res, next) => {
         }
 
         if (!user.verified) {
-            let token = await TokenRepo.findOneByObject({ userId: user._id });
-            if (!token) {
-                const otp = generateOTP();
-                const token = await TokenRepo.createToken({
-                    userId: user._id,
-                    email: user.email,
-                    token: otp,
-                });
-                await otpRequest(
-                    user.email,
-                    user.name,
-                    "Your UME Health OTP Request",
-                    token?.token
-                );
-
-                return successResponse(
-                    res,
-                    "An email has been sent to your email address",
-                    [],
-                    402
-                );
-            }
+            return badRequest(
+                res,
+                "Please Verify Your Account by OTP",
+                []
+            );
         }
+        /*  if (!user.verified) {
+             let token = await TokenRepo.findOneByObject({ userId: user._id });
+             if (!token) {
+                 const otp = generateOTP();
+                 const token = await TokenRepo.createToken({
+                     userId: user._id,
+                     email: user.email,
+                     token: otp,
+                 });
+                 await otpRequest(
+                     user.email,
+                     user.name,
+                     "Your UME Health OTP Request",
+                     token?.token
+                 );
+ 
+                 return successResponse(
+                     res,
+                     "An email has been sent to your email address",
+                     [],
+                     402
+                 );
+             }
+         } */
 
         const userData = {
             name: user.name,
@@ -206,6 +213,7 @@ const login = async (req, res, next) => {
             _id: user._id,
             jobTitle: user.jobTitle
         };
+        console.log("cc", userData)
 
         console.log("[UserController:login] Logged in Successfully");
         const token = jwt.sign({ user }, process.env.JWT_SECRET);
