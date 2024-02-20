@@ -44,7 +44,7 @@ const createNewUser = async (req, res, next) => {
             return badRequest(res, "Email Should be Correct!", email);
         }
         const checkUserExistence = await UserRepo.findOneByObject({ email });
-
+        console.log("c", checkUserExistence)
         if (checkUserExistence.verified) {
             return badRequest(res, "Email address already in use", []);
         }
@@ -181,30 +181,30 @@ const login = async (req, res, next) => {
                 []
             );
         }
-        /*  if (!user.verified) {
-             let token = await TokenRepo.findOneByObject({ userId: user._id });
-             if (!token) {
-                 const otp = generateOTP();
-                 const token = await TokenRepo.createToken({
-                     userId: user._id,
-                     email: user.email,
-                     token: otp,
-                 });
-                 await otpRequest(
-                     user.email,
-                     user.name,
-                     "Your UME Health OTP Request",
-                     token?.token
-                 );
- 
-                 return successResponse(
-                     res,
-                     "An email has been sent to your email address",
-                     [],
-                     402
-                 );
-             }
-         } */
+        if (!user.verified) {
+            let token = await TokenRepo.findOneByObject({ userId: user._id });
+            if (!token) {
+                const otp = generateOTP();
+                const token = await TokenRepo.createToken({
+                    userId: user._id,
+                    email: user.email,
+                    token: otp,
+                });
+                await otpRequest(
+                    user.email,
+                    user.name,
+                    "Your UME Health OTP Request",
+                    token?.token
+                );
+
+                return successResponse(
+                    res,
+                    "An email has been sent to your email address",
+                    [],
+                    402
+                );
+            }
+        }
 
         const userData = {
             name: user.name,
