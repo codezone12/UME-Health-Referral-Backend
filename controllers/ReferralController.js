@@ -49,9 +49,7 @@ const createReferral = async (req, res, next) => {
     try {
         const patientData = req.body;
 
-        console.log(patientData);
-        console.log("done");
-        console.log(patientData.currentDate);
+        
         let public_id;
 
         if (req.file) {
