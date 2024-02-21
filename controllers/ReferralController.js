@@ -55,35 +55,7 @@ const createReferral = async (req, res, next) => {
         let public_id;
 
         if (req.file) {
-            if (patientData.currentDate) {
-                /*  const currentDate = new Date(); // Get the current date and time
- 
-                 // Format the current date into the desired format (DD-MM-YYYY)
-                 const day = currentDate.getDate();
-                 const month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-                 const year = currentDate.getFullYear();
-                 const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`;
-                 const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${year}`; */
-
-
-                // Parse the current date string to a Date object
-                /*  const currentDate = new Date(patientData.currentDate);
-                 console.log(currentDate)
-                 // Extract day, month, and year from the Date object
-                 const day = currentDate.getDate();
-                 const month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-                 const year = currentDate.getFullYear();
- 
-                 // Format the date components into desired format (DD-MM-YYYY)
-                 const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`;
-                 console.log(formattedDate) */
-                // Construct the public_id using the formatted date
-                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
-
-            } else {
-                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
-            }
-
+            public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
             // Upload the PDF file to Cloudinary
             cloudinary.uploader.upload_stream(
                 {
