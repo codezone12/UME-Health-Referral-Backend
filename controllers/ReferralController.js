@@ -56,19 +56,24 @@ const createReferral = async (req, res, next) => {
 
         if (req.file) {
             if (patientData.currentDate) {
-                // Parse the current date string to a Date object
-                const currentDate = new Date(patientData.currentDate);
-                console.log(currentDate)
-                // Extract day, month, and year from the Date object
-                const day = currentDate.getDate();
-                const month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-                const year = currentDate.getFullYear();
 
-                // Format the date components into desired format (DD-MM-YYYY)
-                const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`;
-                console.log(formattedDate)
+                const currentDate = new Date(patientData.currentDate);
+
+                // Convert to local date string
+                const localDate = currentDate.toLocaleDateString();
+                // Parse the current date string to a Date object
+                /*  const currentDate = new Date(patientData.currentDate);
+                 console.log(currentDate)
+                 // Extract day, month, and year from the Date object
+                 const day = currentDate.getDate();
+                 const month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+                 const year = currentDate.getFullYear();
+ 
+                 // Format the date components into desired format (DD-MM-YYYY)
+                 const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`;
+                 console.log(formattedDate) */
                 // Construct the public_id using the formatted date
-                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${patientData.currentDate}.pdf`;
+                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${localDate}.pdf`;
 
             } else {
                 public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
