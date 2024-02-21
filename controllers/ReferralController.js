@@ -62,7 +62,8 @@ const createReferral = async (req, res, next) => {
                 const day = currentDate.getDate();
                 const month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
                 const year = currentDate.getFullYear();
-                const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`;
+               /*  const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`; */
+                 const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day}`;
 
 
                 // Parse the current date string to a Date object
