@@ -56,11 +56,15 @@ const createReferral = async (req, res, next) => {
 
         if (req.file) {
             if (patientData.currentDate) {
+                const currentDate = new Date(); // Get the current date and time
 
-                const currentDate = new Date(patientData.currentDate);
+                // Format the current date into the desired format (DD-MM-YYYY)
+                const day = currentDate.getDate();
+                const month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+                const year = currentDate.getFullYear();
+                const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`;
 
-                // Convert to local date string
-                const localDate = currentDate.toLocaleDateString();
+
                 // Parse the current date string to a Date object
                 /*  const currentDate = new Date(patientData.currentDate);
                  console.log(currentDate)
@@ -73,7 +77,7 @@ const createReferral = async (req, res, next) => {
                  const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`;
                  console.log(formattedDate) */
                 // Construct the public_id using the formatted date
-                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${localDate}.pdf`;
+                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
 
             } else {
                 public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
