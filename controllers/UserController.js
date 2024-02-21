@@ -48,6 +48,7 @@ const createNewUser = async (req, res, next) => {
 
         /*   if (checkUserExistence) { */
         if (checkUserExistence) {
+
             return badRequest(res, "Email address already in use", []);
         }
         /* return badRequest(res, "Email address already in use", []);

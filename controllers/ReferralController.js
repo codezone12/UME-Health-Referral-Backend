@@ -68,7 +68,7 @@ const createReferral = async (req, res, next) => {
                 const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`;
                 console.log(formattedDate)
                 // Construct the public_id using the formatted date
-                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
+                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${patientData.currentDate}.pdf`;
 
             } else {
                 public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
