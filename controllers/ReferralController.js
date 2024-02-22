@@ -51,37 +51,29 @@ const createReferral = async (req, res, next) => {
 
         console.log(patientData);
         console.log("done");
-        console.log(patientData.currentDate);
+
         let public_id;
 
         if (req.file) {
-            if (patientData.currentDate) {
-                const currentDate = new Date(); // Get the current date and time
+            function formatDate(dateString) {
+                // Create a Date object from the ISO date string
+                const date = new Date(dateString);
 
-                // Format the current date into the desired format (DD-MM-YYYY)
-                const day = currentDate.getDate();
-                const month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-                const year = currentDate.getFullYear();
-                const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`;
+                // Extract the year, month, and day components
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+                const day = String(date.getDate()).padStart(2, '0');
 
+                // Concatenate the components to form the formatted date string
+                const formattedDate = `${year}-${month}-${day}`;
 
-                // Parse the current date string to a Date object
-                /*  const currentDate = new Date(patientData.currentDate);
-                 console.log(currentDate)
-                 // Extract day, month, and year from the Date object
-                 const day = currentDate.getDate();
-                 const month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-                 const year = currentDate.getFullYear();
- 
-                 // Format the date components into desired format (DD-MM-YYYY)
-                 const formattedDate = `${day}-${month < 10 ? '0' + month : month}-${year}`;
-                 console.log(formattedDate) */
-                // Construct the public_id using the formatted date
-                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}-${formattedDate}.pdf`;
-
-            } else {
-                public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
+                return formattedDate;
             }
+
+            public_id = `patient_files/${patientData.firstName} ${patientData.lastName} ${formatDate(patientData.createdAt)}.pdf`;
+
+            /*             public_id = `patient_files/${patientData.firstName} ${patientData.lastName}.pdf`;
+             */
 
             // Upload the PDF file to Cloudinary
             cloudinary.uploader.upload_stream(
