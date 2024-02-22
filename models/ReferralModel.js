@@ -33,6 +33,10 @@ let Referral = new Schema(
             type: Date,
             required: true
         },
+        createdAt: {
+            type: Date,
+            required: true
+        },
         currentDate: {
             type: Date,
 
