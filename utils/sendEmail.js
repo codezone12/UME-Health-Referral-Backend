@@ -103,7 +103,7 @@ const referralConfirmation = async (name, email, subject, pdfLink) => {
       <p>Hello!</p>
     
     
-      <p>A new referral request has been submitted by ${name} and you can access it by clicking on <a href="www.refer.umehealth.co.uk">www.refer.umehealth.co.uk</a>< Please contact the patient directly to confirm the appointment date and time.
+      <p>A new referral request has been submitted by ${name} and you can access it by clicking on <a href="www.refer.umehealth.co.uk">www.refer.umehealth.co.uk</a> Please contact the patient directly to confirm the appointment date and time.
       </p>
     
       <p>Regards,<br>
