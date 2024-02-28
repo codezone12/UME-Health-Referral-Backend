@@ -68,7 +68,7 @@ let Patient = new Schema(
         payment: {
             type: String,
             required: true,
-            enum: ["Self Pay", "Insurance/Embassy"],
+            enum: ["Self pay", "Insurance/Embassy"],
         },
         paymentMethod: {
             type: String,
