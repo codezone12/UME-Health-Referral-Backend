@@ -78,7 +78,7 @@ let Referral = new Schema(
         },
         payment: {
             type: String,
-            enum: ["Self pay", "Insurance/Embassy"],
+            enum: ["Self Pay", "Insurance/Embassy"],
         },
         paymentMethod: {
             type: String,
