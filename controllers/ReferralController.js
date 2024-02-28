@@ -499,14 +499,13 @@ const updateReferral = async (req, res, next) => {
                 if (consultant.title === "Prefer Not to Say") {
                     name1 = `${consultant.firstname} ${consultant.lastname}`;
                 } else {
-                    name1 = `${consultant.title} ${consultant.firstname} ${patient.lastname}`;
+                    name1 = `${consultant.title} ${consultant.firstname} ${consultant.lastname}`;
                 }
                 console.log("name", name1)
                 console.log(id)
                 console.log("ss", consultant)
 
                 await referralConfirmed(
-
                     name1,
                     consultant.email,
                     "A new UME Health referral has been created",
