@@ -92,6 +92,8 @@ let Referral = new Schema(
         patient: {
             type: Schema.Types.ObjectId,
             ref: "Patient",
+            required: true,
+
         },
         email: {
             type: String,

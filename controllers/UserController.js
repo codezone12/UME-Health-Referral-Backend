@@ -175,7 +175,7 @@ const login = async (req, res, next) => {
                 403
             );
         }
-
+        console.log(user.statusId)
         if (user.statusId === 'inactive') {
             return badRequest(
                 res,
@@ -222,6 +222,7 @@ const login = async (req, res, next) => {
             email,
             image: user.image,
             role: user.role,
+            statusId: user.statusId,
             _id: user._id,
             jobTitle: user.jobTitle
         };
