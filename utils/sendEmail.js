@@ -44,6 +44,8 @@ const otpMail = async (email, name, subject, otp) => {
 };
 
 const otpRequest = async (firstName, lastName, otp, email, subject) => {
+    const imageUrl = "https://res.cloudinary.com/dxa2sfens/image/upload/v1704871962/samples/yzj44igafl1acu9pguvt.png";
+
     const emailHtml = `
     <!DOCTYPE html>
     <html lang="en">
