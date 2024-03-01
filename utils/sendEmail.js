@@ -59,11 +59,34 @@ const otpRequest = async (firstName, lastName, otp, email, subject) => {
       <p>Thank you for registering on the UME Health patients referral portal. Your OTP is <strong>${otp}</strong>, please use it to complete your registration on our platform.</p>
     
       <p>If you need any further assistance, please send us an email at <a href="mailto:clientrelations@umegroup.com">clientrelations@umegroup.com</a></p>
-    
       <p>Regards,<br>
       UME Health Client Relations Team</p>
+      <a href="https://umehealth.co.uk/">
+      <img src="${imageUrl}" alt="UME Health Image" style="height: 50px;"/>
+  </a>
+      <p>
+      17 Harley Street, Marylebone, London W1G 9QH<br>
+      Telephone: 0207 467 6190<br>
+      Email: <a href="mailto:bookings@umegroup.com">bookings@umegroup.com</a><br>
+      Web: www.umehealth.co.uk<br>
+    </div>
+    
+<p>
+      <h6>Disclaimer and Confidentiality Note:</h6>
+
+    Everything in this email and any attachments relating to the official business of UME Group LLP is proprietary to the company.
+
+    It is confidential, legally privileged by law. UME does not own and endorse any other content. Views and opinions are those of the sender unless clearly stated as being that of UME Group.
+
+    The person addressed in the email is the sole authorized recipient. Please notify the sender immediately if it has unintentionally reached you and do not read, disclose or use the content in any way. Please destroy the communication and all attachments immediately.
+
+    UME Group cannot assure that the integrity of this communication has been maintained or that it is free from errors, virus, interception or interference.
+
+    UME Group LLP, 17 Harley St, London W1G 9QH, Tel: 020 7391 8660 Fax: 020 7391 8666
+    Registered in the UK. Registration number: OC333533</p>
     </body>
-    </html>    
+    </html>
+        
     `;
 
     const transporter = nodemailer.createTransport({
