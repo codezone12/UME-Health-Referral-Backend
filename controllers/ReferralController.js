@@ -993,7 +993,7 @@ const uploadReportByAdmin = async (req, res, next) => {
                         if (consultant.title === "Prefer Not to Say") {
                             name = `${consultant.firstname} ${consultant.lastname}`;
                         } else {
-                            name = `${consultant.title} ${consultant.firstname} ${patient.lastname}`;
+                            name = `${consultant.title} ${consultant.firstname} ${consultant.lastname}`;
                         }
                         console.log("name", name)
                         console.log(id)
