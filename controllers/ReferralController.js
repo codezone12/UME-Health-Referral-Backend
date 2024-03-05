@@ -937,13 +937,87 @@ const deleteReferral = async (req, res, next) => {
     }
 };
 
+/* const uploadReportByAdmin = async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+        if (!req.file) {
+            return errorResponse(res, "No file provided", []);
+        }
+
+        // Check file size
+        if (req.file.size > 10485760) { // 10 MB in bytes
+            return errorResponse(res, "File size exceeds the limit", []);
+        }
+
+        cloudinary.uploader.upload_stream(
+            {
+                resource_type: "raw",
+                public_id: `patient_files/${Date.now()}.pdf`,
+            },
+            async (error, result) => {
+                if (error) {
+                    console.error("error===>", error);
+                    return errorResponse(res, "Error uploading report", error);
+                }
+
+                const finalReport = result.secure_url;
+                console.log("finalReport====", finalReport);
+                const updatedReferral = await ReferralRepo.updateReferralById(
+                    id,
+                    {
+                        finalReport,
+                        adminResponse: true,
+                        pending: false,
+                    }
+                );
+
+                if (!updatedReferral) {
+                    return badRequest(res, "Something went wrong, please try again", []);
+                }
+
+                console.log("updatedPatient====", updatedReferral.consultant);
+
+                const consultant = await UserModel.findOne({
+                    _id: updatedReferral.consultant,
+                });
+                let name;
+
+                if (consultant.title === "Prefer Not to Say") {
+                    name = `${consultant.firstname} ${consultant.lastname}`;
+                } else {
+                    name = `${consultant.title} ${consultant.firstname} ${consultant.lastname}`;
+                }
+                console.log("name", name);
+                console.log(id);
+                console.log("ss", consultant);
+
+                await informConsultant(
+                    name,
+                    consultant.email,
+                    "Re: Your UME Health Patient Referral",
+                    finalReport,
+                    id
+                );
+
+                return successResponse(res, "Report submitted successfully", updatedReferral, 200);
+            }
+        ).end(req.file.buffer);
+    } catch (error) {
+        console.error("Unhandled error:", error);
+        next(error);
+    }
+}; */
 
 
 const uploadReportByAdmin = async (req, res, next) => {
     const { id } = req.params;
-    console.log(id)
+    console.log(req.file)
     try {
         if (req.file) {
+            if (req.file.size > 10485760) { // 10 MB in bytes
+                return errorResponse(res, "File size exceeds the limit", []);
+            }
             cloudinary.uploader
                 .upload_stream(
                     {
@@ -998,13 +1072,7 @@ const uploadReportByAdmin = async (req, res, next) => {
                         console.log("name", name)
                         console.log(id)
                         console.log("ss", consultant)
-                        /*                         console.log(consultant.name)
-                         */
-                        // Pass the 'id' to the informConsultant function
-                        /*  const name = updatedReferral.consultant.name;
-                         const email = updatedReferral.consultant.email;
-                         console.log(name)
-                         console.log(email) */
+
                         await informConsultant(
                             name,
                             consultant.email,
@@ -1032,70 +1100,6 @@ const uploadReportByAdmin = async (req, res, next) => {
 };
 
 
-/* const uploadReportByAdmin1 = async (req, res, next) => {
-    const { id } = req.params;
-    const data = req.body;
-    console.log(id)
-    try {
-        if (req.file) {
-            cloudinary.uploader
-                .upload_stream(
-                    {
-                        resource_type: "raw",
-                        public_id: `patient_files/${Date.now()}.pdf`,
-                    },
-                    async (error, result) => {
-                        if (error) {
-                            console.error("error===>", error);
-                            return errorResponse(
-                                res,
-                                "Error uploading report",
-                                error
-                            );
-                        }
-
-                        data.pdfURL = result.secure_url;
-
-                        try {
-                            const updatedReferral = await ReferralRepo.updateReferralById(id, data);
-                            successResponse(res, "Referral updated successfully", updatedReferral, 200);
-                        } catch (dbError) {
-                            next(dbError);
-                        }
-                    }
-                ).end(req.file.buffer);
-        } else {
-
-
-
-            try {
-                const consultant = await UserModel.findOne({
-                    _id: updatedReferral.consultant,
-
-                });
-                console.log(id)
-                console.log(consultant)
-
-                await informConsultant(
-                    consultant.name,
-                    consultant.email,
-                    "Re: Your UME Health Patient Referral",
-                    data.pdfURL
-                );
-
-
-
-                successResponse(res, "Referral updated successfully", updatedPatient, 200);
-            } catch (dbError) {
-                next(dbError);
-            }
-        }
-
-    } catch (error) {
-        console.error("Unhandled error:", error);
-        next(error);
-    }
-}; */
 module.exports = {
     getAllReferrals,
     createReferral,
