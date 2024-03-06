@@ -10,6 +10,7 @@ const TokenRepo = require("../repo/TokenRepo");
 const { otpRequest } = require("../utils/sendEmail");
 const crypto = require("crypto");
 const UserModel = require("../models/UserModel");
+const { truncateSync } = require("fs");
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -393,11 +394,19 @@ const VerifyToken = async (req, res, next) => {
     }
 };
 
-const updateUserProfile = async (req, res, next) => {
+
+
+
+
+
+
+
+/* const updateUserProfile = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { name, email, password, ...additionalFields } = req.body;
-        console.log("req.file", req.file);
+        console.log("req.file", req.body);
+        const status = req.body.check
         let imageUrl;
         if (req.file) {
             try {
@@ -414,17 +423,21 @@ const updateUserProfile = async (req, res, next) => {
                 // Handle the error or return an appropriate response
             }
         }
+        console.log("CCC", status)
 
         // Update user information
+
         const updatedUser = await UserRepo.updateProfile(id, {
             name,
             email,
+
             password: password
                 ? bcrypt.hashSync(password, bcrypt.genSaltSync(10))
                 : undefined,
             image: imageUrl,
             ...additionalFields,
         });
+
 
         if (!updatedUser) {
             return errorResponse(res, "Failed to update user profile", [], 500);
@@ -443,6 +456,139 @@ const updateUserProfile = async (req, res, next) => {
             { ...updatedUser?._doc, userData },
             200
         );
+    } catch (err) {
+        next(err);
+    }
+}; */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const updateUserProfile = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { name, email, password, ...additionalFields } = req.body;
+        console.log("req.file", req.body);
+        const status = req.body.check === true || req.body.check === "true";
+
+        let imageUrl;
+        if (req.file) {
+            try {
+                const result = await cloudinary.uploader.upload(
+                    req?.file?.path
+                );
+                imageUrl = result?.secure_url;
+                console.log("imageURL", imageUrl);
+            } catch (uploadError) {
+                console.error(
+                    "Error uploading image to Cloudinary:",
+                    uploadError
+                );
+                // Handle the error or return an appropriate response
+            }
+        }
+
+        /* const updatedUser = await UserRepo.updateProfile(id, {
+            name,
+            email,
+            password: pasword,
+
+            image: imageUrl,
+            ...additionalFields,
+        }); */
+        /*  const updatedUser = await UserRepo.updateProfile(id, {
+             name,
+             email,
+ 
+             password: password
+                 ? bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+                 : undefined,
+             image: imageUrl,
+             ...additionalFields,
+         }); */
+
+
+
+        /*  if (status === "true") {
+             updatedUser = await UserRepo.updateProfile(id, {
+                 name,
+                 email,
+                 password: password,
+                 image: imageUrl,
+                 ...additionalFields,
+             });
+         } else {
+             updatedUser = await UserRepo.updateProfile(id, {
+                 name,
+                 email,
+                 password: password
+                     ? bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+                     : undefined,
+                 image: imageUrl,
+                 ...additionalFields,
+             });
+         } */
+        let updatedUser;
+        if (status) {
+            updatedUser = await UserRepo.updateProfile(id, {
+                name,
+                email,
+                password: password,
+                image: imageUrl,
+                ...additionalFields,
+            });
+            console.log("updatedUser", updatedUser);
+
+        } else {
+            updatedUser = await UserRepo.updateProfile(id, {
+                name,
+                email,
+                password: password
+                    ? bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+                    : undefined,
+                image: imageUrl,
+                ...additionalFields,
+            });
+            console.log("updatedUser1", updatedUser);
+
+        }
+
+
+        if (!updatedUser) {
+            return errorResponse(res, "Failed to update user profile", [], 500);
+        }
+        const userData = {
+            name: updatedUser?.name,
+            email,
+            image: updatedUser?.image,
+            role: updatedUser?.role,
+            _id: updatedUser?._id,
+        };
+        successResponse(
+            res,
+            "Profile updated successfully",
+            { ...updatedUser?._doc, userData },
+            200
+        );
+
+        // Update user information
+
+
+
+
     } catch (err) {
         next(err);
     }

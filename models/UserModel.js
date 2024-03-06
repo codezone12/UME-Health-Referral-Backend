@@ -27,6 +27,10 @@ let User = new Schema(
     secretaryEmail: {
       type: String,
     },
+    check: {
+      type: Boolean,
+      default: false,
+    },
     image: {
       type: String,
       default:
