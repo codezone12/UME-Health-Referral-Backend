@@ -269,7 +269,7 @@ const forgotPassword = async (req, res, next) => {
         User.lastName,
         newtoken?.token,
         User.email,
-        "Verify Email"
+        "Your UME Health OTP Request"
     );
 
     return successResponse(
@@ -343,7 +343,7 @@ const resendOTP = async (req, res, next) => {
                 User?.lastName,
                 newtoken?.token,
                 User.email,
-                "Verify Email"
+                "Your UME Health OTP Request"
             );
 
             return successResponse(res, "OTP resent successfully", [], 200);
