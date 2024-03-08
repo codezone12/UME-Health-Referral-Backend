@@ -180,7 +180,7 @@ const login = async (req, res, next) => {
         if (user.statusId === 'inactive') {
             return badRequest(
                 res,
-                "User account is inactive. Please contact support for assistance",
+                " User account is inactive. Please contact support for assistance.",
                 [],
                 403
             );
