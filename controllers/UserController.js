@@ -296,7 +296,7 @@ const resetPassword = async (req, res, next) => {
     const token = await TokenRepo.findOneByObject({ userId: user?._id });
 
     if (token.token !== otp) {
-        return badRequest(res, "Invalid Token", [], 400);
+        return badRequest(res, "Invalid OTP. Please double check and try again.", [], 400);
     }
 
     var salt = bcrypt.genSaltSync(10);
