@@ -21,7 +21,8 @@ const corsOptions = {
     credentials: true,
 };
 
-app.use(cors(corsOptions));
+/* app.use(cors(corsOptions)); */
+app.use(cors());
 
 
 if (config.env !== "test") {
