@@ -4,6 +4,7 @@ const xss = require("xss-clean");
 const mongoSanitize = require("express-mongo-sanitize");
 const compression = require("compression");
 const cors = require("cors");
+
 const passport = require("passport");
 const httpStatus = require("http-status");
 const config = require("./config/config");
@@ -15,18 +16,21 @@ const ApiError = require("./utils/ApiError");
 const app = express();
 
 // Configure CORS to allow only specific origin
-/* const corsOptions = {
+/*  const corsOptions = {
     origin: ['https://ume-health.vercel.app', 'http://localhost:3000'],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     credentials: true,
 };
 
- app.use(cors(corsOptions));  */
-app.use(cors({
-  origin: ['https://ume-health.vercel.app', 'http://localhost:3000'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+ app.use(cors(corsOptions)); */
+
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
+
 
 
 if (config.env !== "test") {
