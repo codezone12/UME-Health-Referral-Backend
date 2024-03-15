@@ -24,12 +24,10 @@ const app = express();
 
  app.use(cors(corsOptions)); */
 
-const corsOptions ={
-    origin:'https://ume-health.vercel.app/', 
-    credentials:true,            //access-control-allow-credentials:true
-    
-}
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: ['https://ume-health.vercel.app', 'http://localhost:3000'],
+  credentials: true // Enable credentials if needed
+}));
 
 
 
