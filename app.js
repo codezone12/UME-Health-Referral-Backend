@@ -52,7 +52,7 @@ app.use(mongoSanitize());
 // gzip compression
 app.use(compression());
 app.get('/', (req, res) => {
-    res.send('Hello, World!', req.headers);
+    res.send('Hello, World!', {req.headers});
 });
 // v1 api routes
 app.use("/v1", routes);
