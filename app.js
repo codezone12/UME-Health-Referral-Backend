@@ -4,7 +4,6 @@ const xss = require("xss-clean");
 const mongoSanitize = require("express-mongo-sanitize");
 const compression = require("compression");
 const cors = require("cors");
-
 const passport = require("passport");
 const httpStatus = require("http-status");
 const config = require("./config/config");
@@ -16,19 +15,13 @@ const ApiError = require("./utils/ApiError");
 const app = express();
 
 // Configure CORS to allow only specific origin
-/*  const corsOptions = {
+const corsOptions = {
     origin: ['https://ume-health.vercel.app', 'http://localhost:3000'],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     credentials: true,
 };
 
- app.use(cors(corsOptions)); */
-
-app.use(cors({
-  origin: ['https://ume-health.vercel.app', 'http://localhost:3000'],
-  credentials: true // Enable credentials if needed
-}));
-
+app.use(cors(corsOptions));
 
 
 if (config.env !== "test") {
@@ -52,18 +45,11 @@ app.use(mongoSanitize());
 // gzip compression
 app.use(compression());
 app.get('/', (req, res) => {
-    res.send('Hello, World!',);
+    res.send('Hello, World!');
 });
 // v1 api routes
 app.use("/v1", routes);
-app.post('/login', async (req, res) => {
-  try {
-    const response = await axios.post('https://ume-health-referral-backend.vercel.app/v1/users/login', req.body);
-    res.json(response.data);
-  } catch (error) {
-    res.status(error.response.status).json(error.response.data);
-  }
-});
+
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
     next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
