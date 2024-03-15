@@ -15,15 +15,19 @@ const ApiError = require("./utils/ApiError");
 const app = express();
 
 // Configure CORS to allow only specific origin
-const corsOptions = {
+/* const corsOptions = {
     origin: ['https://ume-health.vercel.app', 'http://localhost:3000'],
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     credentials: true,
 };
 
-/* app.use(cors(corsOptions)); */
-app.use(cors());
-app.use(cors({    origin: ['https://ume-health.vercel.app', 'http://localhost:3000'], }));
+ app.use(cors(corsOptions));  */
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://ume-health.vercel.app','http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 
 if (config.env !== "test") {
