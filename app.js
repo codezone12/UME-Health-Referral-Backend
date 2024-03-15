@@ -22,12 +22,11 @@ const app = express();
 };
 
  app.use(cors(corsOptions));  */
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://ume-health.vercel.app','http://localhost:3000');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
+app.use(cors({
+  origin: ['https://ume-health.vercel.app', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 
 if (config.env !== "test") {
