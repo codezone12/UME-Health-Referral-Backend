@@ -4,10 +4,15 @@ const config = require("./config/config");
 const logger = require("./config/logger");
 
 let server;
-mongoose.connect(config.mongoose.url, {
+/* mongoose.connect(config.mongoose.url, {
     rejectUnauthorized: false,
     ...config.mongoose.options,
     useFindAndModify: false, // Add this option
+}) */
+mongoose.connect(config.mongoose.url, {
+    rejectUnauthorized: false,
+    ...config.mongoose.options,
+    useFindAndModify: false,
 }).then(() => {
     logger.info("Connected to MongoDB");
     server = app.listen(config.port, () => {
