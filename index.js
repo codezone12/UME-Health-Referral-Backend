@@ -7,7 +7,7 @@ let server;
 mongoose.connect(config.mongoose.url, {
     rejectUnauthorized: false,
     ...config.mongoose.options,
-    useFindAndModify: false, // Add this option
+    useFindAndModify: false, 
 }).then(() => {
     logger.info("Connected to MongoDB");
     server = app.listen(config.port, () => {
