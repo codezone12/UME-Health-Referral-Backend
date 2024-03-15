@@ -58,7 +58,14 @@ app.get('/', (req, res) => {
 });
 // v1 api routes
 app.use("/v1", routes);
-
+app.post('/login', async (req, res) => {
+  try {
+    const response = await axios.post('https://ume-health-referral-backend.vercel.app/v1/users/login', req.body);
+    res.json(response.data);
+  } catch (error) {
+    res.status(error.response.status).json(error.response.data);
+  }
+});
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
     next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
