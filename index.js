@@ -5,7 +5,7 @@ const logger = require("./config/logger");
 
 let server;
 mongoose.connect(config.mongoose.url, {
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
     ...config.mongoose.options,
     useFindAndModify: true, // Add this option
 }).then(() => {
