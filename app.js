@@ -23,6 +23,7 @@ const corsOptions = {
 
 /* app.use(cors(corsOptions)); */
 app.use(cors());
+app.use(cors({    origin: ['https://ume-health.vercel.app', 'http://localhost:3000'], }));
 
 
 if (config.env !== "test") {
