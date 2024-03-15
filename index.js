@@ -10,7 +10,6 @@ let server;
     useFindAndModify: false, // Add this option
 }) */
 mongoose.connect(config.mongoose.url, {
-    rejectUnauthorized: false,
     ...config.mongoose.options,
     useFindAndModify: false,
 }).then(() => {
