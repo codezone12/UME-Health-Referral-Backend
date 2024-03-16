@@ -47,7 +47,7 @@ app.use(compression());
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
-// v1 api routes
+// v1 api route
 app.use("/v1", routes);
 
 // send back a 404 error for any unknown api request
