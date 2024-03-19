@@ -431,7 +431,6 @@ const informPatient = async (name, email, subject, pdfLink, id) => {
     
     
       <p>We are pleased to inform you that your appointment at UME Health has been confirmed for   ${date} at ${time}. Your health and well-being are our top priorities, and we are dedicated to providing you with the best care possible.
-      <a href="https://umehealth.co.uk/">www.refer.umehealth.co.uk </a>
 
 If you need any further assistance, please send us an email at   <a href="clientrelations@umegroup.com">clientrelations@umegroup.com</a>
 
@@ -479,7 +478,7 @@ If you need any further assistance, please send us an email at   <a href="client
     });
     const resp = await transporter.sendMail({
         to: email,
-        subject: "Re: Your patient’s imaging report is ready",
+        subject: "Re: Your appointment with UME Health, 17 Harley Street",
         html: emailHtml,
     });
     if (resp) {
