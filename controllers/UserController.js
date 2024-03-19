@@ -482,12 +482,7 @@ const updateUserProfile = async (req, res, next) => {
         const { name, email, password, ...additionalFields } = req.body;
 
         // Find the user by email
-        const user = await UserRepo.findOneByObject({ email: req.body.email });
 
-        // Check if the user exists and if the entered password matches the stored password
-        if (!bcrypt.compareSync(password, user.password)) {
-            return errorResponse(res, "Incorrect  Password", [], 401);
-        }
 
         let imageUrl;
         if (req.file) {

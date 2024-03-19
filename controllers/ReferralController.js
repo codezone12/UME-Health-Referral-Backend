@@ -49,7 +49,7 @@ const createReferral = async (req, res, next) => {
     try {
         const patientData = req.body;
 
-        console.log(patientData);
+        console.log(patientData.rf);
         console.log("done");
 
         let public_id;
@@ -91,6 +91,7 @@ const createReferral = async (req, res, next) => {
                     patientData.pdfURL = result.secure_url;
 
                     try {
+
                         const newPatient = await ReferralRepo.createReferral(patientData);
                         const admin = await UserModel.findOne({ role: "Admin" });
                         let name;
@@ -109,29 +110,32 @@ const createReferral = async (req, res, next) => {
                         console.log(consultant)
                         console.log("c", name1)
 
-                        /*                         const name = `${patientData.title} ${patientData.firstName} ${patientData.lastName}`;
-                         */
-                        await referralConfirmation(
-                            admin.name,
-                            admin.email,
-                            "A new UME Health referral has been created",
-                            patientData.pdfURL
-                        );
+                        if (patientData.rf === "false") {
 
-                        await referralConfirm(
-                            name,
-                            patientData.email,
-                            "A new UME Health referral has been created",
-                            patientData.pdfURL,
-                            name1
-                        );
 
-                        await referralConfirmed(
-                            patientData.secretaryName,
-                            patientData.secretaryEmail,
-                            "A new UME Health referral has been created",
-                            patientData.pdfURL
-                        );
+
+                            await referralConfirmation(
+                                admin.name,
+                                admin.email,
+                                "A new UME Health referral has been created",
+                                patientData.pdfURL
+                            );
+
+                            await referralConfirm(
+                                name,
+                                patientData.email,
+                                "A new UME Health referral has been created",
+                                patientData.pdfURL,
+                                name1
+                            );
+
+                            await referralConfirmed(
+                                patientData.secretaryName,
+                                patientData.secretaryEmail,
+                                "A new UME Health referral has been created",
+                                patientData.pdfURL
+                            );
+                        }
 
                         successResponse(
                             res,
