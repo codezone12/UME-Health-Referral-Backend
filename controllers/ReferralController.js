@@ -563,8 +563,8 @@ const updateReferralbyAdmin = async (req, res, next) => {
                 } else {
                     name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
                 }
-                console.log("name", name)
-                console.log("e", patient.email)
+                console.log("name", patient)
+                console.log("e", patient.secretaryEmail)
 
                 /*   await referralConfirmation(
                       admin.name,
@@ -575,7 +575,7 @@ const updateReferralbyAdmin = async (req, res, next) => {
 
                 await informPatient(
                     name,
-                    patient.email,
+                    patient.secretaryEmail,
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL,
                     id

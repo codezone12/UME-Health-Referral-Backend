@@ -1,5 +1,6 @@
 const UserRepo = require("../repo/UserRepo");
 const bcrypt = require("bcryptjs");
+
 const jwt = require("jsonwebtoken");
 const {
     badRequest,
@@ -475,14 +476,18 @@ const VerifyToken = async (req, res, next) => {
 
 
 
-
-
 const updateUserProfile = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { name, email, password, ...additionalFields } = req.body;
-        console.log("req.file", req.body);
-        const status = req.body.check === true || req.body.check === "true";
+
+        // Find the user by email
+        const user = await UserRepo.findOneByObject({ email: req.body.email });
+
+        // Check if the user exists and if the entered password matches the stored password
+        if (!bcrypt.compareSync(password, user.password)) {
+            return errorResponse(res, "Incorrect  Password", [], 401);
+        }
 
         let imageUrl;
         if (req.file) {
@@ -501,46 +506,76 @@ const updateUserProfile = async (req, res, next) => {
             }
         }
 
-        /* const updatedUser = await UserRepo.updateProfile(id, {
+        // Hash the password before updating the user profile
+        const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+
+        // Update the user profile with the hashed password
+        const updatedUser = await UserRepo.updateProfile(id, {
             name,
             email,
-            password: pasword,
-
+            password: hashedPassword,
             image: imageUrl,
             ...additionalFields,
-        }); */
-        /*  const updatedUser = await UserRepo.updateProfile(id, {
-             name,
-             email,
- 
-             password: password
-                 ? bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-                 : undefined,
-             image: imageUrl,
-             ...additionalFields,
-         }); */
+        });
+
+        if (!updatedUser) {
+            return errorResponse(res, "Failed to update user profile", [], 500);
+        }
+
+        const userData = {
+            name: updatedUser?.name,
+            email,
+            image: updatedUser?.image,
+            role: updatedUser?.role,
+            _id: updatedUser?._id,
+        };
+
+        successResponse(
+            res,
+            "Profile updated successfully",
+            { ...updatedUser?._doc, userData },
+            200
+        );
+
+    } catch (err) {
+        next(err);
+    }
+};
 
 
 
-        /*  if (status === "true") {
-             updatedUser = await UserRepo.updateProfile(id, {
-                 name,
-                 email,
-                 password: password,
-                 image: imageUrl,
-                 ...additionalFields,
-             });
-         } else {
-             updatedUser = await UserRepo.updateProfile(id, {
-                 name,
-                 email,
-                 password: password
-                     ? bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-                     : undefined,
-                 image: imageUrl,
-                 ...additionalFields,
-             });
-         } */
+/* const updateUserProfile = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { name, email, password, ...additionalFields } = req.body;
+        console.log("req.file", req.body);
+        const status = req.body.check === true || req.body.check === "true";
+        const user = await UserRepo.findOneByObject({ email: req.body.email });
+        if (user.password !== password) {
+            return errorResponse(res, " Incorrect Password", [], 500);
+        }
+
+
+
+        let imageUrl;
+        if (req.file) {
+            try {
+                const result = await cloudinary.uploader.upload(
+                    req?.file?.path
+                );
+                imageUrl = result?.secure_url;
+                console.log("imageURL", imageUrl);
+            } catch (uploadError) {
+                console.error(
+                    "Error uploading image to Cloudinary:",
+                    uploadError
+                );
+                // Handle the error or return an appropriate response
+            }
+        }
+
+       
+
         let updatedUser;
         if (status) {
             updatedUser = await UserRepo.updateProfile(id, {
@@ -592,7 +627,7 @@ const updateUserProfile = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-};
+}; */
 
 const getUserById = async (req, res, next) => {
     try {
