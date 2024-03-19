@@ -487,7 +487,7 @@ const updateReferral = async (req, res, next) => {
                     "A new UME Health referral has been created",
                     data.pdfURL
                 );
-                                const consultant = await UserModel.findById(data.consultant);
+                const consultant = await UserModel.findById(data.consultant);
                 let name1;
 
                 if (consultant.title === "Prefer Not to Say") {
@@ -513,7 +513,7 @@ const updateReferral = async (req, res, next) => {
 
                 await referralConfirmed(
                     name1,
-                    consultant.email,
+                    consultant.secretaryEmail,
                     "A new UME Health referral has been created",
                     updatedPatient.pdfURL
                 );
