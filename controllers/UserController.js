@@ -476,13 +476,14 @@ const VerifyToken = async (req, res, next) => {
 
 
 
-const updateUserProfile = async (req, res, next) => {
+/* const updateUserProfile = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { name, email, password, ...additionalFields } = req.body;
 
         // Find the user by email
-
+        const checkUserExistence = await UserRepo.findOneByObject({ email });
+        console.log("c", checkUserExistence)
 
         let imageUrl;
         if (req.file) {
@@ -535,7 +536,79 @@ const updateUserProfile = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-};
+}; */
+
+
+const updateUserProfile = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { name, email, password, ...additionalFields } = req.body;
+
+        // Find the user by clgemail
+        console.log(req.body)
+        console.log("email:", email);
+        console.log("Additional fields:", additionalFields);
+        const checkUserExistence = await UserRepo.findOneByObject({ email });
+        console.log("c", checkUserExistence);
+
+        // If the found user has a different id than the one being updated, show the toast
+        if (checkUserExistence && checkUserExistence._id.toString() !== id) {
+            return errorResponse(res, "Email already exists", [], 400);
+        }
+
+        let imageUrl;
+        if (req.file) {
+            try {
+                const result = await cloudinary.uploader.upload(
+                    req?.file?.path
+                );
+                imageUrl = result?.secure_url;
+                console.log("imageURL", imageUrl);
+            } catch (uploadError) {
+                console.error(
+                    "Error uploading image to Cloudinary:",
+                    uploadError
+                );
+                // Handle the error or return an appropriate response
+            }
+        }
+
+        // Hash the password before updating the user profile
+        const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+
+        // Update the user profile with the hashed password
+        const updatedUser = await UserRepo.updateProfile(id, {
+            name,
+            email,
+            password: hashedPassword,
+            image: imageUrl,
+            ...additionalFields,
+        });
+
+        if (!updatedUser) {
+            return errorResponse(res, "Failed to update user profile", [], 500);
+        }
+
+        const userData = {
+            name: updatedUser?.name,
+            email,
+            image: updatedUser?.image,
+            role: updatedUser?.role,
+            _id: updatedUser?._id,
+        };
+
+        successResponse(
+            res,
+            "Profile updated successfully",
+            { ...updatedUser?._doc, userData },
+            200
+        );
+
+    } catch (err) {
+        next(err);
+    }
+}
+
 
 
 
