@@ -481,13 +481,7 @@ const updateReferral = async (req, res, next) => {
                 }
                 /*                 const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
                  */               /*  console.log("name", name) */
-                await referralConfirmation(
-consultant.name,
-                    admin.email,
-                    "A new UME Health referral has been created",
-                    data.pdfURL
-                );
-                const consultant = await UserModel.findById(data.consultant);
+                 const consultant = await UserModel.findById(data.consultant);
                 let consultantName = consultant.secretaryName;
                 let name1;
 
@@ -497,6 +491,13 @@ consultant.name,
                 } else {
                     name1 = `${consultant.title} ${consultant.firstname} ${consultant.lastname}`;
                 }
+                await referralConfirmation(
+consultant.name,
+                    admin.email,
+                    "A new UME Health referral has been created",
+                    data.pdfURL
+                );
+               
                 /* 
                                 console.log("name", name1)
                                 console.log(id)
