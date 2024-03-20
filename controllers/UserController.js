@@ -544,31 +544,29 @@ const updateUserProfile = async (req, res, next) => {
         const { id } = req.params;
         const { name, email, password, ...additionalFields } = req.body;
 
-        // Find the user by clgemail
-        console.log(req.body)
-        console.log("email:", email);
-        console.log("Additional fields:", additionalFields);
+        // Find the user by email
         const checkUserExistence = await UserRepo.findOneByObject({ email });
-        console.log("c", checkUserExistence);
-
-        // If the found user has a different id than the one being updated, show the toast
         if (checkUserExistence && checkUserExistence._id.toString() !== id) {
             return errorResponse(res, "Email already exists", [], 400);
+        }
+
+        // Check if secretaryEmail exists
+        if (additionalFields.secretaryEmail) {
+            // Find the user by secretaryEmail
+            const checkSecretaryExistence = await UserRepo.findOneByObject({ email: additionalFields.secretaryEmail });
+            if (checkSecretaryExistence && checkSecretaryExistence._id.toString() !== id) {
+                return errorResponse(res, "Secretary Email already exists", [], 400);
+            }
         }
 
         let imageUrl;
         if (req.file) {
             try {
-                const result = await cloudinary.uploader.upload(
-                    req?.file?.path
-                );
+                const result = await cloudinary.uploader.upload(req?.file?.path);
                 imageUrl = result?.secure_url;
                 console.log("imageURL", imageUrl);
             } catch (uploadError) {
-                console.error(
-                    "Error uploading image to Cloudinary:",
-                    uploadError
-                );
+                console.error("Error uploading image to Cloudinary:", uploadError);
                 // Handle the error or return an appropriate response
             }
         }
@@ -597,17 +595,13 @@ const updateUserProfile = async (req, res, next) => {
             _id: updatedUser?._id,
         };
 
-        successResponse(
-            res,
-            "Profile updated successfully",
-            { ...updatedUser?._doc, userData },
-            200
-        );
+        successResponse(res, "Profile updated successfully", { ...updatedUser?._doc, userData }, 200);
 
     } catch (err) {
         next(err);
     }
 }
+
 
 
 
