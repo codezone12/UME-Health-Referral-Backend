@@ -442,7 +442,7 @@ const updateReferral = async (req, res, next) => {
         const data = req.body;
 
         const consultant = await UserModel.findById(data.consultant);
-
+        console.log("consultantName", consultant.name);
 
         if (req.file) {
             cloudinary.uploader.upload_stream(
@@ -472,15 +472,15 @@ const updateReferral = async (req, res, next) => {
                 const patient = await referralModel.findOne({ _id: id });
                 const admin = await UserModel.findOne({ role: "Admin" });
                 let name;
-                console.log(patient)
-                console.log("first", patient.title)
+                /* console.log(patient)
+                console.log("first", patient.title) */
                 if (patient.title === " ") {
                     name = `${patient.firstName} ${patient.lastName}`;
                 } else {
                     name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
                 }
-/*                 const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
- */                console.log("name", name)
+                /*                 const name = `${patient.title} ${patient.firstName} ${patient.lastName}`;
+                 */               /*  console.log("name", name) */
                 await referralConfirmation(
                     admin.name,
                     admin.email,
@@ -497,12 +497,12 @@ const updateReferral = async (req, res, next) => {
                 } else {
                     name1 = `${consultant.title} ${consultant.firstname} ${consultant.lastname}`;
                 }
-
-                console.log("name", name1)
-                console.log(id)
-                console.log("ss", consultant)
-
-
+                /* 
+                                console.log("name", name1)
+                                console.log(id)
+                                console.log("ss", consultant)
+                 
+                 */
                 await referralConfirm(
                     name,
                     patient.email,
